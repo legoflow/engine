@@ -52,6 +52,10 @@ const override = require('legoflow-engine/override');
 const { messager, dev, build } = require('legoflow-engine');
 ```
 
+#### 调用的参数配置
+
+[查看详细](./params_config.md)
+
 ## 许可
 
 [MIT](./LICENSE)
