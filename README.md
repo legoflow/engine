@@ -50,11 +50,11 @@ const override = require('legoflow-engine/override');
 // dev 启动 开发 的异步函数
 // build 启动 构建 的异步函数
 const { messager, dev, build } = require('legoflow-engine');
+
+dev( Config );
 ```
 
-#### 调用的参数配置
-
-[查看详细](./params_config.md)
+调用需要的 [参数配置](./params_config.md)
 
 ## 许可
 
