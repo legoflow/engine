@@ -1,8 +1,21 @@
-# Engine &middot; ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
+<h1 align="center"> Engine </h1>
+
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+        <img alt="Licence" src="https://img.shields.io/badge/license-MIT-green.svg" />
+    </a>
+    <a href="">
+        <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-green.svg" />
+    </a>
+</p>
+
+<p align="center">
+    <strong>工作流核心引擎模块</strong>
+</p>
 
 ## 作用
 
-作为 LegoFlow 系列工作流的核心引擎模块，导出 `开发` 以及 `构建` 工作流的调用方法提供给客户端以及 cli 等上层工具。
+导出 `开发` 以及 `构建` 工作流的调用方法提供给客户端以及 cli 等上层工具
 
 ## 安装
 
@@ -34,8 +47,8 @@ const override = require('legoflow-engine/override');
 
 ```js
 // messager 工作流消息输出机制
-// dev 启动 开发 工作流
-// build 启动 构建 工作流
+// dev 启动 开发 的异步函数
+// build 启动 构建 的异步函数
 const { messager, dev, build } = require('legoflow-engine');
 ```
 
