@@ -1,10 +1,12 @@
 'use strict';
 
-const messager = require('./common/messager');
 const webpackEntry = require('./common/webpack_entry');
 
 const webpack = require('./dev/webpack');
 const gulp = require('./dev/gulp');
+
+const Messager = require('./common/messager');
+const messager = new Messager( );
 
 const axios = require('axios');
 

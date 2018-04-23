@@ -1,26 +1,27 @@
 'use strict';
 
+module.exports = class Messager {
+    static sender ( { type, msg } ) {
+        console[ console[ type ] ? type : 'log' ]( `[${ type }]`, `${ msg }` );
+    }
 
-
-module.exports = {
-    sender ( { type, msg } ) {
-        console[ console[ type ] ? type : 'log' ]( `[${ type }]: `, msg );
-    },
     log ( msg ) {
-        this.sender( { type: 'log', msg } );
-    },
+        Messager.sender( { type: 'log', msg } );
+    }
+
     error ( msg ) {
-        this.sender( { type: 'error', msg } );
-    },
+        Messager.sender( { type: 'error', msg } );
+    }
+
     success ( msg ) {
-        this.sender( { type: 'success', msg } );
-    },
+        Messager.sender( { type: 'success', msg } );
+    }
+
     stop ( msg ) {
-        this.sender( { type: 'stop', msg } );
-    },
+        Messager.sender( { type: 'stop', msg } );
+    }
+
     notice ( msg ) {
-        this.sender( { type: 'notice', msg } );
-    },
+        Messager.sender( { type: 'notice', msg } );
+    }
 };
-
-

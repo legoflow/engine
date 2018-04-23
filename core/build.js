@@ -5,13 +5,15 @@ const fs = require('fs-extra');
 const moment = require('moment');
 const path = require('path');
 
-const messager = require('./common/messager');
 const webpackEntry = require('./common/webpack_entry');
 
 const webpack = require('./build/webpack');
 const gulp = require('./build/gulp');
 const runShell = require('./build/run_shell');
 const util = require('../util');
+
+const Messager = require('./common/messager');
+const messager = new Messager( );
 
 module.exports = async ( _config_ ) => {
     // common config reslove

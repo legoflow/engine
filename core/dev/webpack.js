@@ -53,10 +53,6 @@ const start = ( resolve, reject ) => {
         }
     }
 
-    if ( config.env === 'dev' ) {
-        webpackDevServerOptions.quiet = false;
-    }
-
     new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {
         if ( err ) throw err;
 
