@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 module.exports = {
     sender ( { type, msg } ) {
         console[ console[ type ] ? type : 'log' ]( `[${ type }]: `, msg );

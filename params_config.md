@@ -15,6 +15,8 @@
     // 是否对 JS 进行 ES.Next 语法的编译
     "ES.Next": true,
     // 注入 webpack 别名
+    // 是否热更新
+    "hot": false,
     "alias": {
         "$": "./src/assets/jquery.min.js"
     },
@@ -93,8 +95,6 @@
     },
     // 存放 node_modules 的目录绝对路径
     "root": "/Users/lijialiang/legoflow@2",
-    // 系统 mac || win
-    "system": "mac",
     // 用户名
     "user": "ce111",
     // 端口号

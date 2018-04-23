@@ -1,7 +1,7 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.3",
-  "description": "the engine of workflow ",
+  "version": "0.0.4",
+  "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
     "test": "node ./__test__/index.js"
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/legoflow/engine.git"
   },
   "keywords": [
-    "workflow"
+    "legoflow", "workflow"
   ],
   "author": "lijialiang@yy.com",
   "license": "MIT",

@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const YAML = require('yamljs');
+const { exec } = require('child_process');
 
 // 路径标准化
 String.prototype.pathNorm = function ( ) {
@@ -90,7 +91,10 @@ String.prototype.getConfig = function ( _config_ = { } ) {
 }
 
 const util = {
-    sleep: ( delay ) => new Promise(( resolve ) => setTimeout(resolve, delay)),
+    sleep: ( delay ) => new Promise( ( resolve ) => setTimeout( resolve, delay ) ),
+    chromeOpen ( url ) {
+        process.platform === 'win32' ? exec( `start chrome "${ url }"` ) : exec( `open -a "google chrome" ${ url }` );
+    },
 };
 
 module.exports = util;

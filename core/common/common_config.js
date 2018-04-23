@@ -8,6 +8,10 @@ const resolve = ( _config_ ) => {
 
     const { projectPath, root, env, user, workflow } = config;
 
+    if ( !config.system ) {
+        config.system = process.platform === 'win32' ? 'win' : 'mac';
+    }
+
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
     const defaultAlias  = {

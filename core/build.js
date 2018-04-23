@@ -11,6 +11,7 @@ const webpackEntry = require('./common/webpack_entry');
 const webpack = require('./build/webpack');
 const gulp = require('./build/gulp');
 const runShell = require('./build/run_shell');
+const util = require('../util');
 
 module.exports = async ( _config_ ) => {
     // common config reslove
@@ -62,10 +63,14 @@ module.exports = async ( _config_ ) => {
         await gulp( config, messager );
 
         if ( shell ) {
-            runShell( shell, config, messager );
+            await runShell( shell, config, messager );
         }
         else {
             messager.success( );
+        }
+
+        if ( config.autoOpenChrome ) {
+            util.chromeOpen( `${ config.projectPath }/dist` );
         }
     } catch ( err ) {
         console.error( '[BUILD@WEBPACK ERROR]', err );
