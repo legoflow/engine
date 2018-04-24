@@ -13,7 +13,7 @@ let config = void 0;
 let messager = void 0;
 
 const start = ( resolve, reject ) => {
-    let { entry, ip, webpackPort, projectPath, root, hot } = config;
+    let { entry, ip, webpackPort, projectPath, root, hot, publicPath } = config;
 
     const isHotReload = config[ 'hot.reload' ] || false;
 
@@ -26,6 +26,8 @@ const start = ( resolve, reject ) => {
         entry,
         output: {
             filename: './js/[name].js',
+            path: `${ projectPath }/dist/js`,
+            publicPath: publicPath || '',
         },
         module: {
             rules: webpackRules( config ),
@@ -45,7 +47,7 @@ const start = ( resolve, reject ) => {
         compress: false,
         noInfo: false,
         lazy: false,
-        quiet: true,
+        quiet: false,
         filename: 'bundle.js',
         watchOptions: {
             aggregateTimeout: 100,

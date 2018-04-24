@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {

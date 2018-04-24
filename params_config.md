@@ -76,6 +76,8 @@
         "shell": "./shell.js",
         // 构建出 webpack stats.json，有助于分析模块打包占比
         "output.webpackStats": true,
+        // 打包到 JS 文件的图片最大值
+        "bundle.limitImgSize": 1000,
         // 是否仅仅执行 Shell 模块
         "onlyRunShell": true,
         // 用户配置参数
