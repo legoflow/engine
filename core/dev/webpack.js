@@ -13,11 +13,13 @@ let config = void 0;
 let messager = void 0;
 
 const start = ( resolve, reject ) => {
-    let { entry, ip, webpackPort, projectPath, root, hot, publicPath } = config;
+    let { entry, ip, webpackPort, projectPath, root, hot, publicPath, system } = config;
 
     const isHotReload = config[ 'hot.reload' ] || false;
 
     const srcFolderPath = path.resolve( projectPath, './src' );
+
+    const outputPath = `${ projectPath }/dist/js`;
 
     const webpackOptions = {
         mode: 'development',
@@ -26,7 +28,7 @@ const start = ( resolve, reject ) => {
         entry,
         output: {
             filename: './js/[name].js',
-            path: `${ projectPath }/dist/js`,
+            path: system === 'mac' ? outputPath : outputPath.pathWinNorm( ),
             publicPath: publicPath || '',
         },
         module: {

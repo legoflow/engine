@@ -8,6 +8,9 @@ const resolve = ( _config_ ) => {
 
     const { projectPath, root, env, user, workflow } = config;
 
+    config.path = projectPath.pathNorm( );
+    config.projectPath = projectPath.pathNorm( );
+
     if ( !config.system ) {
         config.system = process.platform === 'win32' ? 'win' : 'mac';
     }

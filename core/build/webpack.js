@@ -12,7 +12,7 @@ let config = void 0;
 let messager = void 0;
 
 const start = ( resolve, reject ) => {
-    let { entry, ip, alias, projectPath, root, user, args, publicPath, version } = config;
+    let { entry, ip, alias, projectPath, root, user, args, publicPath, version, system } = config;
 
     const { cache } = config[ 'workflow.build' ];
 
@@ -28,14 +28,16 @@ const start = ( resolve, reject ) => {
             break;
     }
 
+    const outputPath = `${ projectPath }/dist/js`;
+
     const webpackOptions = {
         mode: 'production',
         entry,
         output: {
             filename: '[name].js',
             chunkFilename,
-            path: `${ projectPath }/dist/js`,
-            publicPath: publicPath || '',
+            path: system === 'mac' ? outputPath : outputPath.pathWinNorm( ),
+            publicPath: publicPath || './js/',
         },
         module: {
             rules: webpackRules( config ),

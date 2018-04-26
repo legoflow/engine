@@ -10,6 +10,10 @@ String.prototype.pathNorm = function ( ) {
     return this.toString( ).replace( /\\/g, '/' );
 }
 
+String.prototype.pathWinNorm = function ( ) {
+    return this.toString( ).replace( /\//g, '\\' );
+}
+
 // 配置文件路径 转配置
 String.prototype.toConfig = function ( ) {
     const p = this.toString( );
