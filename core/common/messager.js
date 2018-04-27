@@ -1,8 +1,31 @@
 'use strict';
 
+const chalk = require('chalk');
+
 module.exports = class Messager {
     static sender ( { type, msg } ) {
-        console[ console[ type ] ? type : 'log' ]( `[${ type }]`, `${ msg }` );
+        let color = msg => msg;
+
+        switch ( type ) {
+            case 'error': {
+                color = chalk.red;
+                break;
+            }
+            case 'success': {
+                color = chalk.green.bold;
+                break;
+            }
+            case 'stop': {
+                color = chalk.yellow;
+                break;
+            }
+            case 'notice': {
+                color = chalk.blue;
+                break;
+            }
+        }
+
+        console.log( color( `[${ type }]` ), color( msg ) );
     }
 
     log ( msg ) {

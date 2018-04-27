@@ -53,8 +53,6 @@ const start = async ( _config_ ) => {
     config.entry = entryFiles;
 
     try {
-        require('./common/print_config')( config );
-
         await webpack( config, messager );
 
         await ( ( ) => new Promise( ( resolve, reject ) => {

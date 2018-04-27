@@ -33,8 +33,6 @@ module.exports = async ( _config_ ) => {
 `;
 
     try {
-        require('./common/print_config')( config );
-
         del.sync( `${ config.path }/dist`, { force: true } );
 
         let { shell, onlyRunShell } = config[ 'workflow.build' ];

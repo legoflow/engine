@@ -42,6 +42,13 @@
         "watch.reload": [
             "./src/test/**/*"
         ],
+        // 代理 https://doc.webpack-china.org/configuration/dev-server/#devserver-proxy
+        "proxy": {
+            "/api": {
+                "target": "https://legox.org/mock/a3e67a40-863c-11e7-9085-0ba4558c07dc",
+                "changeOrigin": true
+            }
+        },
         // 用户配置参数
         // 根据用户输入 webpack define 插件变量
         // * 全部用户在 JS 文件中变量 process.args.token4Common 编译为 abc

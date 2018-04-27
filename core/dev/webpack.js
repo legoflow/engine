@@ -21,6 +21,8 @@ const start = ( resolve, reject ) => {
 
     const outputPath = `${ projectPath }/dist/js`;
 
+    const workflowConfig = config[ 'workflow.dev' ];
+
     const webpackOptions = {
         mode: 'development',
         // devtool: 'cheap-eval-source-map',
@@ -50,11 +52,19 @@ const start = ( resolve, reject ) => {
         noInfo: false,
         lazy: false,
         quiet: false,
+        stats: {
+            colors: true,
+            modules: false,
+            children: false,
+            chunks: false,
+            chunkModules: false,
+        },
         filename: 'bundle.js',
         watchOptions: {
             aggregateTimeout: 100,
             poll: 1000,
-        }
+        },
+        proxy: workflowConfig.proxy || { },
     }
 
     new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {

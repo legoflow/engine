@@ -244,7 +244,7 @@ module.exports = async ( _config_, _messager_ ) => {
     }
 
     watch( `${ projectPath }/legoflow.*`, ( ) => {
-        console.log( '配置修改后, 重启工作流后生效' );
+        messager.notice( '配置修改后, 重启工作流后生效' );
     } );
 
     await toPromise( BROWSER_OPEN );
@@ -262,7 +262,7 @@ module.exports = async ( _config_, _messager_ ) => {
         const name = result.basename;
 
         if ( name.indexOf( '.js' ) > 0 && name.indexOf( '_' ) !== 0 ){
-            console.log( 'Entry 文件变动, 请重启工作流' );
+            messager.notice( 'Entry 文件变动, 请重启工作流' );
         }
     } );
 

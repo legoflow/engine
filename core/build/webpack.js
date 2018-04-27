@@ -57,6 +57,14 @@ const start = ( resolve, reject ) => {
             return void 0;
         }
 
+        console.log( stats.toString( {
+            colors: true,
+            modules: false,
+            children: false,
+            chunks: false,
+            chunkModules: false,
+        } ) );
+
         messager.log( 'JS 构建完成' );
 
         resolve( );
