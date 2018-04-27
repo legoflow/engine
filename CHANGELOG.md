@@ -2,6 +2,12 @@
 
 * [null]
 
+## 0.0.13 (April 27, 2018)
+
+* 增加 `workflow.dev { proxy }`
+* 升级 WebPack v4.6.0
+* 优化 打印 LOG 信息
+
 ## 0.0.12 (April 26, 2018)
 
 * 修复 Windows 兼容性问题
