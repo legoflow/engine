@@ -2,6 +2,10 @@
 
 * [null]
 
+## 0.0.17 (April 27, 2018)
+
+* 清除 gulp-sass 依赖的 node-sass 版本
+
 ## 0.0.13 (April 27, 2018)
 
 * 增加 `workflow.dev { proxy }`
