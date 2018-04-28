@@ -14,17 +14,17 @@
     "REM": false,
     // 是否对 JS 进行 ES.Next 语法的编译
     "ES.Next": true,
-    // 注入 webpack 别名
     // 是否热更新
     "hot": false,
+    // 注入 webpack 别名 --- https://webpack.js.org/loaders/css-loader/#alias ---
     "alias": {
         "$": "./src/assets/jquery.min.js"
     },
-    // 注入 webpack 全局对象
+    // 注入 webpack 全局对象 --- https://webpack.js.org/guides/shimming/#shimming-globals ---
     "global": {
         "$": "jquery"
     },
-    // 注入 webpack externals
+    // 注入 webpack externals --- https://webpack.js.org/configuration/externals/#externals ---
     "externals": {
         "vue": "Vue"
     },
@@ -42,14 +42,14 @@
         "watch.reload": [
             "./src/test/**/*"
         ],
-        // 代理 https://doc.webpack-china.org/configuration/dev-server/#devserver-proxy
+        // 代理 --- https://doc.webpack-china.org/configuration/dev-server/#devserver-proxy ---
         "proxy": {
             "/api": {
                 "target": "https://legox.org/mock/a3e67a40-863c-11e7-9085-0ba4558c07dc",
                 "changeOrigin": true
             }
         },
-        // 用户配置参数
+        // 用户配置参数 --- https://webpack.js.org/plugins/define-plugin/#usage ---
         // 根据用户输入 webpack define 插件变量
         // * 全部用户在 JS 文件中变量 process.args.token4Common 编译为 abc
         // 用户为 test1，在 JS 文件中变量 process.args.token4User 编译为 123
@@ -82,6 +82,7 @@
         // 需要执行的 shell 模块文件
         "shell": "./shell.js",
         // 构建出 webpack stats.json，有助于分析模块打包占比
+        // 分析网站 --- http://webpack.github.io/analyse/ --- --- http://alexkuz.github.io/webpack-chart/ ---
         "output.webpackStats": true,
         // 打包到 JS 文件的图片最大值
         "bundle.limitImgSize": 1000,

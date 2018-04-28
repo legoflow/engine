@@ -8,7 +8,7 @@
 
 ## 0.0.13 (April 27, 2018)
 
-* 增加 `workflow.dev { proxy }`
+* 增加 **workflow.dev { proxy }**
 * 升级 WebPack v4.6.0
 * 优化 打印 LOG 信息
 

@@ -36,7 +36,7 @@ const webpackDevServerLaunchTimer = ( ip, port, resolve ) => {
 const start = async ( _config_ ) => {
     if ( !localIP && getLocalIPCounter < 10 ) {
         ++getLocalIPCounter;
-        setTimeout( ( ) => start( _config_ ) , 300 );
+        setTimeout( ( ) => start( _config_ ), 300 );
         return void 0;
     }
     else if ( getLocalIPCounter >= 10 ) {
