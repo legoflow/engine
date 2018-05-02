@@ -1,6 +1,7 @@
 ## Unreleased
 
 * 修复 构建工作流 cache 个别问题
+* 增加 **workflow.build { css.resourcesDomain }** 替换 css 引入资源相对路径转为绝对路径
 
 ## 0.0.17 (April 27, 2018)
 

@@ -77,8 +77,12 @@
         "cache": "version",
         // 类型于 1.x 版本 assets，构建时候对 html 文件引入的资源加入主域
         // 例如：<script src="./js/main.js"></script>
-        // 输出：<script src="https://legox.org/js/main.js"></script>
-        "html.resourcesDomain": "https://legox.org",
+        // 输出：<script src="https://legoflow.com/js/main.js"></script>
+        "html.resourcesDomain": "https://legoflow.com",
+        // 类型于 1.x 版本 assets.css，构建时候对 css 文件引入的资源加入主域
+        // 例如：background-image: url( ../assets/icon.png );
+        // 输出：background-image: url( https://legoflow.com/assets/icon.png );
+        "css.resourcesDomain": "https://legoflow.com",
         // 需要执行的 shell 模块文件
         "shell": "./shell.js",
         // 构建出 webpack stats.json，有助于分析模块打包占比

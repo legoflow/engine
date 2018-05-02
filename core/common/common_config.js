@@ -49,7 +49,7 @@ const resolve = ( _config_ ) => {
     // 用户自定义开发参数
     let args = {
         'process.env': `"${ workflow }"`,
-        'process.config_env': `"${ nowENV }"`,
+        'process.$env': `"${ nowENV }"`,
         'process.args': { },
     }
 

@@ -22,6 +22,7 @@ const cssUrlVersion = require('gulp-make-css-url-version');
 const useref = require('gulp-useref');
 const gulpif = require('gulp-if');
 const htmlVersion = require('gulp-html-version');
+const gulpReplace = require('gulp-replace');
 
 const assets = require('gulp-assets');
 const dist = require('gulp-dist');
@@ -265,14 +266,42 @@ const INLINE_TASK = ( resolve, reject ) => {
         } );
 }
 
-// ---------------------------------- css version ----------------------------------
-const CSS_VERSION = ( resolve, reject ) => {
-    const { cache } = config[ 'workflow.build' ];
+// ---------------------------------- css version and replace demain ----------------------------------
+const CSS_VERSION_AND_REPLACE_DOMAIN = ( resolve, reject ) => {
+    const workflowConfig = config[ 'workflow.build' ];
+
+    const { cache } = workflowConfig;
+
+    let resourcesDomain = workflowConfig && workflowConfig[ 'css.resourcesDomain' ] ? workflowConfig[ 'css.resourcesDomain' ] : void 0;
+
+    if ( resourcesDomain && resourcesDomain[ resourcesDomain.length - 1 ] !== '/' ) {
+        resourcesDomain += '/';
+    }
 
     gulp.src( `${ projectPath }/dist/css/**/*.css` )
         .pipe( cssUrlVersion( {
                 paramType: cache || '',
                 version: config.version || '',
+            } )
+        )
+        .pipe(
+            gulpReplace( /\.\.\/(img\/\S+\.(png|gif|jpg|webp|svg))/g, ( all, str ) => {
+                if ( resourcesDomain ) {
+                    return resourcesDomain + str;
+                }
+                else {
+                    return all;
+                }
+            } )
+        )
+        .pipe(
+            gulpReplace( /\.\.\/(assets\/\S+\.(png|gif|jpg|webp|ttf|woff|otf|eot|svg))/g, ( all, str ) => {
+                if ( resourcesDomain ) {
+                    return resourcesDomain + str;
+                }
+                else {
+                    return all;
+                }
             } )
         )
         .pipe( gulp.dest( `${ projectPath }/dist/css/` ) )
@@ -354,7 +383,7 @@ module.exports = async ( _config_, _messager_ ) => {
 
     await toPromise( INLINE_TASK );
 
-    await toPromise( CSS_VERSION );
+    await toPromise( CSS_VERSION_AND_REPLACE_DOMAIN );
 
     await toPromise( MOVE_ASSETS );
 
