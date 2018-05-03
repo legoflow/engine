@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.18 (May 3, 2018)
+
 * 修复 构建工作流 cache 个别问题
 * 增加 **workflow.build { css.resourcesDomain }** 替换 css 引入资源相对路径转为绝对路径
 
@@ -10,7 +14,7 @@
 ## 0.0.13 (April 27, 2018)
 
 * 增加 **workflow.dev { proxy }**
-* 升级 WebPack v4.6.0
+* 升级 Webpack v4.6.0
 * 优化 打印 LOG 信息
 
 ## 0.0.12 (April 26, 2018)
