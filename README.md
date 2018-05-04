@@ -54,7 +54,7 @@ const { messager, dev, build } = require('legoflow-engine');
 dev( Config );
 ```
 
-调用需要的 [参数配置](./params_config.md)
+调用需要的 [参数配置](https://legoflow.com/wiki/config.html)
 
 ## 许可
 

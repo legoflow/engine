@@ -2,6 +2,11 @@
 
 * [null]
 
+## 0.0.19 (May 4, 2018)
+
+* 提供 params_config_schema.js
+* 修复 **workflow.build { publicPath }** 缺失问题
+
 ## 0.0.18 (May 3, 2018)
 
 * 修复 构建工作流 cache 个别问题

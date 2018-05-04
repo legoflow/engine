@@ -13,7 +13,7 @@ let config = void 0;
 let messager = void 0;
 
 const start = ( resolve, reject ) => {
-    let { entry, ip, webpackPort, projectPath, root, hot, publicPath, system } = config;
+    let { entry, ip, webpackPort, projectPath, root, hot, system } = config;
 
     const isHotReload = config[ 'hot.reload' ] || false;
 
@@ -31,7 +31,7 @@ const start = ( resolve, reject ) => {
         output: {
             filename: './js/[name].js',
             path: system === 'mac' ? outputPath : outputPath.pathWinNorm( ),
-            publicPath: publicPath || '',
+            publicPath: '',
         },
         module: {
             rules: webpackRules( config ),

@@ -12,7 +12,11 @@ let config = void 0;
 let messager = void 0;
 
 const start = ( resolve, reject ) => {
-    let { entry, ip, alias, projectPath, root, user, args, publicPath, version, system } = config;
+    let { entry, ip, alias, projectPath, root, user, args, version, system } = config;
+
+    const workflowConfig = config[ 'workflow.build' ];
+
+    const { publicPath } = workflowConfig;
 
     const { cache } = config[ 'workflow.build' ];
 
