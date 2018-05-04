@@ -118,11 +118,17 @@ const sassErrorNotifier = function ( msg ) {
 const SASS_TASK = ( files ) => {
     const { projectPath } = config;
 
+    const workflowConfig = config[ 'workflow.dev' ] || { };
+
     const sassPath = `${ projectPath }/src/sass/**/*.scss`;
     const distPath = `${ projectPath }/src/css/`;
 
     gulp.src( sassPath )
-        .pipe( sassVariables( { $env: 'dev' } ) )
+        .pipe( sassVariables( {
+                $env: 'dev',
+                $environment: workflowConfig.env || '',
+            } )
+        )
         .pipe( sourcemaps.init( ) )
         .pipe( filterStyleFile( ) )
         .pipe( sass( ).on( 'error', sassErrorNotifier ) )
@@ -198,7 +204,7 @@ const EJS_TASK = ( ) => {
 let imgSassTaskTimer = void 0;
 
 const IMG_SASS_TASK = ( ) => {
-    imgSassTaskTimer ? clearTimeout( imgSassTaskTimer ) : void 0;
+    imgSassTaskTimer && clearTimeout( imgSassTaskTimer );
 
     imgSassTaskTimer = setTimeout( async ( ) => {
         await imgSize( config );

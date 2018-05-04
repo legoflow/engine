@@ -49,7 +49,7 @@ const resolve = ( _config_ ) => {
     // 用户自定义开发参数
     let args = {
         'process.env': `"${ workflow }"`,
-        'process.$env': `"${ nowENV }"`,
+        'process.environment': `"${ nowENV }"`,
         'process.args': { },
     }
 
@@ -57,7 +57,7 @@ const resolve = ( _config_ ) => {
 
     if ( typeof envUserArgs != 'undefined' ) {
         for ( let key in envUserArgs ) {
-            if ( key === user || key !== '*' ) {
+            if ( key === user || key == '*' ) {
                 args[ 'process.args' ] = _.assign( args[ 'process.args' ], envUserArgs[ key ] );
             }
         }

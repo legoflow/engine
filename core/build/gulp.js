@@ -83,11 +83,14 @@ const EJS_TASK = ( resolve, reject ) => {
 const SASS_TASK = ( resolve, reject ) => {
     const { banner } = config;
 
+    const workflowConfig = config[ 'workflow.build' ] || { };
+
     const dest = `${ projectPath }/dist/css`;
 
     gulp.src( `${ projectPath }/src/sass/**/*.scss` )
         .pipe( sassVariables( {
                 $env: 'build',
+                $environment: workflowConfig.env || '',
             } )
         )
         .pipe( filterStyleFile( ) )
@@ -268,11 +271,11 @@ const INLINE_TASK = ( resolve, reject ) => {
 
 // ---------------------------------- css version and replace demain ----------------------------------
 const CSS_VERSION_AND_REPLACE_DOMAIN = ( resolve, reject ) => {
-    const workflowConfig = config[ 'workflow.build' ];
+    const workflowConfig = config[ 'workflow.build' ] || { };
 
     const { cache } = workflowConfig;
 
-    let resourcesDomain = workflowConfig && workflowConfig[ 'css.resourcesDomain' ] ? workflowConfig[ 'css.resourcesDomain' ] : void 0;
+    let resourcesDomain = workflowConfig[ 'css.resourcesDomain' ];
 
     if ( resourcesDomain && resourcesDomain[ resourcesDomain.length - 1 ] !== '/' ) {
         resourcesDomain += '/';

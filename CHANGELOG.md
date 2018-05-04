@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 修复 **user.args** 通用注入
 
 ## 0.0.19 (May 4, 2018)
 
