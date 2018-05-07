@@ -13,7 +13,7 @@ module.exports = ( config ) => {
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
-    const imgSize = ( workflow == 'build' && workflowConfig[ 'bundle.limitImgSize' ] ) ? workflowConfig[ 'bundle.limitImgSize' ] : 1024 * 100;
+    const limitSize = ( workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ] ) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 100;
 
     const appNodeModules = path.resolve( root, './node_modules' );
 
@@ -22,17 +22,39 @@ module.exports = ( config ) => {
     const vueScssLoadersString = `${ appNodeModules }/vue-style-loader!${ appNodeModules }/css-loader!${ appNodeModules }/sass-loader`;
     const vueSassLoadersString = `${ appNodeModules }/vue-style-loader!${ appNodeModules }/css-loader!${ appNodeModules }/sass-loader?indentedSyntax`;
 
+    const autoprefixerOptions = {
+        plugins: ( ) => [
+            require('autoprefixer')( {
+                browsers: [ '> 0.01%', ],
+            } )
+        ],
+    }
+
     const rules = [
         {
-            test: /\.(png|jpg|gif|svg|jpeg)$/,
+            test: /\.(png|jpg|gif|svg|jpeg|svg)$/,
             exclude,
             use: [
                 {
                     loader: require.resolve('url-loader'),
                     options: {
-                        limit: 1024 * imgSize,
+                        limit: 1024 * limitSize,
                         name: '../img/[name].[ext]?[hash]',
                         root: 'img',
+                    },
+                }
+            ]
+        },
+        {
+            test: /\.(ttf|woff|otf|eot)$/,
+            exclude,
+            use: [
+                {
+                    loader: require.resolve('url-loader'),
+                    options: {
+                        limit: 1024 * limitSize,
+                        name: '../assets/[name].[ext]?[hash]',
+                        root: 'assets',
                     },
                 }
             ]
@@ -48,19 +70,26 @@ module.exports = ( config ) => {
                     loader: require.resolve('css-loader'),
                 },
                 {
-                    loader: require.resolve('postcss-loader'),  options: {
-                        plugins: ( ) => [
-                            require('autoprefixer')( {
-                                browsers: [
-                                    '> 0.01%',
-                                ]
-                            } )
-                        ],
-                      }
+                    loader: require.resolve('postcss-loader'), options: autoprefixerOptions,
                 },
                 {
                     loader: require.resolve('sass-loader'),
                 }
+            ]
+        },
+        {
+            test: /\.css$/,
+            exclude,
+            use: [
+                {
+                    loader: require.resolve('style-loader'),
+                },
+                {
+                    loader: require.resolve('css-loader'),
+                },
+                {
+                    loader: require.resolve('postcss-loader'), options: autoprefixerOptions,
+                },
             ]
         },
         {

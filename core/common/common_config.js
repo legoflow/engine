@@ -20,6 +20,7 @@ const resolve = ( _config_ ) => {
     const defaultAlias  = {
         js: `${ projectPath }/src/js/`,
         '@local': `${ projectPath }/node_modules`,
+        '@tpl/helper': `${ root }/node_modules/art-template/lib/runtime`,
     };
 
     const nowENV = workflowConfig[ 'env' ] || workflow;

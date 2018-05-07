@@ -10,6 +10,11 @@ module.exports = ( config ) => {
         modules: [
             path.resolve( root, './node_modules' ),
         ],
-        extensions: [ '.js', '.ts', '.tsx', '.jsx', '.vue', '.art', '.scss', '.html', '.svg', '.json' ],
+        extensions: [
+            '.js', '.ts', '.tsx', '.jsx',
+            '.vue', '.art', '.html',
+            '.scss', '.css' , '.json',
+            '.svg',
+        ],
     };
 };

@@ -44,6 +44,7 @@
     "browser-sync": "2.7.0",
     "css-loader": "0.28.11",
     "del": "~3.0.0",
+    "file-loader": "1.1.11",
     "fs-extra": "~5.0.0",
     "glob": "~7.1.2",
     "gulp": "4.0.0",
