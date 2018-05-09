@@ -10,6 +10,7 @@ const schema = {
     global: Object,
     externals: Object,
     env: Object,
+    includeModules: Array,
     'workflow.dev': {
         env: String,
         'watch.reload': Array,

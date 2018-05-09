@@ -6,7 +6,7 @@ const _ = require('lodash');
 const resolve = ( _config_ ) => {
     let config = _.cloneDeep( _config_ );
 
-    const { projectPath, root, env, user, workflow } = config;
+    const { projectPath, root, env, user, workflow, includeModules } = config;
 
     config.path = projectPath.pathNorm( );
     config.projectPath = projectPath.pathNorm( );
@@ -45,6 +45,14 @@ const resolve = ( _config_ ) => {
         if ( typeof config.alias[ item ] === 'string' && config.alias[ item ].indexOf( './' ) === 0 ) {
             config.alias[ item ] = path.resolve( projectPath, config.alias[ item ] );
         }
+    }
+
+    if ( includeModules && includeModules.length > 0 ) {
+        includeModules.forEach( ( item, index ) => {
+            if ( typeof item === 'string' && item.indexOf( './' ) === 0 ) {
+                config.includeModules[ index ] = path.resolve( projectPath, item );
+            }
+        } );
     }
 
     // 用户自定义开发参数

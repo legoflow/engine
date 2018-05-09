@@ -1,8 +1,13 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.20 (May 9, 2018)
+
 * 修复 **user.args** 通用注入
 * 增加 默认别名 **@tpl/helper**
 * 修改 **workflow.build { bundle.limitImgSize }** 为 **workflow.build { bunlde.limitResourcesSize }**
+* 增加 **includeModules**
 
 ## 0.0.19 (May 4, 2018)
 
