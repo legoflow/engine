@@ -3,7 +3,11 @@
 const path = require('path');
 
 module.exports = ( config ) => {
-    const { alias, projectPath, root, includeModules } = config;
+    let { alias, projectPath, root, includeModules } = config;
+
+    if ( !includeModules ) {
+        includeModules = [ ];
+    }
 
     return {
         alias,

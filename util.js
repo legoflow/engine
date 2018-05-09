@@ -38,7 +38,7 @@ String.prototype.toConfig = function ( ) {
 
             switch ( extname ) {
                 case '.js': {
-                    typeof config === 'function' && config = config( );
+                    typeof config === 'function' && ( config = config( ) );
                     break;
                 }
             }
