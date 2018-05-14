@@ -1,8 +1,9 @@
 'use strict';
 
 const fs = require('fs-extra');
+const util = require('../../util');
 
-module.exports = ( shell, config, messager ) => {
+module.exports = async ( shell, config, messager ) => {
     messager.log( 'start to exec shell' );
 
     delete require.cache[ shell ];
@@ -23,7 +24,5 @@ module.exports = ( shell, config, messager ) => {
         shell.exec( `${ nodeBin } ${ file }`, callback );
     }
 
-    shell( {
-        config, messager, nodeBinExec,
-    } );
+    await shell( { config, messager, nodeBinExec, util, } );
 };

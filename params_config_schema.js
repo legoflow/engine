@@ -16,6 +16,8 @@ const schema = {
         'watch.reload': Array,
         'user.args': Object,
         proxy: Object,
+        shell: String,
+        onlyRunShell: Boolean,
     },
     'workflow.build': {
         publicPath: String,

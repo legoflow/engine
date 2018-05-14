@@ -9,7 +9,7 @@ const webpackEntry = require('./common/webpack_entry');
 
 const webpack = require('./build/webpack');
 const gulp = require('./build/gulp');
-const runShell = require('./build/run_shell');
+const runShell = require('./common/run_shell');
 const util = require('../util');
 
 const Messager = require('./common/messager');
@@ -48,7 +48,7 @@ module.exports = async ( _config_ ) => {
         }
 
         if ( shell && onlyRunShell ) {
-            runShell( shell, config, messager );
+            await runShell( shell, config, messager );
 
             return void 0;
         }

@@ -1,5 +1,10 @@
 'use strict';
 
+const axios = require('axios');
+const path = require('path');
+const fs = require('fs');
+const network = require('network');
+
 const webpackEntry = require('./common/webpack_entry');
 
 const webpack = require('./dev/webpack');
@@ -8,9 +13,9 @@ const gulp = require('./dev/gulp');
 const Messager = require('./common/messager');
 const messager = new Messager( );
 
-const axios = require('axios');
+const util = require('../util');
 
-const network = require('network');
+const runShell = require('./common/run_shell');
 
 let config = void 0;
 let localIP = void 0;
@@ -53,6 +58,24 @@ const start = async ( _config_ ) => {
     config.entry = entryFiles;
 
     try {
+        let { shell, onlyRunShell } = config[ 'workflow.dev' ];
+
+        if ( shell && shell.indexOf( './' ) === 0 ) {
+            shell = path.resolve( config.projectPath, shell );
+        }
+
+        if ( shell && !fs.existsSync( shell ) ) {
+            messager.error( 'shell file undefined.' );
+
+            shell = void 0;
+        }
+
+        if ( shell && onlyRunShell ) {
+            await runShell( shell, config, messager );
+
+            return void 0;
+        }
+
         await webpack( config, messager );
 
         await ( ( ) => new Promise( ( resolve, reject ) => {
@@ -62,6 +85,14 @@ const start = async ( _config_ ) => {
         const { bsPort } = await gulp( config, messager );
 
         config.bsPort = bsPort;
+
+        if ( shell ) {
+            await runShell( shell, config, messager );
+        }
+
+        if ( config.autoOpenChrome ) {
+            util.chromeOpen( `http://${ config.ip }:${ config.bsPort }` );
+        }
 
         messager.success( config );
     } catch ( err ) {

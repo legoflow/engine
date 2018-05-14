@@ -55,7 +55,7 @@ const BROWSER_OPEN = ( resolve, reject ) => {
         notify: false,
         ghostMode: false,
         port,
-        open: 'external',
+        open: false,
         browser,
         timestamps: true,
         proxy: {
