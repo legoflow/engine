@@ -15,13 +15,13 @@ let messager = void 0;
 const start = ( resolve, reject ) => {
     let { entry, ip, webpackPort, projectPath, root, hot, system } = config;
 
-    const isHotReload = config[ 'hot.reload' ] || false;
+    const workflowConfig = config[ 'workflow.dev' ] || { };
+
+    const isHotReload = workflowConfig[ 'hot.reload' ] || false;
 
     const srcFolderPath = path.resolve( projectPath, './src' );
 
     const outputPath = `${ projectPath }/dist/js`;
-
-    const workflowConfig = config[ 'workflow.dev' ];
 
     const webpackOptions = {
         mode: 'development',

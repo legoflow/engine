@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -89,8 +89,8 @@
     "useref": "1.2.0",
     "vue-loader": "14.2.2",
     "vue-template-compiler": "2.5.16",
-    "webpack": "4.6.0",
-    "webpack-dev-server": "3.1.2",
+    "webpack": "4.8.3",
+    "webpack-dev-server": "3.1.4",
     "yamljs": "^0.3.0"
   }
 }

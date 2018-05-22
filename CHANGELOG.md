@@ -2,6 +2,12 @@
 
 * [null]
 
+## 0.0.24 (May 22, 2018)
+
+* 升级 Webpack v4.8.3
+* 升级 Webpack-dev-server v3.1.4，修复[热更新问题](https://github.com/vuejs-templates/webpack/issues/910)
+* 支持 **workflow.dev { hot.reload }**
+
 ## 0.0.23 (May 14, 2018)
 
 * 支持 开发工作流使用 shell

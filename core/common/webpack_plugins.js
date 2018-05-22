@@ -14,7 +14,7 @@ module.exports = ( config ) => {
     const workflowConfig = config[ `workflow.${ config.workflow }` ];
 
     // hot reload
-    const isHotReload = config[ 'hot.reload' ] || false;
+    const isHotReload = workflowConfig[ 'hot.reload' ] || false;
 
     if ( isHotReload && config.workflow == 'dev' ) {
         plugins.push( new webpack.HotModuleReplacementPlugin( ) );

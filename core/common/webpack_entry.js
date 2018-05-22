@@ -3,9 +3,15 @@
 const path = require('path');
 const glob = require('glob');
 
-module.exports = ( { hot, entry, projectPath, ip, webpackPort, workflow } ) => {
+module.exports = ( config ) => {
+    let { entry, projectPath, ip, webpackPort, workflow } = config;
+
     let files = entry || [ ];
     let entrys = { };
+
+    const workflowConfig = config[ 'workflow.dev' ] || { };
+
+    const hot = workflowConfig[ 'hot.reload' ];
 
     if ( !entry ) {
         const jsFolderPath = path.resolve( projectPath, './src/js' );
