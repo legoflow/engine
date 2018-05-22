@@ -67,6 +67,10 @@ const start = ( resolve, reject ) => {
         proxy: workflowConfig.proxy || { },
     }
 
+    if ( config.friendlyErrors ) {
+        webpackDevServerOptions.quiet = true;
+    }
+
     new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {
         if ( err ) throw err;
 

@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "art-template-loader": "1.4.3",
     "awesome-typescript-loader": "5.0.0",
     "axios": "^0.18.0",
+    "babel-eslint": "8.2.3",
     "babel-helper-vue-jsx-merge-props": "2.0.3",
     "babel-loader": "8.0.0-beta.2",
     "babel-plugin-syntax-jsx": "6.18.0",
@@ -44,7 +45,10 @@
     "browser-sync": "2.7.0",
     "css-loader": "0.28.11",
     "del": "~3.0.0",
+    "eslint": "4.19.1",
+    "eslint-loader": "2.0.0",
     "file-loader": "1.1.11",
+    "friendly-errors-webpack-plugin": "1.7.0",
     "fs-extra": "~5.0.0",
     "glob": "~7.1.2",
     "gulp": "4.0.0",

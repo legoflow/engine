@@ -2,6 +2,11 @@
 
 * [null]
 
+## 0.0.25 (May 22, 2018)
+
+* 增加 **FriendlyErrors**
+* 增加 **ESLint** 支持
+
 ## 0.0.24 (May 22, 2018)
 
 * 升级 Webpack v4.8.3

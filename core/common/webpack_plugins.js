@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const StatsPlugin = require('stats-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = ( config ) => {
     let plugins = [
@@ -10,6 +11,24 @@ module.exports = ( config ) => {
         new webpack.DefinePlugin( config.args || { } ),
         new CheckerPlugin( ),
     ]
+
+    // friendlyErrors
+    if ( config.friendlyErrors ) {
+        plugins.push(
+            new FriendlyErrorsWebpackPlugin( {
+                onErrors ( severity, errors ) {
+                    if ( errors instanceof Array ) {
+                        errors.forEach( ( item, index ) => {
+                            if ( item.file.indexOf( './src/' ) >= 0 ) {
+                                errors[ index ].file = `./src/${ item.file.split( './src/' )[ 1 ] }`;
+                            }
+                        } );
+                    }
+                },
+                clearConsole: true,
+            } ),
+        )
+    }
 
     const workflowConfig = config[ `workflow.${ config.workflow }` ];
 

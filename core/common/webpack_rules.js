@@ -2,6 +2,7 @@
 
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const glob = require('glob');
 
 const getTsConfigJson = require('../common/get_tsconfig_json');
 const babelOptions = require('../common/babel_options');
@@ -9,7 +10,7 @@ const babelOptions = require('../common/babel_options');
 module.exports = ( config ) => {
     const isESNext = config[ 'ES.Next' ];
 
-    const { workflow, root } = config;
+    const { workflow, root, projectPath, ESLint } = config;
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
@@ -28,6 +29,27 @@ module.exports = ( config ) => {
                 browsers: [ '> 0.01%', ],
             } )
         ],
+    }
+
+    const vueRule = {
+        test: /\.vue$/,
+        exclude,
+        loader: require.resolve('vue-loader'),
+        options: {
+            loaders: {
+                scss: vueScssLoadersString,
+                sass: vueSassLoadersString,
+                js: [
+                    {
+                        loader: require.resolve('babel-loader'),
+                        options: babelOptions,
+                    },
+                ],
+            },
+            preserveWhitespace: false,
+            postcss: [ autoprefixer( { browsers: [ '> 0.01%' ] } ) ],
+            // TODO: markup-inline-loader
+        },
     }
 
     const rules = [
@@ -102,60 +124,65 @@ module.exports = ( config ) => {
             exclude,
             use: [ require.resolve('html-loader'), ],
         },
-        {
-            test: /\.vue$/,
-            exclude,
-            loader: require.resolve('vue-loader'),
-            options: {
-                loaders: {
-                    scss: vueScssLoadersString,
-                    sass: vueSassLoadersString,
-                    js: {
-                        loader: require.resolve('babel-loader'),
-                        options: babelOptions,
-                    },
-                },
-                preserveWhitespace: false,
-                postcss: [ autoprefixer( { browsers: [ '> 0.01%' ] } ) ],
-                // TODO: markup-inline-loader
-            },
-        },
     ];
 
+    let jsRule = void 0;
+    let tsRule = void 0;
+
     if ( isESNext ) {
-        rules.push(
-            {
-                test: /\.*(js|jsx)$/,
-                exclude,
-                use: [
-                    {
-                        loader: require.resolve('babel-loader'),
-                        options: babelOptions,
-                    },
-                ]
-            },
-            {
-                test: /\.*(ts|tsx)$/,
-                exclude,
-                use: [
-                    {
-                        loader: require.resolve('awesome-typescript-loader'),
-                        options: {
-                            silent: true,
-                            configFileName: getTsConfigJson( config ),
-                            useBabel: true,
-                            babelCore: require.resolve('@babel/core'),
-                            babelOptions: {
-                                babelrc: false,
-                                presets: babelOptions.presets,
-                                plugins: babelOptions.plugins,
-                            },
+        jsRule = {
+            test: /\.*(js|jsx)$/,
+            exclude,
+            use: [
+                {
+                    loader: require.resolve('babel-loader'),
+                    options: babelOptions,
+                },
+            ]
+        };
+
+        tsRule = {
+            test: /\.*(ts|tsx)$/,
+            exclude,
+            use: [
+                {
+                    loader: require.resolve('awesome-typescript-loader'),
+                    options: {
+                        silent: true,
+                        configFileName: getTsConfigJson( config ),
+                        useBabel: true,
+                        babelCore: require.resolve('@babel/core'),
+                        babelOptions: {
+                            babelrc: false,
+                            presets: babelOptions.presets,
+                            plugins: babelOptions.plugins,
                         },
                     },
-                ],
-            }
-        );
+                },
+            ],
+        }
     }
+
+    if ( ESLint ) {
+        const [ eslintConfig ] = glob.sync( path.resolve( projectPath, '.eslintrc.*' ) );
+
+        const eslintRule = {
+            loader: require.resolve('eslint-loader'),
+            options: {
+                configFile: eslintConfig,
+                eslintPath: path.resolve( root, './node_modules/eslint' ),
+            }
+        }
+
+        vueRule.options.loaders.js.push( eslintRule );
+
+        jsRule && jsRule.use.push( eslintRule );
+    }
+
+    jsRule && rules.push( jsRule );
+    tsRule && rules.push( tsRule );
+
+    rules.push( vueRule );
 
     return rules;
 };

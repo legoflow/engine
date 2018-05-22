@@ -6,6 +6,7 @@ const schema = {
     type: String,
     REM: Boolean,
     'ES.Next': Boolean,
+    ESLint: Boolean,
     alias: Object,
     global: Object,
     externals: Object,
@@ -13,6 +14,7 @@ const schema = {
     includeModules: Array,
     'workflow.dev': {
         env: String,
+        'hot.reload': Boolean,
         'watch.reload': Array,
         'user.args': Object,
         proxy: Object,
