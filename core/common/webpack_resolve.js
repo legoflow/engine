@@ -17,7 +17,7 @@ module.exports = ( config ) => {
         ],
         extensions: [
             '.js', '.ts', '.tsx', '.jsx',
-            '.vue', '.art', '.html',
+            '.vue', '.art', '.html', '.tpl',
             '.scss', '.css' , '.json',
             '.svg',
         ],

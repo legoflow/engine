@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 修复 HTML bundle 无效问题
 
 ## 0.0.25 (May 22, 2018)
 
