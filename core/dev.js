@@ -48,32 +48,40 @@ const start = async ( _config_ ) => {
         localIP = '127.0.0.1';
     }
 
+    _config_.ip = localIP;
+
+    let { shell, onlyRunShell } = _config_[ 'workflow.dev' ];
+
+    if ( shell && shell.indexOf( './' ) === 0 ) {
+        shell = path.resolve( _config_.projectPath, shell );
+    }
+
+    if ( shell && !fs.existsSync( shell ) ) {
+        messager.error( 'shell file undefined.' );
+
+        shell = void 0;
+    }
+
+    const shellFunc = shell ? getShell( shell, _config_, messager ) : void 0;
+
+    if ( shell && shellFunc && shellFunc.init ) {
+        await shellFunc.init( _config_ );
+    }
+
     // common config reslove
     config = require('./common/common_config')( _config_, messager );
-
-    config.ip = localIP;
 
     const entryFiles = webpackEntry( config );
 
     config.entry = entryFiles;
 
     try {
-        let { shell, onlyRunShell } = config[ 'workflow.dev' ];
-
-        if ( shell && shell.indexOf( './' ) === 0 ) {
-            shell = path.resolve( config.projectPath, shell );
+        if ( shell && shellFunc && shellFunc.before ) {
+            await shellFunc.before( config );
         }
-
-        if ( shell && !fs.existsSync( shell ) ) {
-            messager.error( 'shell file undefined.' );
-
-            shell = void 0;
-        }
-
-        const shellFunc = shell ? getShell( shell, config, messager ) : void 0;
 
         if ( shell && onlyRunShell && shellFunc ) {
-            shellFunc.after ? await shellFunc.after( ) : await shellFunc( );
+            shellFunc.after ? await shellFunc.after( config ) : await shellFunc( config );
 
             return void 0;
         }
@@ -89,7 +97,7 @@ const start = async ( _config_ ) => {
         config.bsPort = bsPort;
 
         if ( shell && shellFunc ) {
-            shellFunc.after ? await shellFunc.after( ) : await shellFunc( );
+            shellFunc.after ? await shellFunc.after( config ) : await shellFunc( config );
         }
 
         if ( config.autoOpenChrome ) {

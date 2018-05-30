@@ -3,15 +3,15 @@
 const fs = require('fs-extra');
 const util = require('../../util');
 
-module.exports = ( shell, config, messager ) => {
+module.exports = ( shell, _config_, messager ) => {
     delete require.cache[ shell ];
 
     shell = require( shell );
 
-    const { nodeBin } = config;
+    const { nodeBin } = _config_;
 
     const pull = ( module ) => {
-        return require( `${ config.root }/node_modules/${ module }` );
+        return require( `${ _config_.root }/node_modules/${ module }` );
     }
 
     const nodeBinExec =  ( root, file, callback ) => {
@@ -26,22 +26,37 @@ module.exports = ( shell, config, messager ) => {
         shell.exec( `${ nodeBin } ${ file }`, callback );
     }
 
-    if ( shell.before || shell.after ) {
-        return {
-            async before ( ) {
-                messager.log( 'start to exec shell.before' );
+    const cycleFunc = { };
 
-                await shell.before( { config, messager, nodeBinExec, util, pull } );
-            },
-            async after ( ) {
-                messager.log( 'start to exec shell.after' );
+    if ( shell.init ) {
+        cycleFunc.init = async function ( config ) {
+            messager.log( 'start to exec shell.init' );
 
-                await shell.after( { config, messager, nodeBinExec, util, pull } );
-            },
-        };
+            await shell.init( { config, messager, nodeBinExec, util, pull } );
+        }
+    }
+
+    if ( shell.before ) {
+        cycleFunc.before = async function ( config ) {
+            messager.log( 'start to exec shell.before' );
+
+            await shell.before( { config, messager, nodeBinExec, util, pull } );
+        }
+    }
+
+    if ( shell.after ) {
+        cycleFunc.after = async function ( config ) {
+            messager.log( 'start to exec shell.after' );
+
+            await shell.after( { config, messager, nodeBinExec, util, pull } );
+        }
+    }
+
+    if ( Object.keys( cycleFunc ).length > 0 ) {
+        return cycleFunc;
     }
     else {
-        return async ( ) => {
+        return async ( config ) => {
             messager.log( 'start to exec shell' );
 
             await shell( { config, messager, nodeBinExec, util, pull } );
