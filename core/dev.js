@@ -15,7 +15,7 @@ const messager = new Messager( );
 
 const util = require('../util');
 
-const runShell = require('./common/run_shell');
+const getShell = require('./common/get_shell');
 
 let config = void 0;
 let localIP = void 0;
@@ -70,8 +70,10 @@ const start = async ( _config_ ) => {
             shell = void 0;
         }
 
-        if ( shell && onlyRunShell ) {
-            await runShell( shell, config, messager );
+        const shellFunc = shell ? getShell( shell, config, messager ) : void 0;
+
+        if ( shell && onlyRunShell && shellFunc ) {
+            shellFunc.after ? await shellFunc.after( ) : await shellFunc( );
 
             return void 0;
         }
@@ -86,8 +88,8 @@ const start = async ( _config_ ) => {
 
         config.bsPort = bsPort;
 
-        if ( shell ) {
-            await runShell( shell, config, messager );
+        if ( shell && shellFunc ) {
+            shellFunc.after ? await shellFunc.after( ) : await shellFunc( );
         }
 
         if ( config.autoOpenChrome ) {

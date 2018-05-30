@@ -9,7 +9,7 @@ const webpackEntry = require('./common/webpack_entry');
 
 const webpack = require('./build/webpack');
 const gulp = require('./build/gulp');
-const runShell = require('./common/run_shell');
+const getShell = require('./common/get_shell');
 const util = require('../util');
 
 const Messager = require('./common/messager');
@@ -47,10 +47,16 @@ module.exports = async ( _config_ ) => {
             shell = void 0;
         }
 
-        if ( shell && onlyRunShell ) {
-            await runShell( shell, config, messager );
+        const shellFunc = shell ? getShell( shell, config, messager ) : void 0;
+
+        if ( shell && onlyRunShell && shellFunc ) {
+            shellFunc.after ? await shellFunc.after( ) : await shellFunc( );
 
             return void 0;
+        }
+
+        if ( shellFunc.before ) {
+            await shellFunc.before( );
         }
 
         fs.mkdirSync( `${ config.path }/dist` );
@@ -62,8 +68,8 @@ module.exports = async ( _config_ ) => {
 
         await gulp( config, messager );
 
-        if ( shell ) {
-            await runShell( shell, config, messager );
+        if ( shell && shellFunc ) {
+            shellFunc.after ? await shellFunc.after( ) : await shellFunc( );
         }
         else {
             messager.success( );
