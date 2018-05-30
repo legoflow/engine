@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.26 (May 30, 2018)
+
 * 修复 HTML bundle 无效问题
 * 支持 工作流 shell 前置钩子
 
