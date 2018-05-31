@@ -10,7 +10,7 @@ const babelOptions = require('../common/babel_options');
 module.exports = ( config ) => {
     const isESNext = config[ 'ES.Next' ];
 
-    const { workflow, root, projectPath, ESLint } = config;
+    const { workflow, root, projectPath, ESLint, alias } = config;
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
@@ -60,7 +60,7 @@ module.exports = ( config ) => {
         ]
     }
 
-    const cssRuleUse = [
+    const cssModulesRuleUse = [
         {
             loader: require.resolve( 'vue-style-loader' ),
             options: { sourceMap: true },
@@ -78,7 +78,32 @@ module.exports = ( config ) => {
             loader: require.resolve('postcss-loader'),
             options: postcssOptions,
         },
-    ]
+    ];
+
+    const cssRuleUse = [
+        {
+            loader: require.resolve( 'vue-style-loader' ),
+            options: { sourceMap: true },
+        },
+        {
+            loader: require.resolve('css-loader'),
+            options: {
+                importLoaders: 1,
+                sourceMap: true,
+            },
+        },
+        {
+            loader: require.resolve('postcss-loader'),
+            options: postcssOptions,
+        },
+    ];
+
+    const scssModulesRuleUse = cssModulesRuleUse.concat( [ {
+        loader: require.resolve('sass-loader'),
+        options: {
+            sourceMap: true,
+        },
+    } ] );
 
     const scssRuleUse = cssRuleUse.concat( [ {
         loader: require.resolve('sass-loader'),
@@ -119,12 +144,28 @@ module.exports = ( config ) => {
         {
             test: /\.scss$/,
             exclude,
-            use: scssRuleUse,
+            oneOf: [
+                {
+                    resourceQuery: /module/,
+                    use: scssModulesRuleUse,
+                },
+                {
+                    use: scssRuleUse,
+                },
+            ],
         },
         {
             test: /\.css$/,
             exclude,
-            use: cssRuleUse,
+            oneOf: [
+                {
+                    resourceQuery: /module/,
+                    use: cssModulesRuleUse,
+                },
+                {
+                    use: cssRuleUse,
+                },
+            ],
         },
         {
             test: /\.(tpl|art)$/,
