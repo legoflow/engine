@@ -20,10 +20,8 @@ module.exports = ( config ) => {
 
     const exclude = [ appNodeModules ];
 
-    const vueScssLoadersString = `${ appNodeModules }/vue-style-loader!${ appNodeModules }/css-loader!${ appNodeModules }/sass-loader`;
-    const vueSassLoadersString = `${ appNodeModules }/vue-style-loader!${ appNodeModules }/css-loader!${ appNodeModules }/sass-loader?indentedSyntax`;
-
-    const autoprefixerOptions = {
+    const postcssOptions = {
+        sourceMap: true,
         plugins: ( ) => [
             require('autoprefixer')( {
                 browsers: [ '> 0.01%', ],
@@ -31,30 +29,67 @@ module.exports = ( config ) => {
         ],
     }
 
+    const inlineSvgLoader = {
+        loader: require.resolve('markup-inline-loader'),
+        options: {
+            strict: 'inline',
+            svgo: {
+                plugins: [
+                    { removeTitle: true },
+                    { removeUselessStrokeAndFill: false },
+                    { removeUnknownsAndDefaults: true },
+                    { removeStyleElement: true },
+                ],
+            },
+        }
+    }
+
     const vueRule = {
         test: /\.vue$/,
         exclude,
-        loader: require.resolve('vue-loader'),
-        options: {
-            loaders: {
-                scss: vueScssLoadersString,
-                sass: vueSassLoadersString,
-                js: [
-                    {
-                        loader: require.resolve('babel-loader'),
-                        options: babelOptions,
+        use: [
+            {
+                loader: require.resolve('vue-loader'),
+                options: {
+                    compilerOptions: {
+                        preserveWhitespace: false,
                     },
-                ],
+                },
             },
-            preserveWhitespace: false,
-            postcss: [ autoprefixer( { browsers: [ '> 0.01%' ] } ) ],
-            // TODO: markup-inline-loader
-        },
+            inlineSvgLoader,
+        ]
     }
+
+    const cssRuleUse = [
+        {
+            loader: require.resolve( 'vue-style-loader' ),
+            options: { sourceMap: true },
+        },
+        {
+            loader: require.resolve('css-loader'),
+            options: {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[local]_[hash:base64:8]',
+                sourceMap: true,
+            },
+        },
+        {
+            loader: require.resolve('postcss-loader'),
+            options: postcssOptions,
+        },
+    ]
+
+    const scssRuleUse = cssRuleUse.concat( [ {
+        loader: require.resolve('sass-loader'),
+        options: {
+            sourceMap: true,
+        },
+    } ] );
 
     const rules = [
         {
-            test: /\.(png|jpg|gif|svg|jpeg|svg)$/,
+            test: /\.(png|jpg|gif|jpeg|svg)$/,
             exclude,
             use: [
                 {
@@ -84,45 +119,25 @@ module.exports = ( config ) => {
         {
             test: /\.scss$/,
             exclude,
-            use: [
-                {
-                    loader: require.resolve('to-string-loader'),
-                },
-                {
-                    loader: require.resolve('css-loader'),
-                },
-                {
-                    loader: require.resolve('postcss-loader'), options: autoprefixerOptions,
-                },
-                {
-                    loader: require.resolve('sass-loader'),
-                }
-            ]
+            use: scssRuleUse,
         },
         {
             test: /\.css$/,
             exclude,
-            use: [
-                {
-                    loader: require.resolve('style-loader'),
-                },
-                {
-                    loader: require.resolve('css-loader'),
-                },
-                {
-                    loader: require.resolve('postcss-loader'), options: autoprefixerOptions,
-                },
-            ]
+            use: cssRuleUse,
         },
         {
-            test: /\.tpl$/,
+            test: /\.(tpl|art)$/,
             exclude,
             use: [ require.resolve('art-template-loader'), ],
         },
         {
             test: /\.html$/,
             exclude,
-            use: [ require.resolve('html-loader'), ],
+            use: [
+                require.resolve('html-loader'),
+                inlineSvgLoader,
+            ],
         },
     ];
 

@@ -1,6 +1,7 @@
 ## Unreleased
 
-* [null]
+* 更新 vue-loader v15
+* 增加 html & vue template inline svg
 
 ## 0.0.28 (May 30, 2018)
 

@@ -4,13 +4,15 @@ const webpack = require('webpack');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const StatsPlugin = require('stats-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = ( config ) => {
     let plugins = [
         new webpack.ProvidePlugin( config.global || { } ),
         new webpack.DefinePlugin( config.args || { } ),
         new CheckerPlugin( ),
-    ]
+        new VueLoaderPlugin( ),
+    ];
 
     // friendlyErrors
     if ( config.friendlyErrors ) {
