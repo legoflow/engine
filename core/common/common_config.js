@@ -18,12 +18,13 @@ const resolve = ( _config_ ) => {
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
     const defaultAlias  = {
-        js: `${ projectPath }/src/js/`,
         '@local': `${ projectPath }/node_modules`,
         '@tpl/helper': `${ root }/node_modules/art-template/lib/runtime`,
     };
 
     const nowENV = workflowConfig[ 'env' ] || workflow;
+
+    config.alias = Object.assign( defaultAlias, config.alias );
 
     if ( typeof env !== 'undefined' && typeof env[ nowENV ] !== 'undefined' ) {
         const __config__ = env[ nowENV ];
