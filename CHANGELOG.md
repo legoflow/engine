@@ -1,7 +1,10 @@
 ## Unreleased
 
-* 更新 vue-loader v15
+* 重大更新 vue-loader v15
 * 增加 html & vue template inline svg
+* 增加 ESLint 默认规范 [standard](https://standardjs.com/rules-zhcn.html)
+* 升级 Webpack v4.10.2
+* 升级 Babel v7.0.0-beta.49
 
 ## 0.0.28 (May 30, 2018)
 
