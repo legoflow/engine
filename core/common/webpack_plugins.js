@@ -5,6 +5,7 @@ const { CheckerPlugin } = require('awesome-typescript-loader');
 const StatsPlugin = require('stats-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = ( config ) => {
     let plugins = [
@@ -16,8 +17,26 @@ module.exports = ( config ) => {
 
     // friendlyErrors
     if ( config.friendlyErrors ) {
+        const successMessage = [ ];
+
+        let bsPort = 0;
+
+        Object.defineProperty( config, 'bsPort', {
+            get ( ) {
+                return bsPort;
+            },
+            set ( newValue ) {
+                bsPort = newValue;
+
+                successMessage.push( `Running: http://${ config.ip }:${ bsPort }` );
+            },
+        } )
+
         plugins.push(
             new FriendlyErrorsWebpackPlugin( {
+                compilationSuccessInfo: {
+                    messages: successMessage,
+                },
                 onErrors ( severity, errors ) {
                     if ( errors instanceof Array ) {
                         errors.forEach( ( item, index ) => {
@@ -33,6 +52,22 @@ module.exports = ( config ) => {
     }
 
     const workflowConfig = config[ `workflow.${ config.workflow }` ];
+
+    if ( config.workflow === 'build' ) {
+        plugins.push(
+            new UglifyJsPlugin( {
+                cache: `${ config.projectPath }/.cache/uglifyjs-webpack-plugin`,
+            } )
+        )
+
+        plugins.push(
+            new webpack.NoEmitOnErrorsPlugin( )
+        )
+
+        plugins.push(
+            new webpack.optimize.ModuleConcatenationPlugin( )
+        )
+    }
 
     // hot reload
     const isHotReload = workflowConfig[ 'hot.reload' ] || false;

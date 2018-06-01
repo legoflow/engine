@@ -35,7 +35,7 @@ const start = ( resolve, reject ) => {
     const outputPath = `${ projectPath }/dist/js`;
 
     const webpackOptions = {
-        mode: 'production',
+        mode: 'none',
         entry,
         output: {
             filename: '[name].js',

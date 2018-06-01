@@ -225,12 +225,10 @@ module.exports = ( config ) => {
         const eslintRule = {
             loader: require.resolve('eslint-loader'),
             options: {
-                configFile: eslintConfig,
+                configFile: eslintConfig || path.resolve( __dirname, './defalut_eslint.js' ),
                 eslintPath: path.resolve( root, './node_modules/eslint' ),
             }
         }
-
-        vueRule.options.loaders.js.push( eslintRule );
 
         jsRule && jsRule.use.push( eslintRule );
     }
