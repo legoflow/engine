@@ -3,6 +3,7 @@
 const fs = require('fs-extra');
 const util = require('../../util');
 
+// TODO: legoflow.js shell support function
 module.exports = ( shell, _config_, messager ) => {
     delete require.cache[ shell ];
 

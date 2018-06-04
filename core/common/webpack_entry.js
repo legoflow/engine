@@ -19,6 +19,8 @@ module.exports = ( config ) => {
         files = glob.sync( `${ jsFolderPath }/*.*(js|ts)` ) || [ ];
     }
 
+    files = files.filter( ( v ) => v.indexOf( '.d.ts' ) < 0 );
+
     files.forEach( ( item, index ) => {
         if ( path.basename( item )[ 0 ] !== '_' ) {
             let basename = void 0;

@@ -202,17 +202,16 @@ module.exports = ( config ) => {
             exclude,
             use: [
                 {
-                    loader: require.resolve('awesome-typescript-loader'),
+                    loader: require.resolve('babel-loader'),
+                    options: babelOptions,
+                },
+                {
+                    loader: require.resolve('ts-loader'),
                     options: {
-                        silent: true,
-                        configFileName: getTsConfigJson( config ),
-                        useBabel: true,
-                        babelCore: require.resolve('@babel/core'),
-                        babelOptions: {
-                            babelrc: false,
-                            presets: babelOptions.presets,
-                            plugins: babelOptions.plugins,
-                        },
+                        configFile: getTsConfigJson( config ),
+                        context: projectPath,
+                        allowTsInNodeModules: true,
+                        appendTsSuffixTo: [ /\.vue$/ ],
                     },
                 },
             ],

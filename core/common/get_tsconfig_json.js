@@ -6,7 +6,7 @@ const fs =  require('fs');
 module.exports = function ( config ) {
     const { root, projectPath } = config;
 
-    const defalutTsConfigJsonFilePath = path.resolve( root, './store/tsconfig.json' );
+    const defalutTsConfigJsonFilePath = path.resolve( __dirname, './default_tsconfig.json' );
     const projectTsConfigJsonFilePath = path.resolve( projectPath, './tsconfig.json' );
 
     if ( fs.existsSync( projectTsConfigJsonFilePath ) ) {
