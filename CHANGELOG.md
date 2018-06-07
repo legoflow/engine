@@ -2,11 +2,15 @@
 
 * [null]
 
+## 0.0.31 (June 7, 2018)
+
+* Webpack 若构建失败停止构建，抛出错误
+
 ## 0.0.30 (June 4, 2018)
 
 * 重大更新 vue-loader v15
 * 增加 html & vue template inline svg
-* 增加 ESLint 默认规范 [standard](https://standardjs.com/rules-zhcn.html)
+* 增加 ESLint 默认规范 [Standard](https://standardjs.com/rules-zhcn.html)
 * 升级 Webpack v4.10.2
 * 升级 Babel v7.0.0-beta.49
 * 升级 Typescript v2.9.1

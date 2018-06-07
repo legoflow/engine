@@ -57,21 +57,27 @@ const start = ( resolve, reject ) => {
     compiler.run( ( error, stats ) => {
         if ( error ) {
             messager.stop( `JS 打包错误: ${ error.toString( ) }` );
-
-            return void 0;
         }
+        else {
+            const msg = stats.toString( {
+                colors: true,
+                modules: false,
+                children: false,
+                chunks: false,
+                chunkModules: false,
+            } );
 
-        console.log( stats.toString( {
-            colors: true,
-            modules: false,
-            children: false,
-            chunks: false,
-            chunkModules: false,
-        } ) );
+            if ( stats.compilation.errors.length > 0 ) {
+                messager.stop( `JS 打包错误: ${ msg }` );
+            }
+            else {
+                console.log( msg );
 
-        messager.log( 'JS 构建完成' );
+                messager.log( 'JS 构建完成' );
 
-        resolve( );
+                resolve( );
+            }
+        }
     } )
 };
 
