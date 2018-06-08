@@ -2,9 +2,10 @@
 
 * [null]
 
-## 0.0.32-beta.1 (June 8, 2018)
+## 0.0.32-beta.2 (June 8, 2018)
 
 * 兼容 vue file `lang="html"`
+* 增加 ESLint 检测 TS & .vue file
 
 ## 0.0.31 (June 7, 2018)
 
