@@ -175,9 +175,17 @@ module.exports = ( config ) => {
         {
             test: /\.html$/,
             exclude,
-            use: [
-                require.resolve('html-loader'),
-                inlineSvgLoader,
+            oneOf: [
+                {
+                    resourceQuery: /^\?vue/,
+                    use: [ ],
+                },
+                {
+                    use: [
+                        require.resolve('html-loader'),
+                        inlineSvgLoader,
+                    ],
+                },
             ],
         },
     ];

@@ -2,6 +2,10 @@
 
 * [null]
 
+## 0.0.32-beta.1 (June 8, 2018)
+
+* 兼容 vue file `lang="html"`
+
 ## 0.0.31 (June 7, 2018)
 
 * Webpack 若构建失败停止构建，抛出错误
