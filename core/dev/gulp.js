@@ -249,10 +249,6 @@ module.exports = async ( _config_, _messager_ ) => {
         } );
     }
 
-    watch( `${ projectPath }/legoflow.*`, ( ) => {
-        messager.notice( '配置修改后, 重启工作流后生效' );
-    } );
-
     await toPromise( BROWSER_OPEN );
 
     EJS_TASK( );

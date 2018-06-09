@@ -1,10 +1,14 @@
 'use strict';
 
 const webpack = require('webpack');
+const path = require('path');
 const StatsPlugin = require('stats-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = ( config ) => {
     let plugins = [
@@ -17,18 +21,23 @@ module.exports = ( config ) => {
     if ( config.friendlyErrors ) {
         const successMessage = [ ];
 
-        let bsPort = 0;
+        if ( config.mode === 'webpack' ) {
+            successMessage.push( `Running: http://${ config.ip }:${ config.webpackPort }` );
+        }
+        else {
+            let bsPort = 0;
 
-        Object.defineProperty( config, 'bsPort', {
-            get ( ) {
-                return bsPort;
-            },
-            set ( newValue ) {
-                bsPort = newValue;
+            Object.defineProperty( config, 'bsPort', {
+                get ( ) {
+                    return bsPort;
+                },
+                set ( newValue ) {
+                    bsPort = newValue;
 
-                successMessage.push( `Running: http://${ config.ip }:${ bsPort }` );
-            },
-        } )
+                    successMessage.push( `Running: http://${ config.ip }:${ bsPort }` );
+                },
+            } )
+        }
 
         plugins.push(
             new FriendlyErrorsWebpackPlugin( {
@@ -50,22 +59,6 @@ module.exports = ( config ) => {
     }
 
     const workflowConfig = config[ `workflow.${ config.workflow }` ];
-
-    if ( config.workflow === 'build' ) {
-        plugins.push(
-            new UglifyJsPlugin( {
-                cache: `${ config.projectPath }/.cache/uglifyjs-webpack-plugin`,
-            } )
-        )
-
-        plugins.push(
-            new webpack.NoEmitOnErrorsPlugin( )
-        )
-
-        plugins.push(
-            new webpack.optimize.ModuleConcatenationPlugin( )
-        )
-    }
 
     // hot reload
     const isHotReload = workflowConfig[ 'hot.reload' ] || false;
@@ -89,6 +82,58 @@ module.exports = ( config ) => {
         plugins.push(
             new StatsPlugin( '../../stats.json', {
                 chunkModules: true,
+            } )
+        )
+    }
+
+    if ( config.mode === 'webpack' ) {
+        let { html } = config.webpack || { };
+        const isBuildWorkflow = config.workflow === 'build';
+
+        const defaultHtml = {
+            template: './src/html/index.html',
+            filename: 'index.html',
+        }
+
+        !html && ( html = [ defaultHtml ] );
+
+        !Array.isArray( html ) && ( html = [ html ] );
+
+        html.forEach( ( item ) => {
+            item.template && item.template.indexOf( './src' ) === 0 && ( item.template = path.resolve( config.projectPath, item.template ) );
+            isBuildWorkflow && ( item.filename = `../${ item.filename }` );
+            plugins.push( new HtmlWebpackPlugin( item ) );
+        } )
+
+        if ( config.workflow === 'build' ) {
+            plugins.push( new MiniCssExtractPlugin( {
+                filename: "../css/[name].css",
+                chunkFilename: "../css/[name].css",
+            } ) );
+        }
+    }
+
+    if ( config.workflow === 'build' ) {
+        plugins.push(
+            new UglifyJsPlugin( {
+                cache: `${ config.projectPath }/.cache/uglifyjs-webpack-plugin`,
+            } )
+        )
+
+        plugins.push(
+            new webpack.NoEmitOnErrorsPlugin( )
+        )
+
+        plugins.push(
+            new webpack.optimize.ModuleConcatenationPlugin( )
+        )
+
+        plugins.push(
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.css$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorOptions: { autoprefixer: { browsers: [ '> 0.01%', ] } },
+                canPrint: true,
             } )
         )
     }

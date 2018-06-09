@@ -3,6 +3,8 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const glob = require('glob');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 const getTsConfigJson = require('../common/get_tsconfig_json');
 const babelOptions = require('../common/babel_options');
@@ -14,6 +16,8 @@ module.exports = ( config ) => {
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
+    const isBuildWorkflow = config.workflow === 'build';
+
     const limitSize = ( workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ] ) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 100;
 
     const appNodeModules = path.resolve( root, './node_modules' );
@@ -21,7 +25,7 @@ module.exports = ( config ) => {
     const exclude = [ appNodeModules ];
 
     const postcssOptions = {
-        sourceMap: true,
+        sourceMap: isBuildWorkflow,
         plugins: ( ) => [
             require('autoprefixer')( {
                 browsers: [ '> 0.01%', ],
@@ -61,9 +65,16 @@ module.exports = ( config ) => {
     }
 
     const cssModulesRuleUse = [
+        config.workflow === 'build' && config.mode === 'webpack' ?
+        {
+            loader: MiniCssExtractPlugin.loader,
+        }
+        :
         {
             loader: require.resolve( 'vue-style-loader' ),
-            options: { sourceMap: true },
+            options: {
+                sourceMap: isBuildWorkflow,
+            },
         },
         {
             loader: require.resolve('css-loader'),
@@ -71,7 +82,7 @@ module.exports = ( config ) => {
                 importLoaders: 1,
                 modules: true,
                 localIdentName: '[local]_[hash:base64:8]',
-                sourceMap: true,
+                sourceMap: isBuildWorkflow,
             },
         },
         {
@@ -81,15 +92,22 @@ module.exports = ( config ) => {
     ];
 
     const cssRuleUse = [
+        config.workflow === 'build' && config.mode === 'webpack' ?
+        {
+            loader: MiniCssExtractPlugin.loader,
+        }
+        :
         {
             loader: require.resolve( 'vue-style-loader' ),
-            options: { sourceMap: true },
+            options: {
+                sourceMap: isBuildWorkflow
+            },
         },
         {
             loader: require.resolve('css-loader'),
             options: {
                 importLoaders: 1,
-                sourceMap: true,
+                sourceMap: isBuildWorkflow,
             },
         },
         {
@@ -101,14 +119,14 @@ module.exports = ( config ) => {
     const scssModulesRuleUse = cssModulesRuleUse.concat( [ {
         loader: require.resolve('sass-loader'),
         options: {
-            sourceMap: true,
+            sourceMap: isBuildWorkflow,
         },
     } ] );
 
     const scssRuleUse = cssRuleUse.concat( [ {
         loader: require.resolve('sass-loader'),
         options: {
-            sourceMap: true,
+            sourceMap: isBuildWorkflow,
         },
     } ] );
 

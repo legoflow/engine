@@ -6,8 +6,9 @@ const glob = require('glob');
 module.exports = ( config ) => {
     let { entry, projectPath, ip, webpackPort, workflow } = config;
 
-    let files = entry || [ ];
+    let files = [ ];
     let entrys = { };
+    let isAutoGetEntry = true;
 
     const workflowConfig = config[ 'workflow.dev' ] || { };
 
@@ -17,12 +18,36 @@ module.exports = ( config ) => {
         const jsFolderPath = path.resolve( projectPath, './src/js' );
 
         files = glob.sync( `${ jsFolderPath }/*.*(js|ts)` ) || [ ];
+
+        files = files.filter( v => path.basename( v )[ 0 ] !== '_' && v.indexOf( '.d.ts' ) < 0 );
+    }
+    else {
+        isAutoGetEntry = false;
+
+        if ( typeof entry === 'string' ) {
+            entry = [ entry ];
+        }
+
+        if ( Array.isArray( entry ) ) {
+            files = entry;
+
+            files = files.map( v => v.indexOf( './src/' ) === 0 ? path.resolve( projectPath, v ) : v );
+        }
+        else if ( typeof entry === 'object' ) {
+            files = { };
+
+            for ( let name in entry ) {
+                let entryPath = entry[ name ];
+
+                entryPath.indexOf( './src/' ) === 0 && ( entryPath = path.resolve( projectPath, entryPath ) );
+
+                files[ name ] = entryPath;
+            }
+        }
     }
 
-    files = files.filter( ( v ) => v.indexOf( '.d.ts' ) < 0 );
-
-    files.forEach( ( item, index ) => {
-        if ( path.basename( item )[ 0 ] !== '_' ) {
+    if ( Array.isArray( files ) ) {
+        files.forEach( ( item ) => {
             let basename = void 0;
 
             if ( item.indexOf( '.js' ) > 0 ) {
@@ -32,14 +57,19 @@ module.exports = ( config ) => {
                 basename = path.basename( item, '.ts' );
             }
 
-            if ( workflow === 'dev' ) {
-                entrys[ basename ] = hot == true ? [ `webpack-dev-server/client?http://${ ip }:${ webpackPort }`, 'webpack/hot/dev-server', item ] : [ `webpack-dev-server/client?http://${ ip }:${ webpackPort }`, item ];
-            }
-            else if ( workflow === 'build' ) {
-                entrys[ basename ] = item;
-            }
+            entrys[ basename ] = item;
+        } );
+    }
+    else {
+        entrys = files;
+    }
+
+    if ( workflow === 'dev' ) {
+        for ( let name in entrys ) {
+            const entryPath = entrys[ name ];
+            entrys[ name ] = hot == true ? [ `webpack-dev-server/client?http://${ ip }:${ webpackPort }`, 'webpack/hot/dev-server', entryPath ] : [ `webpack-dev-server/client?http://${ ip }:${ webpackPort }`, entryPath ];
         }
-    } );
+    }
 
     return entrys;
 };

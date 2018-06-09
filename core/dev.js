@@ -4,6 +4,8 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 const network = require('network');
+const findFreePort = require('find-free-port');
+const watch = require('gulp-watch');
 
 const webpackEntry = require('./common/webpack_entry');
 
@@ -71,6 +73,18 @@ const start = async ( _config_ ) => {
     // common config reslove
     config = require('./common/common_config')( _config_, messager );
 
+    // get free port
+    if ( config.mode === 'webpack' ) {
+        await new Promise( ( resolve, reject ) => {
+            const port = parseInt( config.port );
+            findFreePort( port, port + 10,  ( err, freePort ) => {
+                config.webpackPort = freePort;
+
+                resolve( );
+            } );
+        } )
+    }
+
     const entryFiles = webpackEntry( config );
 
     config.entry = entryFiles;
@@ -92,9 +106,16 @@ const start = async ( _config_ ) => {
             webpackDevServerLaunchTimer( config.ip, config.webpackPort, resolve );
         } ) )( )
 
-        const { bsPort } = await gulp( config, messager );
+        watch( `${ config.projectPath }/legoflow.*`, ( ) => {
+            messager.notice( '配置修改后, 重启工作流后生效' );
+        } );
 
-        config.bsPort = bsPort;
+        if ( config.mode !== 'webpack' ) {
+            const { bsPort } = await gulp( config, messager );
+        }
+        else {
+            config.bsPort = config.webpackPort;
+        }
 
         if ( shell && shellFunc ) {
             shellFunc.after ? await shellFunc.after( config ) : await shellFunc( config );

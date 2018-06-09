@@ -74,7 +74,7 @@ const start = ( resolve, reject ) => {
     new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {
         if ( err ) throw err;
 
-        console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` );
+        config.mode !== 'webpack'  && console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` );
 
         resolve( );
     } );

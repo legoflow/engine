@@ -1,6 +1,7 @@
 ## Unreleased
 
-* [null]
+* 支持 webpack mode
+* 支持 自定义 entry
 
 ## 0.0.32-beta.2 (June 8, 2018)
 

@@ -12,6 +12,8 @@ const schema = {
     externals: Object,
     env: Object,
     includeModules: Array,
+    mode: String,
+    webpack: Object,
     'workflow.dev': {
         env: String,
         'hot.reload': Boolean,
@@ -25,6 +27,7 @@ const schema = {
         publicPath: String,
         'html.resourcesDomain': String,
         'css.resourcesDomain': String,
+        'bundle.limitResourcesSize': Number,
         cache: String,
         'user.args': String,
         env: String,

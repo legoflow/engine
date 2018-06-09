@@ -64,13 +64,14 @@ module.exports = async ( _config_ ) => {
         }
 
         fs.mkdirSync( `${ config.path }/dist` );
-        fs.mkdirSync( `${ config.path }/dist/img` );
-        fs.mkdirSync( `${ config.path }/dist/css` );
-        fs.mkdirSync( `${ config.path }/dist/js` );
+
+        config.mode !== 'webpack' && fs.mkdirSync( `${ config.path }/dist/img` );
+        config.mode !== 'webpack' && fs.mkdirSync( `${ config.path }/dist/css` );
+        config.mode !== 'webpack' && fs.mkdirSync( `${ config.path }/dist/js` );
 
         await webpack( config, messager );
 
-        await gulp( config, messager );
+        config.mode !== 'webpack' && await gulp( config, messager );
 
         if ( shell && shellFunc ) {
             shellFunc.after ? await shellFunc.after( config ) : await shellFunc( config );
