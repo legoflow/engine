@@ -283,6 +283,7 @@ const CSS_VERSION_AND_REPLACE_DOMAIN = ( resolve, reject ) => {
 
     gulp.src( `${ projectPath }/dist/css/**/*.css` )
         .pipe( cssUrlVersion( {
+                flag: config.cacheFlag,
                 paramType: cache || '',
                 version: config.version || '',
             } )
@@ -341,6 +342,7 @@ const HTML_TASK = ( resolve, reject ) => {
         .pipe( gulpif( '*.js', header( banner ) ) )
         .pipe( gulpif( '*.css', header( banner ) ) )
         .pipe( htmlVersion({
+                flag: config.cacheFlag,
                 paramType: cache,
                 version: config.version,
                 suffix: [ 'css', 'js', 'jpg', 'png', 'gif' ],

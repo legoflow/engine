@@ -1,10 +1,11 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.32 (June 11, 2018)
+
 * 支持 webpack mode
 * 支持 自定义 entry
-
-## 0.0.32-beta.2 (June 8, 2018)
-
 * 兼容 vue file `lang="html"`
 * 增加 ESLint 检测 TS & .vue file
 

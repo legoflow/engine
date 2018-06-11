@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
@@ -7,6 +8,26 @@ const resolve = ( _config_ ) => {
     let config = _.cloneDeep( _config_ );
 
     const { projectPath, root, env, user, workflow, includeModules } = config;
+
+    if ( typeof config.isTS === 'undefined' ) {
+        config.isTS = fs.existsSync( path.resolve( projectPath, 'tsconfig.json' ) );
+    }
+
+    const { cache } = config[ 'workflow.build' ];
+
+    config.cacheFlag = void 0;
+
+    switch ( cache ) {
+        case 'timestamp':
+            config.cacheFlag = ( new Date( ) ).getTime( );
+            break;
+        case 'version':
+            config.cacheFlag = config.version || '0.0.0';
+            break;
+        case 'hash':
+            config.cacheFlag = '[hash]';
+            break;
+    }
 
     config.path = projectPath.pathNorm( );
     config.projectPath = projectPath.pathNorm( );

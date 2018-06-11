@@ -5,14 +5,12 @@ const autoprefixer = require('autoprefixer');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
-const getTsConfigJson = require('../common/get_tsconfig_json');
 const babelOptions = require('../common/babel_options');
 
 module.exports = ( config ) => {
     const isESNext = config[ 'ES.Next' ];
 
-    const { workflow, root, projectPath, ESLint, alias } = config;
+    const { workflow, root, projectPath, ESLint, alias, isTS, cacheFlag } = config;
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
@@ -130,6 +128,8 @@ module.exports = ( config ) => {
         },
     } ] );
 
+    const filesName = cacheFlag ? `[name].${ cacheFlag }.[ext]` : '[name].[ext]';
+
     const rules = [
         {
             test: /\.(png|jpg|gif|jpeg|svg)$/,
@@ -139,7 +139,7 @@ module.exports = ( config ) => {
                     loader: require.resolve('url-loader'),
                     options: {
                         limit: 1024 * limitSize,
-                        name: '../img/[name].[ext]?[hash]',
+                        name: `../img/${ filesName }`,
                         root: 'img',
                     },
                 }
@@ -153,7 +153,7 @@ module.exports = ( config ) => {
                     loader: require.resolve('url-loader'),
                     options: {
                         limit: 1024 * limitSize,
-                        name: '../assets/[name].[ext]?[hash]',
+                        name: `../assets/${ filesName }`,
                         root: 'assets',
                     },
                 }
@@ -222,7 +222,9 @@ module.exports = ( config ) => {
                 },
             ]
         };
+    }
 
+    if ( isTS ) {
         tsRule = {
             test: /\.*(ts|tsx)$/,
             exclude,
@@ -234,9 +236,10 @@ module.exports = ( config ) => {
                 {
                     loader: require.resolve('ts-loader'),
                     options: {
-                        configFile: getTsConfigJson( config ),
-                        context: projectPath,
-                        allowTsInNodeModules: true,
+                        // configFile: getTsConfigJson( config ),
+                        // context: projectPath,
+                        // allowTsInNodeModules: true,
+                        transpileOnly: true,
                         appendTsSuffixTo: [ /\.vue$/ ],
                     },
                 },

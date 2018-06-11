@@ -9,6 +9,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = ( config ) => {
     let plugins = [
@@ -18,8 +19,9 @@ module.exports = ( config ) => {
     ];
 
     // friendlyErrors
-    if ( config.friendlyErrors ) {
-        const successMessage = [ ];
+    const successMessage = [ ];
+
+    if ( config.friendlyErrors && config.workflow === 'dev' ) {
 
         if ( config.mode === 'webpack' ) {
             successMessage.push( `Running: http://${ config.ip }:${ config.webpackPort }` );
@@ -106,11 +108,24 @@ module.exports = ( config ) => {
         } )
 
         if ( config.workflow === 'build' ) {
+            const name = config.cacheFlag ? `../css/[name].${ config.cacheFlag }.css` : '../css/[name].css';
+
             plugins.push( new MiniCssExtractPlugin( {
-                filename: "../css/[name].css",
-                chunkFilename: "../css/[name].css",
+                filename: name,
+                chunkFilename: name,
             } ) );
         }
+    }
+
+    if ( config.isTS ) {
+        plugins.push(
+            new ForkTsCheckerWebpackPlugin( {
+                // tsconfig: getTsConfigJson( config ),
+                // tslint: true,
+                vue: true,
+                formatter: 'codeframe',
+            } )
+        )
     }
 
     if ( config.workflow === 'build' ) {

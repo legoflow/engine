@@ -4,6 +4,7 @@ const path = require('path');
 const _ = require('lodash');
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
+const chalk = require('chalk');
 
 const webpackRules = require('../common/webpack_rules');
 const webpackResolve = require('../common/webpack_resolve');
@@ -39,7 +40,8 @@ const start = ( resolve, reject ) => {
         externals: config.externals || { },
         resolve: webpackResolve( config ),
         plugins: webpackPlugins( config ),
-        context: path.resolve( root, './node_modules' ),
+        // context: path.resolve( root, './node_modules' ),
+        context: projectPath,
     }
 
     const compiler = webpack( webpackOptions );
@@ -74,7 +76,7 @@ const start = ( resolve, reject ) => {
     new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {
         if ( err ) throw err;
 
-        config.mode !== 'webpack'  && console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` );
+        config.mode !== 'webpack' ? console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` ) : console.log( `Webpack version ${ chalk.bold( webpack.version ) }` );
 
         resolve( );
     } );

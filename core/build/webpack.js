@@ -12,24 +12,16 @@ let config = void 0;
 let messager = void 0;
 
 const start = ( resolve, reject ) => {
-    let { entry, ip, alias, projectPath, root, user, args, version, system } = config;
+    let { entry, ip, alias, projectPath, root, user, args, version, system, cacheFlag } = config;
 
     const workflowConfig = config[ 'workflow.build' ];
 
     const { publicPath } = workflowConfig;
 
-    const { cache } = config[ 'workflow.build' ];
-
     let chunkFilename = '[name].js';
 
-    switch ( cache ) {
-        case 'timestamp':
-            const time = ( new Date( ) ).getTime( );
-            chunkFilename = `[name].${ time }.js`;
-            break;
-        case 'version':
-            chunkFilename = `[name].${ version || '0.0.0' }.js`;
-            break;
+    if ( cacheFlag ) {
+        chunkFilename = `[name].${ cacheFlag }.js`;
     }
 
     const outputPath = `${ projectPath }/dist/js`;
@@ -38,7 +30,7 @@ const start = ( resolve, reject ) => {
         mode: 'none',
         entry,
         output: {
-            filename: '[name].js',
+            filename: config.mode !== 'webpack' ? '[name].js' : chunkFilename,
             chunkFilename,
             path: system === 'mac' ? outputPath : outputPath.pathWinNorm( ),
             publicPath: publicPath || './js/',
@@ -49,10 +41,15 @@ const start = ( resolve, reject ) => {
         externals: config.externals || { },
         resolve: webpackResolve( config ),
         plugins: webpackPlugins( config ),
-        context: path.resolve( root, './node_modules' ),
+        // context: path.resolve( root, './node_modules' ),
+        context: projectPath,
     }
 
     const compiler = webpack( webpackOptions );
+
+    compiler.hooks.afterEmit.tap( 'GetHash', ( compilation ) => {
+        config.cacheFlag === '[hash]' && ( config.cacheFlag = compilation.hash );
+    } )
 
     compiler.run( ( error, stats ) => {
         if ( error ) {
@@ -68,7 +65,8 @@ const start = ( resolve, reject ) => {
             } );
 
             if ( stats.compilation.errors.length > 0 ) {
-                messager.stop( `JS 打包错误: ${ msg }` );
+                // console.error( msg );
+                messager.stop( `JS 打包错误` );
             }
             else {
                 console.log( msg );
