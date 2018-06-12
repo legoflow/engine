@@ -41,8 +41,7 @@ const start = ( resolve, reject ) => {
         externals: config.externals || { },
         resolve: webpackResolve( config ),
         plugins: webpackPlugins( config ),
-        // context: path.resolve( root, './node_modules' ),
-        context: projectPath,
+        context: system === 'mac' ? projectPath : projectPath.pathWinNorm( ),
     }
 
     const compiler = webpack( webpackOptions );
