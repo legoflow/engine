@@ -19,8 +19,9 @@ module.exports = ( config ) => {
     const limitSize = ( workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ] ) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 100;
 
     const appNodeModules = path.resolve( root, './node_modules' );
+    const localNodeModules = path.resolve( projectPath, './node_modules' );
 
-    const exclude = [ appNodeModules ];
+    const exclude = [ appNodeModules, localNodeModules ];
 
     const postcssOptions = {
         sourceMap: isBuildWorkflow,
@@ -226,7 +227,7 @@ module.exports = ( config ) => {
 
     if ( isTS ) {
         tsRule = {
-            test: /\.*(ts|tsx)$/,
+            test: /\.*(ts)$/,
             exclude,
             use: [
                 {
@@ -236,10 +237,10 @@ module.exports = ( config ) => {
                 {
                     loader: require.resolve('ts-loader'),
                     options: {
-                        // configFile: getTsConfigJson( config ),
-                        // context: projectPath,
-                        // allowTsInNodeModules: true,
-                        transpileOnly: true,
+                        configFile: path.resolve( projectPath, './tsconfig.json' ),
+                        context: projectPath,
+                        allowTsInNodeModules: true,
+                        // transpileOnly: true,
                         appendTsSuffixTo: [ /\.vue$/ ],
                     },
                 },

@@ -117,16 +117,15 @@ module.exports = ( config ) => {
         }
     }
 
-    if ( config.isTS ) {
-        plugins.push(
-            new ForkTsCheckerWebpackPlugin( {
-                // tsconfig: getTsConfigJson( config ),
-                // tslint: true,
-                vue: true,
-                formatter: 'codeframe',
-            } )
-        )
-    }
+    // if ( config.isTS ) {
+    //     plugins.push(
+    //         new ForkTsCheckerWebpackPlugin( {
+    //             // tslint: true,
+    //             vue: true,
+    //             formatter: 'codeframe',
+    //         } )
+    //     )
+    // }
 
     if ( config.workflow === 'build' ) {
         plugins.push(

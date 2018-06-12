@@ -1,6 +1,7 @@
 ## Unreleased
 
-* [null]
+* exclude local node_modules
+* disable fork-ts to show the error in browser
 
 ## 0.0.32 (June 11, 2018)
 
