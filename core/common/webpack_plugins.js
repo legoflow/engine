@@ -1,5 +1,6 @@
 'use strict';
 
+const glob = require('glob');
 const webpack = require('webpack');
 const path = require('path');
 const StatsPlugin = require('stats-webpack-plugin');
@@ -10,8 +11,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 module.exports = ( config ) => {
+    const { projectPath } = config;
+
     let plugins = [
         new webpack.ProvidePlugin( config.global || { } ),
         new webpack.DefinePlugin( config.args || { } ),
@@ -91,24 +95,10 @@ module.exports = ( config ) => {
     }
 
     if ( config.mode === 'webpack' ) {
-        let { html } = config.webpack || { };
+        let { html, dll } = config.webpack || { };
         const isBuildWorkflow = config.workflow === 'build';
 
-        const defaultHtml = {
-            template: './src/html/index.html',
-            filename: 'index.html',
-            chunksSortMode: 'none',
-        }
-
-        !html && ( html = [ defaultHtml ] );
-
-        !Array.isArray( html ) && ( html = [ html ] );
-
-        html.forEach( ( item ) => {
-            item.template && item.template.indexOf( './src' ) === 0 && ( item.template = path.resolve( config.projectPath, item.template ) );
-            isBuildWorkflow && ( item.filename = `../${ item.filename }` );
-            plugins.push( new HtmlWebpackPlugin( item ) );
-        } )
+        const manifestFiles = glob.sync( path.resolve( projectPath, './dll/*.manifest.json' ) );
 
         if ( config.workflow === 'build' ) {
             const name = config.cacheFlag ? `../css/[name].${ config.cacheFlag }.css` : '../css/[name].css';
@@ -117,6 +107,42 @@ module.exports = ( config ) => {
                 filename: name,
                 chunkFilename: name,
             } ) );
+
+            // dll
+            if ( dll && manifestFiles.length > 0 ) {
+                manifestFiles.forEach( ( item, index ) => {
+                    plugins.push(
+                        new webpack.DllReferencePlugin( {
+                            context: projectPath,
+                            manifest: require( item ),
+                        } )
+                    )
+                } );
+            }
+
+            const defaultHtml = {
+                template: './src/html/index.html',
+                filename: 'index.html',
+            }
+
+            !html && ( html = [ defaultHtml ] );
+
+            !Array.isArray( html ) && ( html = [ html ] );
+
+            html.forEach( ( item ) => {
+                item.template && item.template.indexOf( './src' ) === 0 && ( item.template = path.resolve( projectPath, item.template ) );
+                isBuildWorkflow && ( item.filename = `../${ item.filename }` );
+                plugins.push( new HtmlWebpackPlugin( item ) );
+            } )
+
+            if ( manifestFiles.length > 0 ) {
+                plugins.push(
+                    new AddAssetHtmlPlugin( {
+                        includeSourcemap: false,
+                        filepath: path.resolve( projectPath, './dll/*.dll.js' ),
+                    } )
+                );
+            }
         }
     }
 
@@ -133,7 +159,7 @@ module.exports = ( config ) => {
     if ( config.workflow === 'build' ) {
         plugins.push(
             new UglifyJsPlugin( {
-                cache: `${ config.projectPath }/.cache/uglifyjs-webpack-plugin`,
+                cache: `${ projectPath }/.cache/uglifyjs-webpack-plugin`,
             } )
         )
 

@@ -1,6 +1,7 @@
 ## Unreleased
 
 * 修复 banner 时间错误
+* 修复 开发工作流 Chrome 打开端口 `0` 错误
 
 ## 0.0.33 (June 14, 2018)
 

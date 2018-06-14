@@ -115,6 +115,7 @@ const start = async ( _config_ ) => {
 
         if ( config.mode !== 'webpack' ) {
             const { bsPort } = await gulp( config, messager );
+            config.bsPort = bsPort;
         }
         else {
             config.bsPort = config.webpackPort;
