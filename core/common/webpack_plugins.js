@@ -97,6 +97,7 @@ module.exports = ( config ) => {
         const defaultHtml = {
             template: './src/html/index.html',
             filename: 'index.html',
+            chunksSortMode: 'none',
         }
 
         !html && ( html = [ defaultHtml ] );

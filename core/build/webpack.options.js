@@ -21,6 +21,11 @@ module.exports = function ( config ) {
 
     const webpackOptions = {
         mode: 'none',
+        performance: {
+            hints: 'warning',
+            maxAssetSize: 250000,
+            maxEntrypointSize: 250000,
+        },
         entry,
         output: {
             filename: config.mode !== 'webpack' ? '[name].js' : chunkFilename,
