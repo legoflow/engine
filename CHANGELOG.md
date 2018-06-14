@@ -2,6 +2,7 @@
 
 * exclude local node_modules
 * disable fork-ts to show the error in browser
+* 支持 Shell 生命周期 **before** 修改 Webpack.options
 
 ## 0.0.32 (June 11, 2018)
 

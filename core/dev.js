@@ -9,7 +9,8 @@ const watch = require('gulp-watch');
 
 const webpackEntry = require('./common/webpack_entry');
 
-const webpack = require('./dev/webpack');
+const webpackOptions = require('./dev/webpack.options');
+const webpackRun = require('./dev/webpack.run');
 const gulp = require('./dev/gulp');
 
 const Messager = require('./common/messager');
@@ -90,6 +91,8 @@ const start = async ( _config_ ) => {
     config.entry = entryFiles;
 
     try {
+        webpackOptions( config );
+
         if ( shell && shellFunc && shellFunc.before ) {
             await shellFunc.before( config );
         }
@@ -100,7 +103,7 @@ const start = async ( _config_ ) => {
             return void 0;
         }
 
-        await webpack( config, messager );
+        await webpackRun( config, messager );
 
         await ( ( ) => new Promise( ( resolve, reject ) => {
             webpackDevServerLaunchTimer( config.ip, config.webpackPort, resolve );

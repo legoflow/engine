@@ -47,6 +47,8 @@ module.exports = ( config ) => {
                     messages: successMessage,
                 },
                 onErrors ( severity, errors ) {
+                    config.friendlyErrorsOutput = true;
+
                     if ( errors instanceof Array ) {
                         errors.forEach( ( item, index ) => {
                             if ( item.file.indexOf( './src/' ) >= 0 ) {

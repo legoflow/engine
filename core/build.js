@@ -7,7 +7,8 @@ const path = require('path');
 
 const webpackEntry = require('./common/webpack_entry');
 
-const webpack = require('./build/webpack');
+const webpackOptions = require('./build/webpack.options');
+const webpackRun = require('./build/webpack.run');
 const gulp = require('./build/gulp');
 const getShell = require('./common/get_shell');
 const util = require('../util');
@@ -53,6 +54,8 @@ module.exports = async ( _config_ ) => {
     try {
         del.sync( `${ config.path }/dist`, { force: true } );
 
+        webpackOptions( config );
+
         if ( shell && shellFunc && shellFunc.before ) {
             await shellFunc.before( config );
         }
@@ -69,7 +72,7 @@ module.exports = async ( _config_ ) => {
         config.mode !== 'webpack' && fs.mkdirSync( `${ config.path }/dist/css` );
         config.mode !== 'webpack' && fs.mkdirSync( `${ config.path }/dist/js` );
 
-        await webpack( config, messager );
+        await webpackRun( config, messager );
 
         config.mode !== 'webpack' && await gulp( config, messager );
 

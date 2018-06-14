@@ -1,19 +1,12 @@
 'use strict';
 
 const path = require('path');
-const _ = require('lodash');
-const webpack = require('webpack');
-const webpackDevServer = require('webpack-dev-server');
-const chalk = require('chalk');
 
 const webpackRules = require('../common/webpack_rules');
 const webpackResolve = require('../common/webpack_resolve');
 const webpackPlugins = require('../common/webpack_plugins');
 
-let config = void 0;
-let messager = void 0;
-
-const start = ( resolve, reject ) => {
+module.exports = ( config ) => {
     let { entry, ip, webpackPort, projectPath, root, hot, system } = config;
 
     const workflowConfig = config[ 'workflow.dev' ] || { };
@@ -43,8 +36,6 @@ const start = ( resolve, reject ) => {
         context: system === 'mac' ? projectPath : projectPath.pathWinNorm( ),
     }
 
-    const compiler = webpack( webpackOptions );
-
     let webpackDevServerOptions =  {
         contentBase: srcFolderPath,
         hot: isHotReload,
@@ -72,18 +63,6 @@ const start = ( resolve, reject ) => {
         webpackDevServerOptions.quiet = true;
     }
 
-    new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {
-        if ( err ) throw err;
-
-        config.mode !== 'webpack' ? console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` ) : console.log( `Webpack version ${ chalk.bold( webpack.version ) }` );
-
-        resolve( );
-    } );
+    config.webpackOptions = webpackOptions;
+    config.webpackDevServerOptions = webpackDevServerOptions;
 };
-
-module.exports = ( _config_, _messager_ ) => new Promise( ( resolve, reject ) => {
-    config = _config_;
-    messager = _messager_;
-
-    start( resolve, reject );
-} );
