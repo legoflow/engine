@@ -47,7 +47,7 @@ module.exports = async ( _config_ ) => {
  * ${ config.name }
  * @version: ${ config.version }
  * @author: ${ config.user }
- * @update: ${ moment( ).format('YYYY-MM-DD hh:mm:ss') }
+ * @update: ${ moment( ).format('YYYY-MM-DD HH:mm:ss') }
  */
 `;
 

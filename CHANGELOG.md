@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 修复 banner 时间错误
 
 ## 0.0.33 (June 14, 2018)
 
