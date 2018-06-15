@@ -100,10 +100,62 @@ module.exports = ( config ) => {
         let { html, dll } = config.webpack || { };
         const isBuildWorkflow = config.workflow === 'build';
 
-        const manifestFiles = glob.sync( path.resolve( projectPath, './dll/*.manifest.json' ) );
-
+        let manifestFiles = [ ];
         let dllOptions = [ ];
         let dllFiles = [ ];
+
+        if ( config.workflow === 'build' ) {
+            manifestFiles = glob.sync( path.resolve( projectPath, './dll/*.manifest.json' ) );
+        }
+
+        const defaultHtml = {
+            template: './src/html/index.html',
+            filename: 'index.html',
+        }
+
+        !html && ( html = [ defaultHtml ] );
+
+        !Array.isArray( html ) && ( html = [ html ] );
+
+        html.forEach( ( item ) => {
+            item.template && item.template.indexOf( './src' ) === 0 && ( item.template = path.resolve( projectPath, item.template ) );
+            isBuildWorkflow && ( item.filename = `../${ item.filename }` );
+
+            plugins.push(
+                new HtmlWebpackPlugin( item )
+            );
+
+            // 根据每个 html 模板判断载入 dll
+            if ( manifestFiles.length > 0 ) {
+                const { dll: itemDll } = item;
+
+                if ( itemDll ) {
+                    const dllAssets = [ ];
+
+                    itemDll.forEach( ( itemDllItem ) => {
+                        dllAssets.push( `${ itemDllItem }.dll.js` );
+                        dllFiles.push( `${ itemDllItem }.dll.js` );
+                    } )
+
+                    dllOptions.push( {
+                        files: [ item.filename ],
+                        append: false,
+                        assets: dllAssets,
+                    } )
+                }
+                // include all dll
+                else {
+                    const dllAssets = glob.sync( path.resolve( projectPath, './dll/*.dll.js' ) ).map( v => path.basename( v ) );
+                    dllFiles = _.concat( dllFiles, dllAssets );
+
+                    dllOptions.push( {
+                        files: [ item.filename ],
+                        append: false,
+                        assets: dllAssets,
+                    } )
+                }
+            }
+        } )
 
         if ( config.workflow === 'build' ) {
             const name = config.cacheFlag ? `../css/[name].${ config.cacheFlag }.css` : '../css/[name].css';
@@ -124,55 +176,6 @@ module.exports = ( config ) => {
                     )
                 } );
             }
-
-            const defaultHtml = {
-                template: './src/html/index.html',
-                filename: 'index.html',
-            }
-
-            !html && ( html = [ defaultHtml ] );
-
-            !Array.isArray( html ) && ( html = [ html ] );
-
-            html.forEach( ( item ) => {
-                item.template && item.template.indexOf( './src' ) === 0 && ( item.template = path.resolve( projectPath, item.template ) );
-                isBuildWorkflow && ( item.filename = `../${ item.filename }` );
-
-                plugins.push(
-                    new HtmlWebpackPlugin( item )
-                );
-
-                // 根据每个 html 模板判断载入 dll
-                if ( manifestFiles.length > 0 ) {
-                    const { dll: itemDll } = item;
-
-                    if ( itemDll ) {
-                        const dllAssets = [ ];
-
-                        itemDll.forEach( ( itemDllItem ) => {
-                            dllAssets.push( `${ itemDllItem }.dll.js` );
-                            dllFiles.push( `${ itemDllItem }.dll.js` );
-                        } )
-
-                        dllOptions.push( {
-                            files: [ item.filename ],
-                            append: false,
-                            assets: dllAssets,
-                        } )
-                    }
-                    // include all dll
-                    else {
-                        const dllAssets = glob.sync( path.resolve( projectPath, './dll/*.dll.js' ) ).map( v => path.basename( v ) );
-                        dllFiles = _.concat( dllFiles, dllAssets );
-
-                        dllOptions.push( {
-                            files: [ item.filename ],
-                            append: false,
-                            assets: dllAssets,
-                        } )
-                    }
-                }
-            } )
 
             // dll 插入
             if ( dllFiles.length > 0 ) {
