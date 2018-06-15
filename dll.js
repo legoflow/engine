@@ -19,6 +19,8 @@ module.exports = function ( config ) {
         return void 0;
     }
 
+    del.sync( `${ projectPath }/dll/**/*`, { force: true } );
+
     const dllOptions = {
         entry: dll,
         output: {
