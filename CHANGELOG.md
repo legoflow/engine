@@ -1,7 +1,9 @@
 ## Unreleased
 
+* 修改 启动调用方式
 * 修复 banner 时间错误
 * 修复 开发工作流 Chrome 打开端口 `0` 错误
+* 增加 Webpack Mode 生成 dll 文件
 
 ## 0.0.33 (June 14, 2018)
 

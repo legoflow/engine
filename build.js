@@ -13,7 +13,7 @@ const gulp = require('./build/gulp');
 const getShell = require('./common/get_shell');
 const util = require('../util');
 
-const Messager = require('./common/messager');
+const Messager = require('./messager');
 const messager = new Messager( );
 
 module.exports = async ( _config_ ) => {

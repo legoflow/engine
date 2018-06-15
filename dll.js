@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const webpack = require('webpack');
 const del = require('del');
 
-const Messager = require('./common/messager');
+const Messager = require('./messager');
 const messager = new Messager( );
 
 module.exports = function ( config ) {

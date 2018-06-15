@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const glob = require('glob');
 const webpack = require('webpack');
 const path = require('path');
@@ -11,7 +12,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = ( config ) => {
     const { projectPath } = config;
@@ -100,6 +102,9 @@ module.exports = ( config ) => {
 
         const manifestFiles = glob.sync( path.resolve( projectPath, './dll/*.manifest.json' ) );
 
+        let dllOptions = [ ];
+        let dllFiles = [ ];
+
         if ( config.workflow === 'build' ) {
             const name = config.cacheFlag ? `../css/[name].${ config.cacheFlag }.css` : '../css/[name].css';
 
@@ -132,16 +137,61 @@ module.exports = ( config ) => {
             html.forEach( ( item ) => {
                 item.template && item.template.indexOf( './src' ) === 0 && ( item.template = path.resolve( projectPath, item.template ) );
                 isBuildWorkflow && ( item.filename = `../${ item.filename }` );
-                plugins.push( new HtmlWebpackPlugin( item ) );
+
+                plugins.push(
+                    new HtmlWebpackPlugin( item )
+                );
+
+                // 根据每个 html 模板判断载入 dll
+                if ( manifestFiles.length > 0 ) {
+                    const { dll: itemDll } = item;
+
+                    if ( itemDll ) {
+                        const dllAssets = [ ];
+
+                        itemDll.forEach( ( itemDllItem ) => {
+                            dllAssets.push( `${ itemDllItem }.dll.js` );
+                            dllFiles.push( `${ itemDllItem }.dll.js` );
+                        } )
+
+                        dllOptions.push( {
+                            files: [ item.filename ],
+                            append: false,
+                            assets: dllAssets,
+                        } )
+                    }
+                    // include all dll
+                    else {
+                        const dllAssets = glob.sync( path.resolve( projectPath, './dll/*.dll.js' ) ).map( v => path.basename( v ) );
+                        dllFiles = _.concat( dllFiles, dllAssets );
+
+                        dllOptions.push( {
+                            files: [ item.filename ],
+                            append: false,
+                            assets: dllAssets,
+                        } )
+                    }
+                }
             } )
 
-            if ( manifestFiles.length > 0 ) {
-                plugins.push(
-                    new AddAssetHtmlPlugin( {
-                        includeSourcemap: false,
-                        filepath: path.resolve( projectPath, './dll/*.dll.js' ),
-                    } )
-                );
+            // dll 插入
+            if ( dllFiles.length > 0 ) {
+                dllOptions.forEach( ( item, index ) => {
+                    plugins.push(
+                        new HtmlWebpackIncludeAssetsPlugin( item )
+                    );
+                } );
+
+                dllFiles = _.uniq( dllFiles );
+
+                dllFiles.forEach( ( item, index ) => {
+                    dllFiles[ index ] = {
+                        from: path.resolve( projectPath, `./dll/${ item }` ),
+                        to: path.resolve( projectPath, `./dist/js/${ item }` ),
+                    }
+                } )
+
+                plugins.push( new CopyWebpackPlugin( dllFiles ) );
             }
         }
     }

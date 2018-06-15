@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.33",
+  "version": "0.0.34-beta.1",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "babel-plugin-syntax-jsx": "6.18.0",
     "babel-plugin-transform-vue-jsx": "^4.0.1",
     "browser-sync": "2.7.0",
+    "copy-webpack-plugin": "4.5.1",
     "css-loader": "0.28.11",
     "cssnano": "3.10.0",
     "del": "~3.0.0",
@@ -83,6 +84,7 @@
     "gulp-util": "3.0.8",
     "gulp-watch": "5.0.0",
     "html-loader": "0.5.5",
+    "html-webpack-include-assets-plugin": "1.0.4",
     "html-webpack-plugin": "3.2.0",
     "image-size": "0.6.2",
     "loader-utils": "1.1.0",

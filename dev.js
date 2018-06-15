@@ -13,7 +13,7 @@ const webpackOptions = require('./dev/webpack.options');
 const webpackRun = require('./dev/webpack.run');
 const gulp = require('./dev/gulp');
 
-const Messager = require('./common/messager');
+const Messager = require('./messager');
 const messager = new Messager( );
 
 const util = require('../util');
