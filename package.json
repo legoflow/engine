@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "babel-helper-vue-jsx-merge-props": "2.0.3",
     "babel-loader": "8.0.0-beta.3",
     "babel-plugin-syntax-jsx": "6.18.0",
-    "babel-plugin-transform-vue-jsx": "^4.0.1",
+    "babel-plugin-transform-vue-jsx": "4.0.1",
     "browser-sync": "2.7.0",
     "copy-webpack-plugin": "4.5.1",
     "css-loader": "0.28.11",

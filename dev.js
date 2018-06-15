@@ -16,7 +16,7 @@ const gulp = require('./core/dev/gulp');
 const Messager = require('./messager');
 const messager = new Messager( );
 
-const util = require('../util');
+const util = require('./util');
 
 const getShell = require('./core/common/get_shell');
 

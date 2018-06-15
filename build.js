@@ -11,7 +11,8 @@ const webpackOptions = require('./core/build/webpack.options');
 const webpackRun = require('./core/build/webpack.run');
 const gulp = require('./core/build/gulp');
 const getShell = require('./core/common/get_shell');
-const util = require('../util');
+
+const util = require('./util');
 
 const Messager = require('./messager');
 const messager = new Messager( );
