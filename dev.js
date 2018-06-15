@@ -7,18 +7,18 @@ const network = require('network');
 const findFreePort = require('find-free-port');
 const watch = require('gulp-watch');
 
-const webpackEntry = require('./common/webpack_entry');
+const webpackEntry = require('./core/common/webpack_entry');
 
-const webpackOptions = require('./dev/webpack.options');
-const webpackRun = require('./dev/webpack.run');
-const gulp = require('./dev/gulp');
+const webpackOptions = require('./core/dev/webpack.options');
+const webpackRun = require('./core/dev/webpack.run');
+const gulp = require('./core/dev/gulp');
 
 const Messager = require('./messager');
 const messager = new Messager( );
 
 const util = require('../util');
 
-const getShell = require('./common/get_shell');
+const getShell = require('./core/common/get_shell');
 
 let config = void 0;
 let localIP = void 0;
@@ -72,7 +72,7 @@ const start = async ( _config_ ) => {
     }
 
     // common config reslove
-    config = require('./common/common_config')( _config_, messager );
+    config = require('./core/common/common_config')( _config_, messager );
 
     // get free port
     if ( config.mode === 'webpack' ) {

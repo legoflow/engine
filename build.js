@@ -5,12 +5,12 @@ const fs = require('fs-extra');
 const moment = require('moment');
 const path = require('path');
 
-const webpackEntry = require('./common/webpack_entry');
+const webpackEntry = require('./core/common/webpack_entry');
 
-const webpackOptions = require('./build/webpack.options');
-const webpackRun = require('./build/webpack.run');
-const gulp = require('./build/gulp');
-const getShell = require('./common/get_shell');
+const webpackOptions = require('./core/build/webpack.options');
+const webpackRun = require('./core/build/webpack.run');
+const gulp = require('./core/build/gulp');
+const getShell = require('./core/common/get_shell');
 const util = require('../util');
 
 const Messager = require('./messager');
@@ -36,7 +36,7 @@ module.exports = async ( _config_ ) => {
     }
 
     // common config reslove
-    let config = require('./common/common_config')( _config_, messager );
+    let config = require('./core/common/common_config')( _config_, messager );
 
     const entryFiles = webpackEntry( config );
 
