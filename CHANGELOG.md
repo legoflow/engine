@@ -2,6 +2,10 @@
 
 * [null]
 
+## 0.0.37 (June 19, 2018)
+
+* 增加 默认开发工作流 **webpack-dev-server.disableHostCheck: true**
+
 ## 0.0.36 (June 15, 2018)
 
 * 修改 启动调用方式
