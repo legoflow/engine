@@ -261,13 +261,13 @@ module.exports = ( config ) => {
 
         rules.push( {
             enforce: 'pre',
-            test: /\.(js|vue)$/,
+            test: /\.(js|vue|ts)$/,
             exclude,
             use: [ eslintRule ],
         } )
 
-        jsRule && jsRule.use.push( eslintRule );
-        tsRule && tsRule.use.push( eslintRule );
+        // jsRule && jsRule.use.push( eslintRule );
+        // tsRule && tsRule.use.push( eslintRule );
     }
 
     jsRule && rules.push( jsRule );

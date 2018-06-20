@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 修复 ESLint 重复提示错误问题
 
 ## 0.0.37 (June 19, 2018)
 
