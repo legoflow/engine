@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.37 (June 20, 2018)
+
 * 修复 ESLint 重复提示错误问题
 * 增加 构建进度输出
 * 增加 开发工作流 Webpack Mode 插入小工具脚本支持
