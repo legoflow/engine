@@ -97,6 +97,7 @@
     "optimize-css-assets-webpack-plugin": "4.0.2",
     "override-modules": "0.0.1",
     "postcss-loader": "2.1.3",
+    "progress-bar-webpack-plugin": "1.11.0",
     "raw-loader": "0.5.1",
     "sass-loader": "6.0.7",
     "shelljs": "^0.7.8",

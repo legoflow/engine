@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const glob = require('glob');
 const webpack = require('webpack');
+const chalk = require('chalk');
 const path = require('path');
 const StatsPlugin = require('stats-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -14,6 +15,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = ( config ) => {
     const { projectPath } = config;
@@ -232,6 +234,13 @@ module.exports = ( config ) => {
                 canPrint: true,
             } )
         )
+
+        if ( config.from === 'cli' ) {
+            plugins.push( new ProgressBarPlugin( {
+                format: `building bundle [:bar] ${ chalk.green.bold( ':percent' ) }`,
+                clear: true,
+            } ) )
+        }
     }
 
     return plugins;
