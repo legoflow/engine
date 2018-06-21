@@ -78,7 +78,7 @@ module.exports = async ( _config_ ) => {
         config.mode !== 'webpack' && await gulp( config, messager );
 
         if ( shell && shellFunc ) {
-            shellFunc.after ? await shellFunc.after( config ) : await shellFunc( config );
+            shellFunc.after ? await shellFunc.after( config ) : ( typeof shellFunc === 'function' &&  await shellFunc( config ) );
         }
         else {
             messager.success( );

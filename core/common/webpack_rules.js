@@ -14,6 +14,8 @@ module.exports = ( config ) => {
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
+    const { publicPath } = workflowConfig;
+
     const isBuildWorkflow = config.workflow === 'build';
 
     const limitSize = ( workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ] ) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 100;
@@ -67,6 +69,9 @@ module.exports = ( config ) => {
         config.workflow === 'build' && config.mode === 'webpack' ?
         {
             loader: MiniCssExtractPlugin.loader,
+            options: {
+                publicPath: publicPath || './',
+            },
         }
         :
         {
@@ -94,6 +99,9 @@ module.exports = ( config ) => {
         config.workflow === 'build' && config.mode === 'webpack' ?
         {
             loader: MiniCssExtractPlugin.loader,
+            options: {
+                publicPath: publicPath || './',
+            },
         }
         :
         {
