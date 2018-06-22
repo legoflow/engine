@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.39 (June 22, 2018)
+
 * 修复 构建直接 import Sass 后编译的 Css 引用错误 img 路径问题
 * 修复 shellFunc 无 after 生命周期错误问题
 
