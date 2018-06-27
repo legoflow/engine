@@ -22,6 +22,7 @@ module.exports = function ( config ) {
     del.sync( `${ projectPath }/dll/**/*`, { force: true } );
 
     const dllOptions = {
+        mode: 'none',
         entry: dll,
         output: {
             filename: '[name].dll.js',

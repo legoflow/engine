@@ -2,7 +2,6 @@
 
 const del = require('del');
 const fs = require('fs-extra');
-const moment = require('moment');
 const path = require('path');
 
 const webpackEntry = require('./core/common/webpack_entry');
@@ -43,12 +42,12 @@ module.exports = async ( _config_ ) => {
 
     config.entry = entryFiles;
 
-    config.banner = `
+config.banner = `
 /*!
  * ${ config.name }
  * @version: ${ config.version }
  * @author: ${ config.user }
- * @update: ${ moment( ).format('YYYY-MM-DD HH:mm:ss') }
+ * @update: ${ config.buildTime }
  */
 `;
 

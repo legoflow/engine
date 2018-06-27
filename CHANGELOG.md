@@ -2,6 +2,11 @@
 
 * [null]
 
+## 0.0.40 (June 27, 2018)
+
+* 修复 `build:dll` webpack mode 设置问题
+* 增加 暴露构建时间到 `process.build_time`
+
 ## 0.0.39 (June 22, 2018)
 
 * 修复 构建直接 import Sass 后编译的 Css 引用错误 img 路径问题

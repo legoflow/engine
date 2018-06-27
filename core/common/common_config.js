@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
+const moment = require('moment');
 
 const resolve = ( _config_ ) => {
     let config = _.cloneDeep( _config_ );
@@ -16,6 +17,8 @@ const resolve = ( _config_ ) => {
     const { cache } = config[ 'workflow.build' ];
 
     config.cacheFlag = void 0;
+
+    config.buildTime = moment( ).format('YYYY-MM-DD HH:mm:ss');
 
     switch ( cache ) {
         case 'timestamp':
@@ -82,6 +85,7 @@ const resolve = ( _config_ ) => {
         'process.env': `"${ workflow }"`,
         'process.environment': `"${ nowENV }"`,
         'process.args': { },
+        'process.build_time': `"${ config.buildTime }"`,
     }
 
     const envUserArgs = workflowConfig[ 'user.args' ];
