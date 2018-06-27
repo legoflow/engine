@@ -2,7 +2,7 @@
 
 * [null]
 
-## 0.0.40 (June 27, 2018)
+## 0.0.42 (June 27, 2018)
 
 * 修复 `build:dll` webpack mode 设置问题
 * 增加 暴露构建时间到 `process.build_time`
