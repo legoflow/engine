@@ -14,6 +14,8 @@ module.exports = ( config ) => {
 
     const workflowConfig = config[ `workflow.${ workflow }` ] || { };
 
+    const webpackImageQuality = config.webpack ? ( config.webpack.imageQuality || 90 ) : 90;
+
     const { publicPath } = workflowConfig;
 
     const isBuildWorkflow = config.workflow === 'build';
@@ -139,21 +141,44 @@ module.exports = ( config ) => {
 
     const filesName = cacheFlag ? `[name].${ cacheFlag }.[ext]` : '[name].[ext]';
 
+    const imageRule = {
+        test: /\.(png|jpg|gif|jpeg|svg)$/,
+        exclude,
+        use: [
+            {
+                loader: require.resolve('url-loader'),
+                options: {
+                    limit: 1024 * limitSize,
+                    name: `../img/${ filesName }`,
+                    root: 'img',
+                },
+            },
+        ],
+    }
+
+    if ( config.workflow === 'build' && config.mode === 'webpack' ) {
+        imageRule.use.push( {
+            loader: require.resolve('image-webpack-loader'),
+            options: {
+                mozjpeg: {
+                    progressive: true,
+                    quality: webpackImageQuality,
+                },
+                optipng: {
+                    enabled: false,
+                },
+                pngquant: {
+                    quality: webpackImageQuality,
+                },
+                gifsicle: {
+                    interlaced: false,
+                },
+            }
+        } )
+    }
+
     const rules = [
-        {
-            test: /\.(png|jpg|gif|jpeg|svg)$/,
-            exclude,
-            use: [
-                {
-                    loader: require.resolve('url-loader'),
-                    options: {
-                        limit: 1024 * limitSize,
-                        name: `../img/${ filesName }`,
-                        root: 'img',
-                    },
-                }
-            ]
-        },
+        imageRule,
         {
             test: /\.(ttf|woff|otf|eot)$/,
             exclude,

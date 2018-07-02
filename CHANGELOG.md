@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 增加 Webpack mode 自动压缩图片文件
 
 ## 0.0.42 (June 27, 2018)
 

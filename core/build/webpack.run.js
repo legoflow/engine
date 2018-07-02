@@ -35,7 +35,7 @@ const run = ( resolve, reject ) => {
             else {
                 console.log( msg );
 
-                messager.log( 'JS 构建完成' );
+                config.mode != 'webpack' && messager.log( 'JS 构建完成' );
 
                 resolve( );
             }
