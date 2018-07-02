@@ -31,24 +31,21 @@ module.exports = ( shell, _config_, messager ) => {
 
     if ( shell.init ) {
         cycleFunc.init = async function ( config ) {
-            messager.log( 'start to exec shell.init' );
-
+            // messager.log( 'start to exec shell.init' );
             await shell.init( { config, messager, nodeBinExec, util, pull } );
         }
     }
 
     if ( shell.before ) {
         cycleFunc.before = async function ( config ) {
-            messager.log( 'start to exec shell.before' );
-
+            // messager.log( 'start to exec shell.before' );
             await shell.before( { config, messager, nodeBinExec, util, pull } );
         }
     }
 
     if ( shell.after ) {
         cycleFunc.after = async function ( config ) {
-            messager.log( 'start to exec shell.after' );
-
+            // messager.log( 'start to exec shell.after' );
             await shell.after( { config, messager, nodeBinExec, util, pull } );
         }
     }
@@ -58,8 +55,7 @@ module.exports = ( shell, _config_, messager ) => {
     }
     else {
         return async ( config ) => {
-            messager.log( 'start to exec shell' );
-
+            // messager.log( 'start to exec shell' );
             await shell( { config, messager, nodeBinExec, util, pull } );
         };
     }

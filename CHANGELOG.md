@@ -1,5 +1,6 @@
 ## Unreleased
 
+* 升级 Webpack 版本 v4.14.0
 * 增加 Webpack mode 自动压缩图片文件
 
 ## 0.0.42 (June 27, 2018)

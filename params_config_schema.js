@@ -13,7 +13,11 @@ const schema = {
     env: Object,
     includeModules: Array,
     mode: String,
-    webpack: Object,
+    webpack: {
+        imageQuality: Number,
+        html: Object,
+        dll: Array,
+    },
     'workflow.dev': {
         env: String,
         'hot.reload': Boolean,
