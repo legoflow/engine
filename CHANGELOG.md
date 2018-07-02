@@ -1,6 +1,7 @@
 ## Unreleased
 
 * 升级 Webpack 版本 v4.14.0
+* 升级 Babel 7 版本 v7.0.0-beta.51
 * 增加 Webpack mode 自动压缩图片文件
 
 ## 0.0.42 (June 27, 2018)
