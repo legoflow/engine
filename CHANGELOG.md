@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 增加 Happypack 构建 Webpack mode JS 文件
 
 ## 0.0.43 (July 7, 2018)
 

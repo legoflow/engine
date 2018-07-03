@@ -42,5 +42,51 @@ module.exports = function ( config ) {
         context: system === 'mac' ? projectPath : projectPath.pathWinNorm( ),
     }
 
+    if ( config.mode === 'webpack' && config.webpack && config.webpack.happypack == true ) {
+        const os = require('os');
+        const HappyPack = require('happypack');
+        const happyThreadPool = HappyPack.ThreadPool( { size: os.cpus( ).length } );
+
+        const injectRules = [
+            { testFile: 'test.js', id: 'BuildJS' },
+            // { testFile: 'test.scss', id: 'BuildScss', oneOf: 1, },
+        ];
+
+        webpackOptions.module.rules.forEach( ( item, index ) => {
+            injectRules.some( ( _ir ) => {
+                if ( item.test.test( _ir.testFile ) ) {
+                    const pluginOptions = {
+                        id: _ir.id,
+                        loaders: item.use,
+                        threadPool: happyThreadPool,
+                        verbose: true,
+                    }
+
+                    const use = [ {
+                        loader: require.resolve('happypack/loader'),
+                        options: { id: _ir.id },
+                    } ];
+
+                    if ( item.oneOf ) {
+                        const loaders = item.oneOf[ _ir.oneOf ].use;
+
+                        item.oneOf[ _ir.oneOf ].use = use;
+
+                        pluginOptions.loaders = loaders;
+                    }
+                    else {
+                        webpackOptions.module.rules[ index ].use = use;
+                    }
+
+                    webpackOptions.plugins.unshift( new HappyPack( pluginOptions ) );
+
+                    return true;
+                }
+
+                return false;
+            } )
+        } )
+    }
+
     config.webpackOptions = webpackOptions;
 };
