@@ -1,5 +1,7 @@
 ## Unreleased
 
+* 增加 WebpackBar 显示进度
+* 更新 Webpack 构建工作流 stats 信息输出方式
 * 增加 Happypack 构建 Webpack mode JS 文件
 
 ## 0.0.43 (July 7, 2018)
