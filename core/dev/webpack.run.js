@@ -8,14 +8,16 @@ let config = void 0;
 let messager = void 0;
 
 const run = ( resolve, reject ) => {
-    const { ip, webpackPort, webpackOptions, webpackDevServerOptions } = config;
+    const { ip, webpackPort, webpackOptions, webpackDevServerOptions, mode } = config;
+
+    mode === 'webpack' && console.log( `Webpack version ${ chalk.bold( webpack.version ) }` );
 
     const compiler = webpack( webpackOptions );
 
     new webpackDevServer( compiler, webpackDevServerOptions ).listen( webpackPort, ip, ( err ) => {
         if ( err ) throw err;
 
-        config.mode !== 'webpack' ? console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` ) : console.log( `Webpack version ${ chalk.bold( webpack.version ) }` );
+        mode !== 'webpack' && console.log( '[WEBPACK SERVER]', `http://${ ip }:${ webpackPort }` );
 
         resolve( );
     } );

@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.44-beta.0",
+  "version": "0.0.44-beta.2",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -99,7 +99,6 @@
     "optimize-css-assets-webpack-plugin": "4.0.2",
     "override-modules": "0.0.1",
     "postcss-loader": "2.1.3",
-    "progress-bar-webpack-plugin": "1.11.0",
     "raw-loader": "0.5.1",
     "sass-loader": "6.0.7",
     "shelljs": "^0.7.8",
@@ -114,6 +113,7 @@
     "vue-template-compiler": "2.5.16",
     "webpack": "4.14.0",
     "webpack-dev-server": "3.1.4",
+    "webpackbar": "2.6.1",
     "yamljs": "^0.3.0"
   }
 }

@@ -15,7 +15,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const WebpackBar = require('webpackbar');
 
 module.exports = ( config ) => {
     const { projectPath } = config;
@@ -244,13 +244,15 @@ module.exports = ( config ) => {
                 canPrint: true,
             } )
         )
+    }
 
-        if ( config.from === 'cli' ) {
-            plugins.push( new ProgressBarPlugin( {
-                format: `building bundle [:bar] ${ chalk.green.bold( ':percent' ) }`,
-                clear: true,
-            } ) )
-        }
+    if ( config.from === 'cli' ) {
+        plugins.push(
+            new WebpackBar( {
+                once: config.workflow === 'dev' ? true : false,
+                name: config.workflow === 'dev' ? 'dev' : 'build',
+            } )
+        )
     }
 
     return plugins;
