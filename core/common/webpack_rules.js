@@ -30,9 +30,13 @@ module.exports = ( config ) => {
     const postcssOptions = {
         sourceMap: isBuildWorkflow,
         plugins: ( ) => [
+            require('postcss-preset-env')( {
+                stage: 0,
+                browsers: [ '> 0.01%', ],
+            } ),
             require('autoprefixer')( {
                 browsers: [ '> 0.01%', ],
-            } )
+            } ),
         ],
     }
 
