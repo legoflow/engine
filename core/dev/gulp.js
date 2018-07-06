@@ -229,8 +229,6 @@ module.exports = async ( _config_, _messager_ ) => {
 
     // 判断如果不是 ejs 编译出来的 html 才自动刷新
     watch( `${ projectPath }/src/*.html`, ( event ) => {
-        console.log( event );
-
         const htmlPath = event.path.replace( /\\/g, '/' );
         const name = htmlPath.split( '/' ).pop( ).replace( '.html', '.ejs' );
 

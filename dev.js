@@ -75,10 +75,25 @@ const start = async ( _config_ ) => {
     config = require('./core/common/common_config')( _config_, messager );
 
     // get free port
+    // FIXME: 发现由 webpack mode 启动的服务，会被标记为 freePort
+    // maybe 与 webpack dev service & index.html 插件有关系
+    await new Promise( ( resolve, reject ) => {
+        const port = parseInt( config.port );
+        findFreePort( port, port + 10, config.ip, ( err, freePort ) => {
+            config.port = freePort;
+
+            resolve( );
+        } );
+    } )
+
+    // get webpack free port
     if ( config.mode === 'webpack' ) {
+        config.webpackPort = config.port;
+    }
+    else {
         await new Promise( ( resolve, reject ) => {
-            const port = parseInt( config.port );
-            findFreePort( port, port + 10,  ( err, freePort ) => {
+            const port = parseInt( config.webpackPort );
+            findFreePort( port, port + 10, config.ip, ( err, freePort ) => {
                 config.webpackPort = freePort;
 
                 resolve( );

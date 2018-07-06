@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.44-beta.3",
+  "version": "0.0.44",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -116,5 +116,9 @@
     "webpack-dev-server": "3.1.4",
     "webpackbar": "2.6.1",
     "yamljs": "^0.3.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

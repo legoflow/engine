@@ -1,11 +1,16 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.44 (July 6, 2018)
+
+* 优化 获取空闲端口逻辑
 * 增加 WebpackBar 显示进度
 * 更新 Webpack 构建工作流 stats 信息输出方式
 * 增加 支持 **postcss-preset-env**
 * 增加 Happypack 构建 Webpack mode JS 文件
 
-## 0.0.43 (July 7, 2018)
+## 0.0.43 (July 3, 2018)
 
 * 升级 Webpack 版本 v4.14.0
 * 升级 Babel 7 版本 v7.0.0-beta.51
