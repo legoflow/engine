@@ -222,11 +222,18 @@ module.exports = ( config ) => {
     }
 
     if ( config.workflow === 'build' ) {
-        plugins.push(
-            new UglifyJsPlugin( {
-                cache: `${ projectPath }/.cache/uglifyjs-webpack-plugin`,
-            } )
-        )
+
+        const UglifyJsPluginOptions = {
+            cache: `${ projectPath }/.cache/uglifyjs-webpack-plugin`,
+        }
+
+        if ( config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true ) {
+            UglifyJsPluginOptions.sourceMap = true;
+        }
+
+        if ( workflowConfig['no-uglify-js'] != true ) {
+            plugins.push( new UglifyJsPlugin( UglifyJsPluginOptions ) );
+        }
 
         plugins.push(
             new webpack.NoEmitOnErrorsPlugin( )

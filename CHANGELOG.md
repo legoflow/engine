@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 增加 Webpack mode 构建 JS SourceMap
 
 ## 0.0.44 (July 6, 2018)
 

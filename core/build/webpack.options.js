@@ -42,6 +42,10 @@ module.exports = function ( config ) {
         context: system === 'mac' ? projectPath : projectPath.pathWinNorm( ),
     }
 
+    if ( config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true ) {
+        webpackOptions[ 'devtool' ] = 'source-map';
+    }
+
     if ( config.mode === 'webpack' && config.webpack && config.webpack.happypack == true ) {
         const os = require('os');
         const HappyPack = require('happypack');
