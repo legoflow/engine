@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const glob = require('glob');
@@ -181,6 +182,61 @@ module.exports = ( config ) => {
         } )
     }
 
+    const scssRule = {
+        test: /\.scss$/,
+        exclude,
+        oneOf: [
+            {
+                resourceQuery: /module/,
+                use: scssModulesRuleUse,
+            },
+            {
+                use: scssRuleUse,
+            },
+        ],
+    }
+
+    const cssRule = {
+        test: /\.css$/,
+        exclude,
+        oneOf: [
+            {
+                resourceQuery: /module/,
+                use: cssModulesRuleUse,
+            },
+            {
+                use: cssRuleUse,
+            },
+        ],
+    }
+
+    if ( config.workflow === 'build' && config.mode === 'webpack' && config.webpack && config.webpack.VueChunkStyle == false ) {
+        const VueStyleLoader = {
+            loader: require.resolve( 'vue-style-loader' ),
+            options: {
+                sourceMap: isBuildWorkflow
+            },
+        }
+
+        const VueScssRule = _.cloneDeep( scssRuleUse ).splice( 1, scssRuleUse.length );
+
+        VueScssRule.unshift( VueStyleLoader );
+
+        scssRule.oneOf.unshift( {
+            resourceQuery: /^\?vue/,
+            use: VueScssRule,
+        } )
+
+        const VueCssRule = _.cloneDeep( cssRuleUse ).splice( 1, cssRuleUse.length );
+
+        VueCssRule.unshift( VueStyleLoader );
+
+        cssRule.oneOf.unshift( {
+            resourceQuery: /^\?vue/,
+            use: VueCssRule,
+        } )
+    }
+
     const rules = [
         imageRule,
         {
@@ -197,32 +253,8 @@ module.exports = ( config ) => {
                 }
             ]
         },
-        {
-            test: /\.scss$/,
-            exclude,
-            oneOf: [
-                {
-                    resourceQuery: /module/,
-                    use: scssModulesRuleUse,
-                },
-                {
-                    use: scssRuleUse,
-                },
-            ],
-        },
-        {
-            test: /\.css$/,
-            exclude,
-            oneOf: [
-                {
-                    resourceQuery: /module/,
-                    use: cssModulesRuleUse,
-                },
-                {
-                    use: cssRuleUse,
-                },
-            ],
-        },
+        scssRule,
+        cssRule,
         {
             test: /\.(tpl|art)$/,
             exclude,
@@ -303,7 +335,7 @@ module.exports = ( config ) => {
             use: [ eslintRule ],
         } )
 
-        // jsRule && jsRule.use.push( eslintRule );
+        // jsRule && jsRule.use.p`ush( eslintRule );
         // tsRule && tsRule.use.push( eslintRule );
     }
 

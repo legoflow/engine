@@ -53,7 +53,9 @@ const override = require('legoflow-engine/override');
 // messager 工作流消息输出机制
 // dev 启动 开发 的异步函数
 // build 启动 构建 的异步函数
-const { messager, dev, build } = require('legoflow-engine');
+const messager = require('legoflow-engine/messager');
+const dev = require('legoflow-engine/dev');
+const build = require('legoflow-engine/build');
 
 dev( Config );
 ```

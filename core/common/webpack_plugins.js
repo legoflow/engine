@@ -231,7 +231,7 @@ module.exports = ( config ) => {
             UglifyJsPluginOptions.sourceMap = true;
         }
 
-        if ( workflowConfig['no-uglify-js'] != true ) {
+        if ( workflowConfig['noUglifyJs'] != true ) {
             plugins.push( new UglifyJsPlugin( UglifyJsPluginOptions ) );
         }
 

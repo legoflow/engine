@@ -1,6 +1,12 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.45 (July 9, 2018)
+
 * 增加 Webpack mode 构建 JS SourceMap
+* 增加 **webpack{ VueChunkStyle }** 配置，使用该配置可让 vue 文件内含样式不独立打包出 Css 文件
+    * 发现 Chunk 模块独立打包出的 Css，在 Android 4.3 版本下无法通过 linkElement.onload 触发回调，导致 Chunk 模块未能进入回调，导致异步路由页面空白。[问题详情](https://github.com/webpack-contrib/mini-css-extract-plugin/pull/134) & [linkElement.onload 兼容性](http://pie.gd/test/script-link-events/)
 
 ## 0.0.44 (July 6, 2018)
 
