@@ -20,7 +20,7 @@ module.exports = function ( config ) {
     const outputPath = `${ projectPath }/dist/js`;
 
     const webpackOptions = {
-        mode: 'none',
+        mode: 'production',
         performance: {
             hints: 'warning',
             maxAssetSize: 250000,
@@ -40,6 +40,9 @@ module.exports = function ( config ) {
         resolve: webpackResolve( config ),
         plugins: webpackPlugins( config ),
         context: system === 'mac' ? projectPath : projectPath.pathWinNorm( ),
+        optimization: {
+            minimize: false,
+        },
     }
 
     if ( config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true ) {

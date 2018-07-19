@@ -225,6 +225,12 @@ module.exports = ( config ) => {
 
         const UglifyJsPluginOptions = {
             cache: `${ projectPath }/.cache/uglifyjs-webpack-plugin`,
+            parallel: true,
+            uglifyOptions: {
+                compress: false,
+                ecma: 6,
+                mangle: true,
+            },
         }
 
         if ( config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true ) {

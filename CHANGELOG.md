@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 修复 引用 node_modules 模块构建打包后重复包裹 **default** 问题
 
 ## 0.0.45 (July 9, 2018)
 
