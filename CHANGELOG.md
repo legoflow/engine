@@ -7,9 +7,9 @@
 * 修复 引用 node_modules 模块构建打包后重复包裹 **default** 问题
 * 升级 Webpack v4.16.1
 * 升级 Babel v7.0.0-beta.54
-* 升级 Postcss & loader，支持外部配置文件 ([Demo]())
+* 升级 Postcss & loader，支持外部配置文件 ([Demo](https://github.com/legoflow/awesomes/tree/master/%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%20Postcss%20%E9%85%8D%E7%BD%AE))
 * 抛弃 使用 Bebel-preset-es2015
-* 增加 **webpack{ include: { esnext } }** 配置 ([详细了解]())
+* 增加 **webpack{ include: { esnext } }** 配置 ([详细了解](https://legoflow.com/wiki/config.html#webpack))
     * 通过该配置让 Webpack include 一些处于 node_modules 下，但同样需要 ESNext 编译的源码模块
 
 ## 0.0.45 (July 9, 2018)
