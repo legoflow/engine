@@ -226,11 +226,11 @@ module.exports = ( config ) => {
         const UglifyJsPluginOptions = {
             cache: `${ projectPath }/.cache/uglifyjs-webpack-plugin`,
             parallel: true,
-            uglifyOptions: {
-                compress: false,
-                ecma: 6,
-                mangle: true,
-            },
+            // uglifyOptions: {
+            //     compress: {},
+            //     ecma: 6,
+            //     mangle: {},
+            // },
         }
 
         if ( config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true ) {
@@ -242,22 +242,22 @@ module.exports = ( config ) => {
         }
 
         // build other plugins
-        // plugins.push(
-        //     new webpack.NoEmitOnErrorsPlugin( )
-        // )
+        plugins.push(
+            new webpack.NoEmitOnErrorsPlugin( )
+        )
 
-        // plugins.push(
-        //     new webpack.optimize.ModuleConcatenationPlugin( )
-        // )
+        plugins.push(
+            new webpack.optimize.ModuleConcatenationPlugin( )
+        )
 
-        // plugins.push(
-        //     new OptimizeCssAssetsPlugin({
-        //         assetNameRegExp: /\.css$/g,
-        //         cssProcessor: require('cssnano'),
-        //         cssProcessorOptions: { autoprefixer: { browsers: [ '> 0.01%', ] } },
-        //         canPrint: true,
-        //     } )
-        // )
+        plugins.push(
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.css$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorOptions: { autoprefixer: { browsers: [ '> 0.01%', ] } },
+                canPrint: true,
+            } )
+        )
     }
 
     if ( config.mode === 'webpack' && config.from === 'cli' ) {

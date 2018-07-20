@@ -2,7 +2,7 @@
 
 * [null]
 
-## 0.0.46 (July 20, 2018)
+## 0.0.47 (July 20, 2018)
 
 * 修复 引用 node_modules 模块构建打包后重复包裹 **default** 问题
 * 升级 Webpack v4.16.1
