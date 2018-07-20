@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 优化 override 重写模块逻辑
 
 ## 0.0.47 (July 20, 2018)
 
