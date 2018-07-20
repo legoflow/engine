@@ -241,22 +241,23 @@ module.exports = ( config ) => {
             plugins.push( new UglifyJsPlugin( UglifyJsPluginOptions ) );
         }
 
-        plugins.push(
-            new webpack.NoEmitOnErrorsPlugin( )
-        )
+        // build other plugins
+        // plugins.push(
+        //     new webpack.NoEmitOnErrorsPlugin( )
+        // )
 
-        plugins.push(
-            new webpack.optimize.ModuleConcatenationPlugin( )
-        )
+        // plugins.push(
+        //     new webpack.optimize.ModuleConcatenationPlugin( )
+        // )
 
-        plugins.push(
-            new OptimizeCssAssetsPlugin({
-                assetNameRegExp: /\.css$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorOptions: { autoprefixer: { browsers: [ '> 0.01%', ] } },
-                canPrint: true,
-            } )
-        )
+        // plugins.push(
+        //     new OptimizeCssAssetsPlugin({
+        //         assetNameRegExp: /\.css$/g,
+        //         cssProcessor: require('cssnano'),
+        //         cssProcessorOptions: { autoprefixer: { browsers: [ '> 0.01%', ] } },
+        //         canPrint: true,
+        //     } )
+        // )
     }
 
     if ( config.mode === 'webpack' && config.from === 'cli' ) {

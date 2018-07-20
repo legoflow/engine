@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.46-beta.9",
+  "version": "0.0.46",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {
@@ -97,7 +97,7 @@
     "node-sass": "4.7.2",
     "optimize-css-assets-webpack-plugin": "4.0.2",
     "override-modules": "0.0.1",
-    "postcss-loader": "2.1.3",
+    "postcss-loader": "2.1.6",
     "postcss-preset-env": "5.2.1",
     "raw-loader": "0.5.1",
     "sass-loader": "6.0.7",

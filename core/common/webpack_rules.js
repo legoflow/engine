@@ -28,8 +28,12 @@ module.exports = ( config ) => {
 
     const exclude = [ appNodeModules, localNodeModules ];
 
-    const postcssOptions = {
-        sourceMap: isBuildWorkflow,
+    const [ postcssConfig ] = glob.sync( path.resolve( projectPath, '.postcssrc.*' ) );
+
+    let isBuildStyleSourceMap = !isBuildWorkflow;
+
+    const postcssOptions = !postcssConfig ? {
+        sourceMap: isBuildStyleSourceMap,
         plugins: ( ) => [
             require('postcss-preset-env')( {
                 stage: 0,
@@ -39,6 +43,10 @@ module.exports = ( config ) => {
                 browsers: [ '> 0.01%', ],
             } ),
         ],
+    } : {
+        config: {
+            path: postcssConfig,
+        },
     }
 
     const inlineSvgLoader = {
@@ -84,7 +92,7 @@ module.exports = ( config ) => {
         {
             loader: require.resolve( 'vue-style-loader' ),
             options: {
-                sourceMap: isBuildWorkflow,
+                sourceMap: isBuildStyleSourceMap,
             },
         },
         {
@@ -93,7 +101,7 @@ module.exports = ( config ) => {
                 importLoaders: 1,
                 modules: true,
                 localIdentName: '[local]_[hash:base64:8]',
-                sourceMap: isBuildWorkflow,
+                sourceMap: isBuildStyleSourceMap,
             },
         },
         {
@@ -114,14 +122,14 @@ module.exports = ( config ) => {
         {
             loader: require.resolve( 'vue-style-loader' ),
             options: {
-                sourceMap: isBuildWorkflow
+                sourceMap: isBuildStyleSourceMap,
             },
         },
         {
             loader: require.resolve('css-loader'),
             options: {
                 importLoaders: 1,
-                sourceMap: isBuildWorkflow,
+                sourceMap: isBuildStyleSourceMap,
             },
         },
         {
@@ -133,14 +141,14 @@ module.exports = ( config ) => {
     const scssModulesRuleUse = cssModulesRuleUse.concat( [ {
         loader: require.resolve('sass-loader'),
         options: {
-            sourceMap: isBuildWorkflow,
+            sourceMap: isBuildStyleSourceMap,
         },
     } ] );
 
     const scssRuleUse = cssRuleUse.concat( [ {
         loader: require.resolve('sass-loader'),
         options: {
-            sourceMap: isBuildWorkflow,
+            sourceMap: isBuildStyleSourceMap,
         },
     } ] );
 
@@ -214,7 +222,7 @@ module.exports = ( config ) => {
         const VueStyleLoader = {
             loader: require.resolve( 'vue-style-loader' ),
             options: {
-                sourceMap: isBuildWorkflow
+                sourceMap: isBuildStyleSourceMap,
             },
         }
 
@@ -343,6 +351,31 @@ module.exports = ( config ) => {
     tsRule && rules.push( tsRule );
 
     rules.push( vueRule );
+
+    // 特别指定 include 的模块
+    if ( config.mode === 'webpack' && config.webpack && config.webpack.include ) {
+        let { esnext } = config.webpack.include;
+
+        // 指定增加 include js || jsx 编译 esnext 模块
+        if ( esnext ) {
+            if ( Array.isArray( esnext ) ) {
+                esnext.forEach( ( item, index ) => {
+                    item.indexOf( './' ) === 0 && ( esnext[ index ] = path.resolve( projectPath, item ) );
+                } )
+            }
+
+            rules.push( {
+                test: /\.*(js|jsx)$/,
+                include: esnext,
+                use: [
+                    {
+                        loader: require.resolve('babel-loader'),
+                        options: babelOptions,
+                    },
+                ]
+            } )
+        }
+    }
 
     return rules;
 };
