@@ -1,9 +1,11 @@
 {
   "name": "legoflow-engine",
-  "version": "0.0.48-beta.2",
+  "version": "0.0.48-beta.5",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "postinstall": "node ./override.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/legoflow/engine.git"
