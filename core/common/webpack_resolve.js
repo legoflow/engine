@@ -9,6 +9,12 @@ module.exports = ( config ) => {
         includeModules = [ ];
     }
 
+    if ( root.toLocaleLowerCase().indexOf('yarn') > 0 ) {
+        includeModules.push(
+            path.resolve( root, '../' )
+        )
+    }
+
     return {
         alias,
         modules: [

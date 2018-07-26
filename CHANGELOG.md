@@ -1,6 +1,10 @@
 ## Unreleased
 
-* 优化 override 重写模块逻辑
+* [null]
+
+## 0.0.48 (July 26, 2018)
+
+* 优化 override 重写模块逻辑，适配 Yarn 安装方式
 
 ## 0.0.47 (July 20, 2018)
 
