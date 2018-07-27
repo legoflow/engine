@@ -201,15 +201,15 @@ module.exports = ( config ) => {
         }
     }
 
-    // if ( config.isTS ) {
-    //     plugins.push(
-    //         new ForkTsCheckerWebpackPlugin( {
-    //             // tslint: true,
-    //             vue: true,
-    //             formatter: 'codeframe',
-    //         } )
-    //     )
-    // }
+    if ( config.isTS ) {
+        plugins.push(
+            new ForkTsCheckerWebpackPlugin( {
+                // tslint: true,
+                vue: true,
+                formatter: 'codeframe',
+            } )
+        )
+    }
 
     // 注入小工具脚本
     if ( config.workflow === 'dev' && config.mode === 'webpack' ) {

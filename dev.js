@@ -36,7 +36,7 @@ const webpackDevServerLaunchTimer = ( ip, port, resolve ) => {
         else{
             setTimeout( ( ) => {
                 webpackDevServerLaunchTimer( ip, port, resolve );
-            }, 1000 );
+            }, 500 );
         }
     } );
 }

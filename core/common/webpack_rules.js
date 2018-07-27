@@ -39,9 +39,6 @@ module.exports = ( config ) => {
                 stage: 0,
                 browsers: [ '> 0.01%', ],
             } ),
-            require('autoprefixer')( {
-                browsers: [ '> 0.01%', ],
-            } ),
         ],
     } : {
         config: {
@@ -333,7 +330,7 @@ module.exports = ( config ) => {
                         configFile: path.resolve( projectPath, './tsconfig.json' ),
                         context: projectPath,
                         allowTsInNodeModules: true,
-                        // transpileOnly: true,
+                        transpileOnly: true,
                         appendTsSuffixTo: [ /\.vue$/ ],
                     },
                 },
@@ -347,7 +344,7 @@ module.exports = ( config ) => {
         const eslintRule = {
             loader: require.resolve('eslint-loader'),
             options: {
-                configFile: eslintConfig || path.resolve( __dirname, './defalut_eslint.js' ),
+                configFile: eslintConfig || ( config.isTS ? path.resolve( __dirname, './default_ts_eslint.js' ) : path.resolve( __dirname, './default_js_eslint.js' ) ),
                 eslintPath: path.resolve( root, './node_modules/eslint' ),
             }
         }
@@ -358,9 +355,6 @@ module.exports = ( config ) => {
             exclude,
             use: [ eslintRule ],
         } )
-
-        // jsRule && jsRule.use.p`ush( eslintRule );
-        // tsRule && tsRule.use.push( eslintRule );
     }
 
     jsRule && rules.push( jsRule );
