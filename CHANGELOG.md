@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 增加 通过 **webpack{ sass.globalResources }** 配置全局作用域的 Sass 文件
 
 ## 0.0.48 (July 26, 2018)
 

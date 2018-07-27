@@ -138,19 +138,35 @@ module.exports = ( config ) => {
         },
     ];
 
-    const scssModulesRuleUse = cssModulesRuleUse.concat( [ {
-        loader: require.resolve('sass-loader'),
-        options: {
-            sourceMap: isBuildStyleSourceMap,
-        },
-    } ] );
+    // sass global resources
+    let sassGlobalResources = [ ];
 
-    const scssRuleUse = cssRuleUse.concat( [ {
-        loader: require.resolve('sass-loader'),
-        options: {
-            sourceMap: isBuildStyleSourceMap,
+    if ( config.mode === 'webpack' && config.webpack && Array.isArray( config.webpack[ 'sass.globalResources' ] ) ) {
+        config.webpack[ 'sass.globalResources' ].forEach( item => {
+            item.indexOf('./') === 0 && ( item = path.resolve( projectPath, item ) );
+
+            sassGlobalResources.push( item );
+        } )
+    }
+
+    const sassLoaders = [ {
+            loader: require.resolve('sass-loader'),
+            options: {
+                sourceMap: isBuildStyleSourceMap,
+            },
         },
-    } ] );
+    ]
+
+    sassGlobalResources.length > 0 && sassLoaders.push( {
+        loader: require.resolve('sass-resources-loader'),
+        options: {
+            resources: sassGlobalResources,
+        },
+    } )
+
+    const scssModulesRuleUse = cssModulesRuleUse.concat( sassLoaders );
+
+    const scssRuleUse = cssRuleUse.concat( sassLoaders );
 
     const filesName = cacheFlag ? `[name].${ cacheFlag }.[ext]` : '[name].[ext]';
 
