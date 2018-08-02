@@ -28,6 +28,12 @@ module.exports = ( config ) => {
 
     const exclude = [ appNodeModules, localNodeModules ];
 
+    if ( root.toLocaleLowerCase().indexOf('yarn') > 0 ) {
+        exclude.push(
+            path.resolve( root, '../' )
+        )
+    }
+
     const [ postcssConfig ] = glob.sync( path.resolve( projectPath, '.postcssrc.*' ) );
 
     let isBuildStyleSourceMap = !isBuildWorkflow;

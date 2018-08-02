@@ -29,26 +29,6 @@ npm i legoflow-engine --save
 
 ## 使用
 
-#### 开始之前，需要重写某些 node_modules 模块，例如：
-
-```js
-const path = require('path');
-const override = require('legoflow-engine/override');
-
-( async ( ) => {
-    await override(
-        // 项目 node_modules 的绝对路径
-        path.resolve( __dirname, './node_modules' ),
-        // 项目 node_modules_override 的绝对路径
-        path.resolve( __dirname, './node_modules/legoflow-engine/node_modules_override' ),
-        // 是否 debug 模式
-        true,
-    )
-} )( );
-```
-
-#### 调用
-
 ```js
 // messager 工作流消息输出机制
 // dev 启动 开发 的异步函数
