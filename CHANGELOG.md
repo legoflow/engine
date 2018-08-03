@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.49 (August 3, 2018)
+
 * 增加 通过 **webpack{ sass.globalResources }** 配置全局作用域的 Sass 文件
 * 修复 TS eslint 检测兼容问题
 * 修复 Yarn 安装方式，构建项目 Babel $export is not a function 问题
