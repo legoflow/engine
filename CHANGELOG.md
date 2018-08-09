@@ -1,10 +1,13 @@
 ## Unreleased
 
+* [null]
+
+## 0.0.50 (August 9, 2018)
+
 * 修复 SVG inline 别名无法解决问题
     * 重写 **[markup-inline-loader](https://github.com/legoflow-override/markup-inline-loader)**，使用 Webpack 4 loader api - this.resolve 处理引入路径解析
-* 增加 开发工作流在 4.x 以及 IE 9/10/11 等浏览器上的兼容性
+* 增加 **开发**工作流在 4.x 以及 IE 9+ 等浏览器上的兼容性
     * 该部分浏览器均不支持 ES6，而依赖模块中存在 ES6 语法，导致兼容问题。筛选其中依赖 ES6 语法的原生 node_modules 模块加入 Babel 编译从而解决问题。
-
 
 ## 0.0.49 (August 3, 2018)
 
