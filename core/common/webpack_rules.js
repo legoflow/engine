@@ -393,5 +393,19 @@ module.exports = ( config ) => {
         }
     }
 
+    rules.push( {
+        test: /\.*(js|jsx)$/,
+        include: [
+            path.resolve(root, './node_modules/ansi-regex'),
+            path.resolve(root, './node_modules/strip-ansi'),
+        ],
+        use: [
+            {
+                loader: require.resolve('babel-loader'),
+                options: babelOptions,
+            },
+        ]
+    } )
+
     return rules;
 };
