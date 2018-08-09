@@ -92,7 +92,7 @@
     "image-webpack-loader": "4.3.1",
     "loader-utils": "1.1.0",
     "lodash": "^4.17.5",
-    "markup-inline-loader": "0.2.2",
+    "markup-inline-loader": "git+https://github.com/legoflow-override/markup-inline-loader.git",
     "mini-css-extract-plugin": "0.4.0",
     "moment": "^2.22.0",
     "network": "0.4.1",
