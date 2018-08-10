@@ -402,8 +402,8 @@ module.exports = ( config ) => {
         include: [
             path.resolve( inlineNodeModules, 'ansi-regex'),
             path.resolve( inlineNodeModules, 'strip-ansi'),
-            path.resolve( nodeModulesPath, 'ansi-regex' ),
-            path.resolve( nodeModulesPath, 'strip-ansi' ),
+            path.resolve( yarnModulesPath, 'ansi-regex' ),
+            path.resolve( yarnModulesPath, 'strip-ansi' ),
         ],
         use: [
             {
