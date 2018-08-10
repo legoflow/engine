@@ -23,15 +23,19 @@ module.exports = ( config ) => {
 
     const limitSize = ( workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ] ) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 100;
 
-    const appNodeModules = path.resolve( root, './node_modules' );
+    const inlineNodeModules = path.resolve( root, './node_modules' );
     const localNodeModules = path.resolve( projectPath, './node_modules' );
 
-    const exclude = [ appNodeModules, localNodeModules ];
+    const exclude = [ inlineNodeModules, localNodeModules ];
+
+    let yarnModulesPath = inlineNodeModules;
 
     if ( root.toLocaleLowerCase().indexOf('yarn') > 0 ) {
         exclude.push(
             path.resolve( root, '../' )
         )
+
+        yarnModulesPath = path.resolve( root, '../' );
     }
 
     const [ postcssConfig ] = glob.sync( path.resolve( projectPath, '.postcssrc.*' ) );
@@ -396,8 +400,10 @@ module.exports = ( config ) => {
     rules.push( {
         test: /\.*(js|jsx)$/,
         include: [
-            path.resolve(root, './node_modules/ansi-regex'),
-            path.resolve(root, './node_modules/strip-ansi'),
+            path.resolve( inlineNodeModules, 'ansi-regex'),
+            path.resolve( inlineNodeModules, 'strip-ansi'),
+            path.resolve( nodeModulesPath, 'ansi-regex' ),
+            path.resolve( nodeModulesPath, 'strip-ansi' ),
         ],
         use: [
             {
