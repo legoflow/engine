@@ -2,9 +2,9 @@
 
 const path = require('path');
 
-const webpackRules = require('../common/webpack_rules');
-const webpackResolve = require('../common/webpack_resolve');
-const webpackPlugins = require('../common/webpack_plugins');
+const webpackRules = require('../common/1_webpack_rules');
+const webpackResolve = require('../common/3_webpack_resolve');
+const webpackPlugins = require('../common/2_webpack_plugins');
 
 module.exports = ( config ) => {
     let { entry, ip, webpackPort, projectPath, root, hot, system } = config;

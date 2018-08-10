@@ -7,7 +7,7 @@ const network = require('network');
 const findFreePort = require('find-free-port');
 const watch = require('gulp-watch');
 
-const webpackEntry = require('./core/common/webpack_entry');
+const webpackEntry = require('./core/common/0_webpack_entry');
 
 const webpackOptions = require('./core/dev/webpack.options');
 const webpackRun = require('./core/dev/webpack.run');

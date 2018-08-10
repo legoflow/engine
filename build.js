@@ -4,7 +4,7 @@ const del = require('del');
 const fs = require('fs-extra');
 const path = require('path');
 
-const webpackEntry = require('./core/common/webpack_entry');
+const webpackEntry = require('./core/common/0_webpack_entry');
 
 const webpackOptions = require('./core/build/webpack.options');
 const webpackRun = require('./core/build/webpack.run');
