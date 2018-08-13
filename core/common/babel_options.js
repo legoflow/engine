@@ -1,9 +1,7 @@
 'use strict';
 
-// FIXME: babel 7 rc-1 promise 没有被转化
 module.exports = {
     presets: [
-        // [ require.resolve('@babel/preset-stage-0'), { decoratorsLegacy: true } ],
         [
             require.resolve('@babel/preset-env'),
             {
@@ -20,6 +18,6 @@ module.exports = {
         require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
         [ require.resolve('@babel/plugin-proposal-pipeline-operator'), { proposal: 'minimal' } ],
         require.resolve('@babel/plugin-syntax-dynamic-import'),
-        require.resolve('@babel/plugin-transform-runtime'),
+        [ require.resolve('@babel/plugin-transform-runtime'), { corejs: 2 } ]
     ],
 };

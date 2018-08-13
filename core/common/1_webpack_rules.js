@@ -400,10 +400,8 @@ module.exports = ( config ) => {
     rules.push( {
         test: /\.*(js|jsx)$/,
         include: [
-            path.resolve( inlineNodeModules, 'ansi-regex'),
-            path.resolve( inlineNodeModules, 'strip-ansi'),
-            path.resolve( yarnModulesPath, 'ansi-regex' ),
-            path.resolve( yarnModulesPath, 'strip-ansi' ),
+            /.*\/ansi-regex\//,
+            /.*\/strip-ansi\//,
         ],
         use: [
             {
