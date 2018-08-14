@@ -1,50 +1,50 @@
-'use strict';
+'use strict'
 
-const chalk = require('chalk');
+const chalk = require('chalk')
 
 module.exports = class Messager {
-    static sender ( { type, msg } ) {
-        let color = msg => msg;
+  static sender ({ type, msg }) {
+    let color = msg => msg
 
-        switch ( type ) {
-            case 'error': {
-                color = chalk.red;
-                break;
-            }
-            case 'success': {
-                color = chalk.green.bold;
-                break;
-            }
-            case 'stop': {
-                color = chalk.yellow;
-                break;
-            }
-            case 'notice': {
-                color = chalk.blue;
-                break;
-            }
-        }
-
-        console.log( color( `[${ type }]` ), color( msg ) );
+    switch (type) {
+      case 'error': {
+        color = chalk.red
+        break
+      }
+      case 'success': {
+        color = chalk.green.bold
+        break
+      }
+      case 'stop': {
+        color = chalk.yellow
+        break
+      }
+      case 'notice': {
+        color = chalk.blue
+        break
+      }
     }
 
-    log ( msg ) {
-        Messager.sender( { type: 'log', msg } );
-    }
+    console.log(color(`[${type}]`), color(msg))
+  }
 
-    error ( msg ) {
-        Messager.sender( { type: 'error', msg } );
-    }
+  log (msg) {
+    Messager.sender({ type: 'log', msg })
+  }
 
-    success ( msg ) {
-        Messager.sender( { type: 'success', msg } );
-    }
+  error (msg) {
+    Messager.sender({ type: 'error', msg })
+  }
 
-    stop ( msg ) {
-        Messager.sender( { type: 'stop', msg } );
-    }
+  success (msg) {
+    Messager.sender({ type: 'success', msg })
+  }
 
-    notice ( msg ) {
-        Messager.sender( { type: 'notice', msg } );
-    }
-};
+  stop (msg) {
+    Messager.sender({ type: 'stop', msg })
+  }
+
+  notice (msg) {
+    Messager.sender({ type: 'notice', msg })
+  }
+}

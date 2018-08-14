@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
 module.exports = {
-  "parserOptions": {
-    "parser": "babel-eslint"
+  'parserOptions': {
+    'parser': 'babel-eslint'
   },
-  "extends": [
-    "standard",
-    "plugin:vue/essential"
+  'extends': [
+    'standard',
+    'plugin:vue/essential'
   ],
-  "plugins": [
-    "vue"
+  'plugins': [
+    'vue'
   ]
-};
+}

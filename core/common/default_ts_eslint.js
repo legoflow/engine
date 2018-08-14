@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
 module.exports = {
-  "parserOptions": {
-    "parser": "typescript-eslint-parser",
+  'parserOptions': {
+    'parser': 'typescript-eslint-parser'
   },
-  "extends": [
-    "standard",
-    "plugin:vue/essential"
+  'extends': [
+    'standard',
+    'plugin:vue/essential'
   ],
-  "plugins": [
-    "vue", "typescript"
+  'plugins': [
+    'vue', 'typescript'
   ],
   rules: {
     // https://github.com/eslint/typescript-eslint-parser#known-issues
@@ -23,5 +23,5 @@ module.exports = {
     // very strange as somehow this rule gets different behaviors depending
     // on the presence of typescript-eslint-parser...
     'strict': 'off'
-  },
-};
+  }
+}

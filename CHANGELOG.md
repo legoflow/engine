@@ -1,6 +1,7 @@
 ## Unreleased
 
-* [null]
+* 升级 Babel@7.0.0-rc.1
+* 修复 Yarn 安装方式下开发工作流浏览器兼容性问题
 
 ## 0.0.50 (August 9, 2018)
 

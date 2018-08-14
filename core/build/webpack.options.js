@@ -1,99 +1,98 @@
-'use strict';
+'use strict'
 
-const webpackRules = require('../common/1_webpack_rules');
-const webpackResolve = require('../common/3_webpack_resolve');
-const webpackPlugins = require('../common/2_webpack_plugins');
+const webpackRules = require('../common/1_webpack_rules')
+const webpackResolve = require('../common/3_webpack_resolve')
+const webpackPlugins = require('../common/2_webpack_plugins')
 
-module.exports = function ( config ) {
-    let { entry, ip, alias, projectPath, root, user, args, version, system, cacheFlag } = config;
+module.exports = function (config) {
+  let { entry, projectPath, system, cacheFlag } = config
 
-    const workflowConfig = config[ 'workflow.build' ];
+  const workflowConfig = config[ 'workflow.build' ]
 
-    const { publicPath } = workflowConfig;
+  const { publicPath } = workflowConfig
 
-    let chunkFilename = '[name].js';
+  let chunkFilename = '[name].js'
 
-    if ( cacheFlag ) {
-        chunkFilename = `[name].${ cacheFlag }.js`;
+  if (cacheFlag) {
+    chunkFilename = `[name].${cacheFlag}.js`
+  }
+
+  const outputPath = `${projectPath}/dist/js`
+
+  const webpackOptions = {
+    mode: 'production',
+    performance: {
+      hints: 'warning',
+      maxAssetSize: 250000,
+      maxEntrypointSize: 250000
+    },
+    entry,
+    output: {
+      filename: config.mode !== 'webpack' ? '[name].js' : chunkFilename,
+      chunkFilename,
+      path: system === 'mac' ? outputPath : outputPath.pathWinNorm(),
+      publicPath: publicPath || './js/'
+    },
+    module: {
+      rules: webpackRules(config)
+    },
+    externals: config.externals || { },
+    resolve: webpackResolve(config),
+    plugins: webpackPlugins(config),
+    context: system === 'mac' ? projectPath : projectPath.pathWinNorm(),
+    optimization: {
+      minimize: false
     }
+  }
 
-    const outputPath = `${ projectPath }/dist/js`;
+  if (config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true) {
+    webpackOptions[ 'devtool' ] = 'source-map'
+  }
 
-    const webpackOptions = {
-        mode: 'production',
-        performance: {
-            hints: 'warning',
-            maxAssetSize: 250000,
-            maxEntrypointSize: 250000,
-        },
-        entry,
-        output: {
-            filename: config.mode !== 'webpack' ? '[name].js' : chunkFilename,
-            chunkFilename,
-            path: system === 'mac' ? outputPath : outputPath.pathWinNorm( ),
-            publicPath: publicPath || './js/',
-        },
-        module: {
-            rules: webpackRules( config ),
-        },
-        externals: config.externals || { },
-        resolve: webpackResolve( config ),
-        plugins: webpackPlugins( config ),
-        context: system === 'mac' ? projectPath : projectPath.pathWinNorm( ),
-        optimization: {
-            minimize: false,
-        },
-    }
+  if (config.mode === 'webpack' && config.webpack && config.webpack.happypack == true) {
+    const os = require('os')
+    const HappyPack = require('happypack')
+    const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
-    if ( config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true ) {
-        webpackOptions[ 'devtool' ] = 'source-map';
-    }
+    const injectRules = [
+      { testFile: 'test.js', id: 'BuildJS' }
+      // { testFile: 'test.scss', id: 'BuildScss', oneOf: 1, },
+    ]
 
-    if ( config.mode === 'webpack' && config.webpack && config.webpack.happypack == true ) {
-        const os = require('os');
-        const HappyPack = require('happypack');
-        const happyThreadPool = HappyPack.ThreadPool( { size: os.cpus( ).length } );
+    webpackOptions.module.rules.forEach((item, index) => {
+      injectRules.some((_ir) => {
+        if (item.test.test(_ir.testFile)) {
+          const pluginOptions = {
+            id: _ir.id,
+            loaders: item.use,
+            threadPool: happyThreadPool,
+            verbose: true
+          }
 
-        const injectRules = [
-            { testFile: 'test.js', id: 'BuildJS' },
-            // { testFile: 'test.scss', id: 'BuildScss', oneOf: 1, },
-        ];
+          const use = [ {
+            loader: require.resolve('happypack/loader'),
+            options: { id: _ir.id }
+          } ]
 
-        webpackOptions.module.rules.forEach( ( item, index ) => {
-            injectRules.some( ( _ir ) => {
-                if ( item.test.test( _ir.testFile ) ) {
-                    const pluginOptions = {
-                        id: _ir.id,
-                        loaders: item.use,
-                        threadPool: happyThreadPool,
-                        verbose: true,
-                    }
+          if (item.oneOf) {
+            const loaders = item.oneOf[ _ir.oneOf ].use
 
-                    const use = [ {
-                        loader: require.resolve('happypack/loader'),
-                        options: { id: _ir.id },
-                    } ];
+            item.oneOf[ _ir.oneOf ].use = use
 
-                    if ( item.oneOf ) {
-                        const loaders = item.oneOf[ _ir.oneOf ].use;
+            pluginOptions.loaders = loaders
+          } else {
+            webpackOptions.module.rules[ index ].use = use
+          }
 
-                        item.oneOf[ _ir.oneOf ].use = use;
+          webpackOptions.plugins.unshift(new HappyPack(pluginOptions))
 
-                        pluginOptions.loaders = loaders;
-                    }
-                    else {
-                        webpackOptions.module.rules[ index ].use = use;
-                    }
+          return true
+        }
 
-                    webpackOptions.plugins.unshift( new HappyPack( pluginOptions ) );
+        return false
+      })
+    })
+  }
 
-                    return true;
-                }
-
-                return false;
-            } )
-        } )
-    }
-
-    config.webpackOptions = webpackOptions;
-};
+  config.webpackOptions = webpackOptions
+}
