@@ -74,7 +74,7 @@ const BROWSER_OPEN = (resolve, reject) => {
         fn (snippet, match) {
           snippet = `
 <script src="${bsHotFileUrl}"></script>
-<script src="https://s1.yy.com/ued_web_static/lib/lego/log/dev.js" async="async"></script>
+<script src="https://s1.yy.com/ued_web_static/lib/lego/log/dev.js" async="async"><\/script>
 </body>
 `
           return snippet
@@ -170,11 +170,11 @@ const SASS_TASK = (files) => {
 }
 
 // ---------------------------------- ejs ----------------------------------
-const EJS_TASK = () => {
+const EJS_TASK = (event) => {
   const { projectPath } = config
 
-  const ejsPath = path.resolve(projectPath, './src/ejs/*.ejs')
   const htmlPath = path.resolve(projectPath, './src')
+  const ejsPath = path.resolve(projectPath, './src/ejs/*.ejs')
 
   gulp.src(ejsPath)
     .pipe(ejs())
@@ -194,7 +194,7 @@ const EJS_TASK = () => {
     })
     )
     .pipe(
-      dist(htmlPath, (i) => {
+      dist(htmlPath, ejsPath, (i) => {
         console.log(`EJS 文件数 ${i}`)
 
         reload(projectPath + '/src/*.html')
