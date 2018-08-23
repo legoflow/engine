@@ -8,7 +8,7 @@ const Messager = require('./messager')
 const messager = new Messager()
 
 module.exports = function (config) {
-  const { projectPath } = config
+  const { projectPath, system } = config
 
   const { dll } = config.webpack || { }
 
@@ -34,7 +34,7 @@ module.exports = function (config) {
         path: path.join(projectPath, 'dll', '[name].manifest.json')
       })
     ],
-    context: projectPath
+    context: system === 'mac' ? projectPath : projectPath.pathWinNorm()
   }
 
   const compiler = webpack(dllOptions)

@@ -1,7 +1,6 @@
 'use strict'
 
-/* eslint-disable no-unused-vars */
-const schema = {
+export default {
   name: String,
   version: String,
   type: String,
