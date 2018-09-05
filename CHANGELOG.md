@@ -1,6 +1,10 @@
 ## Unreleased
 
-* 升级 Babel@7.0.0-rc.1
+* [null]
+
+## 0.0.52 (September 5, 2018)
+
+* 升级 Babel@7.0.0
 * 修复 Yarn 安装方式下开发工作流浏览器兼容性问题
 
 ## 0.0.50 (August 9, 2018)
