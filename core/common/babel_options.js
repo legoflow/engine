@@ -5,6 +5,7 @@ module.exports = {
     [
       require.resolve('@babel/preset-env'),
       {
+        modules: 'commonjs',
         targets: { 'browsers': [ 'android >= 4' ] }
       }
     ]
