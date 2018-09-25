@@ -8,6 +8,8 @@ const Messager = require('./messager')
 const messager = new Messager()
 
 module.exports = function (config) {
+  config = require('./core/common/common_config')(config, messager)
+
   const { projectPath, system } = config
 
   const { dll } = config.webpack || { }
