@@ -16,7 +16,11 @@ export default {
   webpack: {
     imageQuality: Number,
     html: Object,
-    dll: Array
+    dll: Array,
+    include: {
+      esnext: Array
+    },
+    babelModules: String
   },
   'workflow.dev': {
     env: String,

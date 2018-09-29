@@ -1,11 +1,11 @@
 'use strict'
 
-module.exports = {
+module.exports = ({ babelModules = false }) => ({
   presets: [
     [
       require.resolve('@babel/preset-env'),
       {
-        modules: 'commonjs',
+        modules: babelModules,
         targets: { 'browsers': [ 'android >= 4' ] }
       }
     ]
@@ -21,4 +21,4 @@ module.exports = {
     require.resolve('@babel/plugin-syntax-dynamic-import'),
     [ require.resolve('@babel/plugin-transform-runtime'), { corejs: 2 } ]
   ]
-}
+})

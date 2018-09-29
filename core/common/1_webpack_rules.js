@@ -5,7 +5,7 @@ const path = require('path')
 const glob = require('glob')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const babelOptions = require('../common/babel_options')
+let babelOptions = require('../common/babel_options')
 
 module.exports = (config) => {
   const isESNext = config[ 'ES.Next' ]
@@ -26,6 +26,8 @@ module.exports = (config) => {
   const localNodeModules = path.resolve(projectPath, './node_modules')
 
   const exclude = [ inlineNodeModules, localNodeModules ]
+
+  babelOptions = babelOptions({ babelModules: config.webpack['babelModules'] })
 
   if (root.toLocaleLowerCase().indexOf('yarn') > 0) {
     exclude.push(
