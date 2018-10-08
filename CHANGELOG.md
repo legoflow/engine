@@ -2,7 +2,7 @@
 
 * [null]
 
-## 1.1.0 (09-25, 2018)
+## 1.1.1 (10-08, 2018)
 
 * 增加 `webpack: { babelModules }` 配置，可配置内置 [Babel/preset-env modules](https://babeljs.io/docs/en/babel-preset-env#modules)
     * 如果项目混合使用多种 export 多个规范 ([具体问题详情](https://github.com/webpack/webpack/issues/4039))，可设置该配置为 `babelModules: 'commonjs'`

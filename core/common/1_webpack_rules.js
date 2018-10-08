@@ -27,7 +27,7 @@ module.exports = (config) => {
 
   const exclude = [ inlineNodeModules, localNodeModules ]
 
-  babelOptions = babelOptions({ babelModules: config.webpack['babelModules'] })
+  babelOptions = babelOptions({ babelModules: config.webpack && config.webpack['babelModules'] })
 
   if (root.toLocaleLowerCase().indexOf('yarn') > 0) {
     exclude.push(
