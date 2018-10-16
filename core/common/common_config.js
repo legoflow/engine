@@ -99,6 +99,16 @@ const resolve = (_config_) => {
 
   config.args = args
 
+  config.banner = `
+/*!
+ * ${config.name}
+ *
+ * @version: ${config.version}
+ * @author: ${config.user}
+ * @update: ${config.buildTime}
+ */
+`
+
   return config
 }
 

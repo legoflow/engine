@@ -42,15 +42,6 @@ module.exports = async (_config_) => {
 
   config.entry = entryFiles
 
-  config.banner = `
-/*!
- * ${config.name}
- * @version: ${config.version}
- * @author: ${config.user}
- * @update: ${config.buildTime}
- */
-`
-
   try {
     del.sync(`${config.path}/dist`, { force: true })
 

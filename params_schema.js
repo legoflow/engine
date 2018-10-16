@@ -13,6 +13,7 @@ export default {
   env: Object,
   includeModules: Array,
   mode: String,
+  friendlyErrors: Boolean,
   webpack: {
     imageQuality: Number,
     html: Object,

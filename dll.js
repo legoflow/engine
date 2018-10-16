@@ -34,6 +34,10 @@ module.exports = function (config) {
       new webpack.DllPlugin({
         name: '_dll_[name]',
         path: path.join(projectPath, 'dll', '[name].manifest.json')
+      }),
+      new webpack.BannerPlugin({
+        banner: config.banner,
+        raw: true
       })
     ],
     context: system === 'mac' ? projectPath : projectPath.pathWinNorm()
