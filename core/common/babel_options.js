@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = ({ babelModules = false }) => ({
+module.exports = ({ babelModules = 'commonjs' }) => ({
   presets: [
     [
       require.resolve('@babel/preset-env'),
