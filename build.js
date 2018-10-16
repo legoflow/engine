@@ -29,10 +29,10 @@ module.exports = async (_config_) => {
     shell = void 0
   }
 
-  const shellFunc = shell ? getShell(shell, _config_, messager) : void 0
+  const shellExecFunctions = shell ? getShell(shell, _config_, messager) : void 0
 
-  if (shell && shellFunc && shellFunc.init) {
-    await shellFunc.init(_config_)
+  if (shell && shellExecFunctions && shellExecFunctions.init) {
+    await shellExecFunctions.init(_config_)
   }
 
   // common config reslove
@@ -56,12 +56,12 @@ module.exports = async (_config_) => {
 
     webpackOptions(config)
 
-    if (shell && shellFunc && shellFunc.before) {
-      await shellFunc.before(config)
+    if (shell && shellExecFunctions && shellExecFunctions.before) {
+      await shellExecFunctions.before(config)
     }
 
-    if (shell && onlyRunShell && shellFunc) {
-      shellFunc.after ? await shellFunc.after() : await shellFunc()
+    if (shell && onlyRunShell && shellExecFunctions) {
+      shellExecFunctions.after ? await shellExecFunctions.after() : await shellExecFunctions()
 
       return void 0
     }
@@ -76,8 +76,8 @@ module.exports = async (_config_) => {
 
     config.mode !== 'webpack' && await gulp(config, messager)
 
-    if (shell && shellFunc) {
-      shellFunc.after ? await shellFunc.after(config) : (typeof shellFunc === 'function' && await shellFunc(config))
+    if (shell && shellExecFunctions) {
+      shellExecFunctions.after ? await shellExecFunctions.after(config) : (typeof shellExecFunctions === 'function' && await shellExecFunctions(config))
     } else {
       messager.success()
     }

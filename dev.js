@@ -63,10 +63,10 @@ const start = async (_config_) => {
     shell = void 0
   }
 
-  const shellFunc = shell ? getShell(shell, _config_, messager) : void 0
+  const shellExecFunctions = shell ? getShell(shell, _config_, messager) : void 0
 
-  if (shell && shellFunc && shellFunc.init) {
-    await shellFunc.init(_config_)
+  if (shell && shellExecFunctions && shellExecFunctions.init) {
+    await shellExecFunctions.init(_config_)
   }
 
   // common config reslove
@@ -109,12 +109,13 @@ const start = async (_config_) => {
   try {
     webpackOptions(config)
 
-    if (shell && shellFunc && shellFunc.before) {
-      await shellFunc.before(config)
+    if (shell && shellExecFunctions && shellExecFunctions.before) {
+      await shellExecFunctions.before(config)
     }
 
-    if (shell && onlyRunShell && shellFunc) {
-      shellFunc.after ? await shellFunc.after(config) : await shellFunc(config)
+    if (shell && onlyRunShell && shellExecFunctions) {
+      console.log(typeof shellExecFunctions === 'function')
+      shellExecFunctions.after ? await shellExecFunctions.after(config) : await shellExecFunctions(config)
 
       return void 0
     }
@@ -136,8 +137,8 @@ const start = async (_config_) => {
       config.bsPort = config.webpackPort
     }
 
-    if (shell && shellFunc) {
-      shellFunc.after ? await shellFunc.after(config) : await shellFunc(config)
+    if (shell && shellExecFunctions) {
+      shellExecFunctions.after ? await shellExecFunctions.after(config) : (typeof shellExecFunctions === 'function' && await shellExecFunctions(config))
     }
 
     if (config.autoOpenChrome) {

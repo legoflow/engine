@@ -255,7 +255,7 @@ module.exports = (config) => {
     )
   }
 
-  if (config.mode === 'webpack' && config.from === 'cli') {
+  if (config.mode === 'webpack' && config.from === 'cli' && config.friendlyErrors) {
     plugins.push(
       new WebpackBar({
         once: config.workflow === 'dev',
