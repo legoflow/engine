@@ -2,6 +2,13 @@
 
 * [null]
 
+## 1.2.0 (10-18, 2018)
+
+* 增加 构建 DLL 文件，增加 Banner 信息
+* 增加 `friendlyErrors` 配置，可关闭 Webpack Mode 下插件美化输出
+* 更改 `webpack: { babelModules }` 默认值为 `commonjs`
+* 修复 开发工作流个别情况下出现 `Shell.after not function` 问题
+
 ## 1.1.1 (10-08, 2018)
 
 * 增加 `webpack: { babelModules }` 配置，可配置内置 [Babel/preset-env modules](https://babeljs.io/docs/en/babel-preset-env#modules)
