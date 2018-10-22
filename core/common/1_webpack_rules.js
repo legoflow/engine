@@ -70,7 +70,6 @@ module.exports = (config) => {
 
   const vueRule = {
     test: /\.vue$/,
-    exclude,
     use: [
       {
         loader: require.resolve('vue-loader'),
@@ -174,7 +173,6 @@ module.exports = (config) => {
 
   const imageRule = {
     test: /\.(png|jpg|gif|jpeg|svg)$/,
-    exclude,
     use: [
       {
         loader: require.resolve('url-loader'),
@@ -210,7 +208,6 @@ module.exports = (config) => {
 
   const scssRule = {
     test: /\.scss$/,
-    exclude,
     oneOf: [
       {
         resourceQuery: /module/,
@@ -224,7 +221,6 @@ module.exports = (config) => {
 
   const cssRule = {
     test: /\.css$/,
-    exclude,
     oneOf: [
       {
         resourceQuery: /module/,
@@ -267,7 +263,6 @@ module.exports = (config) => {
     imageRule,
     {
       test: /\.(ttf|woff|otf|eot)$/,
-      exclude,
       use: [
         {
           loader: require.resolve('url-loader'),
@@ -283,12 +278,10 @@ module.exports = (config) => {
     cssRule,
     {
       test: /\.(tpl|art)$/,
-      exclude,
       use: [ require.resolve('art-template-loader') ]
     },
     {
       test: /\.html$/,
-      exclude,
       oneOf: [
         {
           resourceQuery: /^\?vue/,
@@ -365,19 +358,21 @@ module.exports = (config) => {
   jsRule && rules.push(jsRule)
   tsRule && rules.push(tsRule)
 
-  rules.push(vueRule)
+  rules.push(Object.assign(_.cloneDeep(vueRule), { exclude }))
+
+  const arrayPathToAbsolute = (array) => {
+    array.forEach((item, index) => {
+      item.indexOf('./') === 0 && (array[ index ] = path.resolve(projectPath, item))
+    })
+  }
 
   // 特别指定 include 的模块
   if (config.mode === 'webpack' && config.webpack && config.webpack.include) {
-    let { esnext } = config.webpack.include
+    let { esnext, vue } = config.webpack.include
 
     // 指定增加 include js || jsx 编译 esnext 模块
     if (esnext) {
-      if (Array.isArray(esnext)) {
-        esnext.forEach((item, index) => {
-          item.indexOf('./') === 0 && (esnext[ index ] = path.resolve(projectPath, item))
-        })
-      }
+      arrayPathToAbsolute(esnext)
 
       rules.push({
         test: /\.*(js|jsx)$/,
@@ -389,6 +384,12 @@ module.exports = (config) => {
           }
         ]
       })
+    }
+
+    if (vue) {
+      arrayPathToAbsolute(vue)
+
+      rules.push(Object.assign(_.cloneDeep(vueRule), { include: vue }))
     }
   }
 

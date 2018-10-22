@@ -19,7 +19,8 @@ export default {
     html: Object,
     dll: Array,
     include: {
-      esnext: Array
+      esnext: Array,
+      vue: Array
     },
     babelModules: String
   },
