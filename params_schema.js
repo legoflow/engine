@@ -22,7 +22,8 @@ export default {
       esnext: Array,
       vue: Array
     },
-    babelModules: String
+    babelModules: String,
+    uglifyOptions: Object
   },
   'workflow.dev': {
     env: String,

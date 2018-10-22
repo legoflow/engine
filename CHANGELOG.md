@@ -2,12 +2,13 @@
 
 * [null]
 
-## 1.3.0 (10-22, 2018)
+## 1.4.0 (10-22, 2018)
 
 * 更新 依赖（[详细](https://github.com/legoflow/engine/commit/3697983fcb602bfaa8c5dbfeaa1594c8919c6232#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)）
 * 增加 `webpack { include: { vue } }` 配置
     * 通过该配置让 Webpack include 一些处于 node_modules 下，但同样需要 Vue-loader 编译的源码模块
 * 删除 非 `js || jsx || ts || tsx` 文件的默认 exclude 配置
+* 增加 `webpack { uglifyOptions }` [配置](https://github.com/webpack-contrib/uglifyjs-webpack-plugin#uglifyoptions)
 
 ## 1.2.0 (10-18, 2018)
 

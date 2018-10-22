@@ -228,6 +228,10 @@ module.exports = (config) => {
       // },
     }
 
+    if (config.mode === 'webpack' && config.webpack && config.webpack['uglifyOptions']) {
+      UglifyJsPluginOptions.uglifyOptions = config.webpack['uglifyOptions']
+    }
+
     if (config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true) {
       UglifyJsPluginOptions.sourceMap = true
     }
