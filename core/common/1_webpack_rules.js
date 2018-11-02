@@ -366,6 +366,18 @@ module.exports = (config) => {
     })
   }
 
+  // YY.PKG
+  rules.push({
+    test: /\.*(js|jsx)$/,
+    include: path.resolve(projectPath, './node_modules/yypkg'),
+    use: [
+      {
+        loader: require.resolve('babel-loader'),
+        options: babelOptions
+      }
+    ]
+  })
+
   // 特别指定 include 的模块
   if (config.mode === 'webpack' && config.webpack && config.webpack.include) {
     let { esnext, vue } = config.webpack.include
