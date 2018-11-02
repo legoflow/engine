@@ -42,6 +42,7 @@ const resolve = (_config_) => {
   const workflowConfig = config[ `workflow.${workflow}` ] || { }
 
   const defaultAlias = {
+    'moment': `${projectPath}/node_modules/moment`,
     'lodash': `${projectPath}/node_modules/lodash`,
     '@local': `${projectPath}/node_modules`,
     '@tpl/helper': `${root}/node_modules/art-template/lib/runtime`
