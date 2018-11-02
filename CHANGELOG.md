@@ -2,6 +2,14 @@
 
 * [null]
 
+## 1.5.0 (11-02, 2018)
+
+* 增加 默认 Babel 编译 [YY.PKG](https://github.com/yypkg/yypkg)
+* 增加 默认别名指向本地 node_modules 模块
+    * lodash
+    * axios
+    * moment
+
 ## 1.4.0 (10-22, 2018)
 
 * 更新 依赖（[详细](https://github.com/legoflow/engine/commit/3697983fcb602bfaa8c5dbfeaa1594c8919c6232#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)）
