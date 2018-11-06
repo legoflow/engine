@@ -1,6 +1,9 @@
 ## Unreleased
 
-* [null]
+* 修改 配置 includeModules 默认加入本地 `node_modules`
+* 修改 配置 limitResourcesSize 默认值为 `5kb`
+* 修改 配置 alias 加入默认值 `@ === ./src`
+* 修改 配置 VueChunkStyle 默认值为 `false`
 
 ## 1.5.0 (11-02, 2018)
 
