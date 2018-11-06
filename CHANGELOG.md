@@ -1,9 +1,12 @@
 ## Unreleased
 
 * 修改 配置 includeModules 默认加入本地 `node_modules`
-* 修改 配置 limitResourcesSize 默认值为 `5kb`
+* 修改 配置 limitResourcesSize 默认值为 `5`
 * 修改 配置 alias 加入默认值 `@ === ./src`
 * 修改 配置 VueChunkStyle 默认值为 `false`
+* 修改 配置 ES.Next 默认值为 `true`
+* 修改 配置 workflow.dev { hot.reload } 默认值为 `true`
+* 修改 配置 workflow.build { cache } 默认值为 `hash`
 
 ## 1.5.0 (11-02, 2018)
 
