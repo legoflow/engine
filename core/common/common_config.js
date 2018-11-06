@@ -45,6 +45,7 @@ const resolve = (_config_) => {
     'axios': `${projectPath}/node_modules/axios`,
     'moment': `${projectPath}/node_modules/moment`,
     'lodash': `${projectPath}/node_modules/lodash`,
+    '@': `${projectPath}/src`,
     '@local': `${projectPath}/node_modules`,
     '@tpl/helper': `${root}/node_modules/art-template/lib/runtime`
   }
