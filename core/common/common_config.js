@@ -14,6 +14,8 @@ const resolve = (_config_) => {
     config.isTS = fs.existsSync(path.resolve(projectPath, 'tsconfig.json'))
   }
 
+  config.webpack && typeof config.webpack.VueChunkStyle === 'undefined' && (config.webpack.VueChunkStyle = false)
+
   const { cache } = config[ 'workflow.build' ]
 
   config.cacheFlag = void 0
