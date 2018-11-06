@@ -20,7 +20,7 @@ module.exports = (config) => {
 
   const isBuildWorkflow = config.workflow === 'build'
 
-  const limitSize = (workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ]) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 100
+  const limitSize = (workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ]) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 5
 
   const inlineNodeModules = path.resolve(root, './node_modules')
   const localNodeModules = path.resolve(projectPath, './node_modules')
