@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 1.6.0 (11-07, 2018)
+
 * 修改 配置 includeModules 默认加入本地 `node_modules`
 * 修改 配置 limitResourcesSize 默认值为 `5`
 * 修改 配置 alias 加入默认值 `@ === ./src`
