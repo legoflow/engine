@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "1.6.0",
+  "version": "1.7.0-beta.2",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {},
@@ -100,6 +100,7 @@
     "optimize-css-assets-webpack-plugin": "5.0.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "5.3.0",
+    "postcss-sprites": "git+https://github.com/legoflow-override/postcss-sprites.git",
     "raw-loader": "0.5.1",
     "sass-loader": "7.1.0",
     "sass-resources-loader": "1.3.3",

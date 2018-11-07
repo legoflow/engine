@@ -20,7 +20,7 @@ module.exports = (config) => {
 
   const isBuildWorkflow = config.workflow === 'build'
 
-  const limitSize = (workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ]) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 1024 * 5
+  const limitSize = (workflow == 'build' && workflowConfig[ 'bundle.limitResourcesSize' ]) ? workflowConfig[ 'bundle.limitResourcesSize' ] : 5
 
   const inlineNodeModules = path.resolve(root, './node_modules')
   const localNodeModules = path.resolve(projectPath, './node_modules')
@@ -45,6 +45,50 @@ module.exports = (config) => {
       require('postcss-preset-env')({
         stage: 0,
         browsers: [ '> 0.01%' ]
+      }),
+      require('postcss-sprites')({
+        alias: config.alias,
+        stylesheetPath: '',
+        spritePath: path.resolve(projectPath, './src/img'),
+        filterBy (image) {
+          if (!/\/slice\//.test(image.url)) {
+            return Promise.reject()
+          }
+
+          return Promise.resolve()
+        },
+        groupBy (image) {
+          let groups = /\/slice\/(.*?)\/.*/gi.exec(image.url)
+          let groupName = groups ? groups[1] : ''
+
+          image.retina = true
+          image.ratio = 1
+
+          if (groupName) {
+            let ratio = /@(\d+)x$/gi.exec(groupName)
+
+            if (ratio) {
+              ratio = ratio[1]
+
+              while (ratio > 10) {
+                ratio = ratio / 10
+              }
+
+              image.ratio = ratio
+            }
+          }
+
+          return Promise.resolve(groupName)
+        },
+        hooks: {
+          onSaveSpritesheet (options, { groups, extension }) {
+            return groups[0] ? path.join(options.spritePath, `${['sprite', ...groups].join('-')}.${extension}`) : path.join(options.spritePath, `sprite.${extension}`)
+          }
+        },
+        spritesmith: {
+          padding: 5
+        }
+        // verbose: true
       })
     ]
   } : {
