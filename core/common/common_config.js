@@ -33,18 +33,20 @@ const resolve = (_config_) => {
 
   config.cacheFlag = void 0
 
-  config.buildTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  if (config.workflow === 'build') {
+    config.buildTime = moment().format('YYYY-MM-DD HH:mm:ss')
 
-  switch (cache) {
-    case 'timestamp':
-      config.cacheFlag = (new Date()).getTime()
-      break
-    case 'version':
-      config.cacheFlag = config.version || '0.0.0'
-      break
-    case 'hash':
-      config.cacheFlag = '[hash]'
-      break
+    switch (cache) {
+      case 'timestamp':
+        config.cacheFlag = (new Date()).getTime()
+        break
+      case 'version':
+        config.cacheFlag = config.version || '0.0.0'
+        break
+      case 'hash':
+        config.cacheFlag = '[hash]'
+        break
+    }
   }
 
   config.path = projectPath.pathNorm()
