@@ -32,6 +32,7 @@ const resolve = (_config_) => {
   const { cache } = config[ 'workflow.build' ]
 
   config.cacheFlag = void 0
+  config.buildTime = ''
 
   if (config.workflow === 'build') {
     config.buildTime = moment().format('YYYY-MM-DD HH:mm:ss')
