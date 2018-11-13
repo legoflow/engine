@@ -113,7 +113,7 @@ const resolve = (_config_) => {
 
   if (typeof envUserArgs != 'undefined') {
     for (let key in envUserArgs) {
-      if (key === user || key == '*') {
+      if (key === user || key === '*') {
         args[ 'process.args' ] = _.assign(args[ 'process.args' ], envUserArgs[ key ])
       }
     }

@@ -2,6 +2,11 @@
 
 * [null]
 
+## 1.7.0 (11-13, 2018)
+
+* 增加 Webpack model 雪碧图功能
+* 修复 cache hash 影响开发工作流问题
+
 ## 1.6.0 (11-07, 2018)
 
 * 修改 配置 includeModules 默认加入本地 `node_modules`
