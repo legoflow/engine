@@ -32,7 +32,8 @@ export default {
     'user.args': Object,
     proxy: Object,
     shell: String,
-    onlyRunShell: Boolean
+    onlyRunShell: Boolean,
+    https: Boolean
   },
   'workflow.build': {
     publicPath: String,

@@ -57,7 +57,8 @@ module.exports = (config) => {
       poll: 1000
     },
     proxy: workflowConfig.proxy || { },
-    disableHostCheck: true
+    disableHostCheck: true,
+    https: workflowConfig.https || false
   }
 
   if (config.friendlyErrors) {

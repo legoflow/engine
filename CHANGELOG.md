@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 增加 `workflow.dev { https }` 配置项
 
 ## 1.7.0 (11-13, 2018)
 
