@@ -15,6 +15,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackBar = require('webpackbar')
+const HtmlInjectAssetsWebpackPlugin = require('html-inject-assets-webpack-plugin')
 
 module.exports = (config) => {
   const { projectPath } = config
@@ -265,6 +266,12 @@ module.exports = (config) => {
         once: config.workflow === 'dev',
         name: config.workflow === 'dev' ? 'dev' : 'build'
       })
+    )
+  }
+
+  if (config.mode === 'webpack' && config.workflow === 'build' && workflowConfig['html.inject']) {
+    plugins.push(
+      new HtmlInjectAssetsWebpackPlugin(workflowConfig['html.inject'])
     )
   }
 

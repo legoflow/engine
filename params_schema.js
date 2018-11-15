@@ -45,6 +45,7 @@ export default {
     env: String,
     shell: String,
     onlyRunShell: Boolean,
-    'output.webpackStats': Boolean
+    'output.webpackStats': Boolean,
+    'html.inject': Object
   }
 }
