@@ -58,7 +58,7 @@ module.exports = (config) => {
     },
     proxy: workflowConfig.proxy || { },
     disableHostCheck: true,
-    https: workflowConfig.https || false
+    https: (config.webpack && config.webpack['dev.https']) || false
   }
 
   if (config.friendlyErrors) {

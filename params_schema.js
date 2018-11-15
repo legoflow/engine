@@ -23,7 +23,13 @@ export default {
       vue: Array
     },
     babelModules: String,
-    uglifyOptions: Object
+    uglifyOptions: Object,
+    VueChunkStyle: Boolean,
+    'sass.globalResources': Array,
+    'dev.https': Boolean,
+    'build.sourceMap': Boolean,
+    'build.html.inject': Object,
+    'build.copy': Object
   },
   'workflow.dev': {
     env: String,
@@ -32,8 +38,7 @@ export default {
     'user.args': Object,
     proxy: Object,
     shell: String,
-    onlyRunShell: Boolean,
-    https: Boolean
+    onlyRunShell: Boolean
   },
   'workflow.build': {
     publicPath: String,
@@ -45,8 +50,6 @@ export default {
     env: String,
     shell: String,
     onlyRunShell: Boolean,
-    'output.webpackStats': Boolean,
-    'html.inject': Object,
-    copy: Object
+    'output.webpackStats': Boolean
   }
 }

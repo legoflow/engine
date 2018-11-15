@@ -270,17 +270,17 @@ module.exports = (config) => {
     )
   }
 
-  if (config.mode === 'webpack' && config.workflow === 'build' && workflowConfig['html.inject']) {
+  if (config.mode === 'webpack' && config.workflow === 'build' && config.webpack['build.htmlInject']) {
     plugins.push(
-      new HtmlInjectAssetsWebpackPlugin(workflowConfig['html.inject'])
+      new HtmlInjectAssetsWebpackPlugin(config.webpack['build.htmlInject'])
     )
   }
 
-  if (config.mode === 'webpack' && config.workflow === 'build' && workflowConfig['copy']) {
+  if (config.mode === 'webpack' && config.workflow === 'build' && config.webpack['build.copy']) {
     plugins.push(
       new FsCopyWebpackPlugin({
         root: projectPath,
-        files: workflowConfig['copy']
+        files: config.webpack['build.copy']
       })
     )
   }

@@ -1,8 +1,8 @@
 ## Unreleased
 
-* 增加 `workflow.dev { https }` [配置项](https://legoflow.com/wiki/config.html#https-v2-4-0)
-* 增加 `workflow.build { html.inject }` [配置项](https://legoflow.com/wiki/config.html#html-inject-v2-4-0)
-* 增加 `workflow.build { copy }` [配置项](https://legoflow.com/wiki/config.html#copy-v2-4-0)
+* 增加 `webpack { dev.https }` [配置项](https://legoflow.com/wiki/config.html#dev-https-v2-4-0)
+* 增加 `webpack { build.htmlInject }` [配置项](https://legoflow.com/wiki/config.html#build-htmlinject-v2-4-0)
+* 增加 `webpack { build.copy }` [配置项](https://legoflow.com/wiki/config.html#build-copy-v2-4-0)
 
 ## 1.7.0 (11-13, 2018)
 
@@ -45,7 +45,7 @@
 ## 1.1.1 (10-08, 2018)
 
 * 增加 `webpack: { babelModules }` 配置，可配置内置 [Babel/preset-env modules](https://babeljs.io/docs/en/babel-preset-env#modules)
-    * 如果项目混合使用多种 export 多个规范 ([具体问题详情](https://github.com/webpack/webpack/issues/4039))
+  * 如果项目混合使用多种 export 多个规范 ([具体问题详情](https://github.com/webpack/webpack/issues/4039))
 
 ## 1.0.1 (09-25, 2018)
 
@@ -67,13 +67,13 @@
 ## 0.0.50 (08-09, 2018)
 
 * 修复 SVG inline 别名无效问题
-    * 重写 **[markup-inline-loader](https://github.com/legoflow-override/markup-inline-loader)**，使用 Webpack 4 loader api - this.resolve 处理引入路径解析
+  * 重写 **[markup-inline-loader](https://github.com/legoflow-override/markup-inline-loader)**，使用 Webpack 4 loader api - this.resolve 处理引入路径解析
 * 增加 **开发**工作流在 4.x 以及 IE 9+ 等浏览器上的兼容性
-    * 该部分浏览器均不支持 ES6，而依赖模块中存在 ES6 语法，导致兼容问题。筛选其中依赖 ES6 语法的原生 node_modules 模块加入 Babel 编译从而解决问题。
+  * 该部分浏览器均不支持 ES6，而依赖模块中存在 ES6 语法，导致兼容问题。筛选其中依赖 ES6 语法的原生 node_modules 模块加入 Babel 编译从而解决问题。
 
 ## 0.0.49 (08-03, 2018)
 
-* 增加 通过 **webpack{ sass.globalResources }** 配置全局作用域的 Sass 文件
+* 增加 通过 **webpack { sass.globalResources }** 配置全局作用域的 Sass 文件
 * 修复 TS eslint 检测兼容问题
 * 修复 Yarn 安装方式，构建项目 Babel $export is not a function 问题
 
@@ -88,14 +88,14 @@
 * 升级 Babel v7.0.0-beta.54
 * 升级 Postcss & loader，支持外部配置文件 ([Demo](https://github.com/legoflow/awesomes/tree/master/%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%20Postcss%20%E9%85%8D%E7%BD%AE))
 * 抛弃 使用 Bebel-preset-es2015
-* 增加 **webpack{ include: { esnext } }** 配置 ([详细了解](https://legoflow.com/wiki/config.html#webpack))
-    * 通过该配置让 Webpack include 一些处于 node_modules 下，但同样需要 ESNext 编译的源码模块
+* 增加 **webpack { include: { esnext } }** 配置 ([详细了解](https://legoflow.com/wiki/config.html#webpack))
+  * 通过该配置让 Webpack include 一些处于 node_modules 下，但同样需要 ESNext 编译的源码模块
 
 ## 0.0.45 (07-09, 2018)
 
 * 增加 Webpack mode 构建 JS SourceMap
-* 增加 **webpack{ VueChunkStyle }** 配置，使用该配置可让 vue 文件内含样式不独立打包出 Css 文件
-    * 发现 Chunk 模块独立打包出的 Css，在 Android 4.3 版本下无法通过 linkElement.onload 触发回调，导致 Chunk 模块未能进入回调，导致异步路由页面空白。[问题详情](https://github.com/webpack-contrib/mini-css-extract-plugin/pull/134) & [linkElement.onload 兼容性](http://pie.gd/test/script-link-events/)
+* 增加 **webpack { VueChunkStyle }** 配置，使用该配置可让 vue 文件内含样式不独立打包出 Css 文件
+  * 发现 Chunk 模块独立打包出的 Css，在 Android 4.3 版本下无法通过 linkElement.onload 触发回调，导致 Chunk 模块未能进入回调，导致异步路由页面空白。[问题详情](https://github.com/webpack-contrib/mini-css-extract-plugin/pull/134) & [linkElement.onload 兼容性](http://pie.gd/test/script-link-events/)
 
 ## 0.0.44 (07-06, 2018)
 
