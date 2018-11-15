@@ -46,6 +46,7 @@ export default {
     shell: String,
     onlyRunShell: Boolean,
     'output.webpackStats': Boolean,
-    'html.inject': Object
+    'html.inject': Object,
+    copy: Object
   }
 }

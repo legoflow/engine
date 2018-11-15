@@ -16,6 +16,7 @@ const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plug
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackBar = require('webpackbar')
 const HtmlInjectAssetsWebpackPlugin = require('html-inject-assets-webpack-plugin')
+const FsCopyWebpackPlugin = require('fs-copy-webpack-plugin')
 
 module.exports = (config) => {
   const { projectPath } = config
@@ -272,6 +273,15 @@ module.exports = (config) => {
   if (config.mode === 'webpack' && config.workflow === 'build' && workflowConfig['html.inject']) {
     plugins.push(
       new HtmlInjectAssetsWebpackPlugin(workflowConfig['html.inject'])
+    )
+  }
+
+  if (config.mode === 'webpack' && config.workflow === 'build' && workflowConfig['copy']) {
+    plugins.push(
+      new FsCopyWebpackPlugin({
+        root: projectPath,
+        files: workflowConfig['copy']
+      })
     )
   }
 
