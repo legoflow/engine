@@ -1,5 +1,9 @@
 ## Unreleased
 
+* [null]
+
+## 1.8.0 (11-22, 2018)
+
 * 增加 `webpack { dev.https }` [配置项](https://legoflow.com/wiki/config.html#dev-https-v2-4-0)
 * 增加 `webpack { build.htmlInject }` [配置项](https://legoflow.com/wiki/config.html#build-htmlinject-v2-4-0)
 * 增加 `webpack { build.copy }` [配置项](https://legoflow.com/wiki/config.html#build-copy-v2-4-0)
