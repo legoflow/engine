@@ -17,6 +17,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackBar = require('webpackbar')
 const HtmlInjectAssetsWebpackPlugin = require('html-inject-assets-webpack-plugin')
 const FsCopyWebpackPlugin = require('fs-copy-webpack-plugin')
+const WorkerPlugin = require('worker-plugin')
 
 module.exports = (config) => {
   const { projectPath } = config
@@ -283,6 +284,10 @@ module.exports = (config) => {
         files: config.webpack['build.copy']
       })
     )
+  }
+
+  if (config.mode === 'webpack') {
+    plugins.push(new WorkerPlugin())
   }
 
   return plugins
