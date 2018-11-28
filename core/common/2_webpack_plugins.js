@@ -286,7 +286,7 @@ module.exports = (config) => {
     )
   }
 
-  if (config.mode === 'webpack') {
+  if (config.mode === 'webpack' && config.webpack['bundle.worker']) {
     plugins.push(new WorkerPlugin())
   }
 
