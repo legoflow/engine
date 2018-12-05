@@ -306,7 +306,7 @@ module.exports = (config) => {
   const rules = [
     imageRule,
     {
-      test: /\.(ttf|woff|otf|eot)$/,
+      test: /\.(ttf|woff|otf|eot|svga)$/,
       use: [
         {
           loader: require.resolve('url-loader'),
