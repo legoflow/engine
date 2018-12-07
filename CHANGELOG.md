@@ -4,8 +4,23 @@
 
 ## 1.9.0 (12-07, 2018)
 
-* 增加 `webpack { bundle.worker }` 配置项，可打包依赖的 WebWork 脚本
-* 增加 SVGA 文件依赖处理
+* 增加 `webpack { bundle.worker }` 配置项，可打包依赖的 WebWork 脚本（[详细](https://legoflow.com/wiki/config.html#bundle-worker-v2-5-0)）
+* 增加 SVGA 文件依赖处理，例如
+  ```js
+  import { Downloader, Parser, Player } from 'svga.lite'
+  import a from './a.svga'
+
+  const downloader = new Downloader()
+  const parser = new Parser()
+  const player = new Player('#svga')
+
+  const fileData = await downloader.get(a)
+  const svgaData = await parser.do(fileData)
+
+  await player.mount(svgaData)
+
+  player.start()
+  ```
 * 更新依赖
   * TypeScript
   * Eslint
