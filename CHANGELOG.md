@@ -1,7 +1,15 @@
 ## Unreleased
 
+* [null]
+
+## 1.9.0 (12-07, 2018)
+
 * 增加 `webpack { bundle.worker }` 配置项，可打包依赖的 WebWork 脚本
 * 增加 SVGA 文件依赖处理
+* 更新依赖
+  * TypeScript
+  * Eslint
+  * Postcss
 
 ## 1.8.0 (11-22, 2018)
 

@@ -29,7 +29,8 @@ export default {
     'dev.https': Boolean,
     'build.sourceMap': Boolean,
     'build.html.inject': Object,
-    'build.copy': Object
+    'build.copy': Object,
+    'bundle.worker': Boolean
   },
   'workflow.dev': {
     env: String,
