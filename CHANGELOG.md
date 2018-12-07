@@ -2,7 +2,7 @@
 
 * [null]
 
-## 1.9.0 (12-07, 2018)
+## 1.9.1 (12-07, 2018)
 
 * 增加 `webpack { bundle.worker }` 配置项，可打包依赖的 WebWork 脚本（[详细](https://legoflow.com/wiki/config.html#bundle-worker-v2-5-0)）
 * 增加 SVGA 文件依赖处理，例如

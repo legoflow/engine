@@ -17,9 +17,8 @@ const resolve = (_config_) => {
   // 增加默认值
   typeof config['ES.Next'] === 'undefined' && (config['ES.Next'] = true)
 
-  if (config.webpack) {
-    typeof config.webpack.VueChunkStyle === 'undefined' && (config.webpack.VueChunkStyle = false)
-  }
+  !config.webpack && (config.webpack = {})
+  typeof config.webpack.VueChunkStyle === 'undefined' && (config.webpack.VueChunkStyle = false)
 
   if (config['workflow.dev']) {
     typeof config['workflow.dev']['hot.reload'] === 'undefined' && (config['workflow.dev']['hot.reload'] = true)
