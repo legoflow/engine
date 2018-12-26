@@ -1,5 +1,3 @@
-'use strict'
-
 const del = require('del')
 const fs = require('fs-extra')
 const path = require('path')

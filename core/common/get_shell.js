@@ -1,5 +1,3 @@
-'use strict'
-
 const fs = require('fs-extra')
 const util = require('../../util')
 
@@ -30,21 +28,21 @@ module.exports = (shell, _config_, messager) => {
   const cycleFunc = { }
 
   if (shell.init) {
-    cycleFunc.init = async function (config) {
+    cycleFunc.init = async config => {
       // messager.log( 'start to exec shell.init' );
       await shell.init({ config, messager, nodeBinExec, util, pull })
     }
   }
 
   if (shell.before) {
-    cycleFunc.before = async function (config) {
+    cycleFunc.before = async config => {
       // messager.log( 'start to exec shell.before' );
       await shell.before({ config, messager, nodeBinExec, util, pull })
     }
   }
 
   if (shell.after) {
-    cycleFunc.after = async function (config) {
+    cycleFunc.after = async config => {
       // messager.log( 'start to exec shell.after' );
       await shell.after({ config, messager, nodeBinExec, util, pull })
     }
@@ -53,7 +51,7 @@ module.exports = (shell, _config_, messager) => {
   if (Object.keys(cycleFunc).length > 0) {
     return cycleFunc
   } else {
-    return async (config) => {
+    return async config => {
       // messager.log( 'start to exec shell' );
       await shell({ config, messager, nodeBinExec, util, pull })
     }

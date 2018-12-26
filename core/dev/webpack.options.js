@@ -1,5 +1,3 @@
-'use strict'
-
 const path = require('path')
 
 const webpackRules = require('../common/1_webpack_rules')

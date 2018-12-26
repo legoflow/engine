@@ -1,5 +1,3 @@
-'use strict'
-
 const _ = require('lodash')
 const glob = require('glob')
 const webpack = require('webpack')

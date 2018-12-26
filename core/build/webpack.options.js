@@ -1,5 +1,3 @@
-'use strict'
-
 const webpackRules = require('../common/1_webpack_rules')
 const webpackResolve = require('../common/3_webpack_resolve')
 const webpackPlugins = require('../common/2_webpack_plugins')
