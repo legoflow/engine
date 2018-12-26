@@ -15,7 +15,7 @@ const Messager = require('./messager')
 const messager = new Messager()
 
 module.exports = async (_config_) => {
-  let { shell, onlyRunShell } = _config_[ 'workflow.build' ]
+  let { shell, onlyRunShell } = _config_['workflow.build']
 
   if (shell && shell.indexOf('./') === 0) {
     shell = path.resolve(_config_.projectPath, shell)

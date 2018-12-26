@@ -5,7 +5,7 @@ const webpackPlugins = require('../common/2_webpack_plugins')
 module.exports = function (config) {
   let { entry, projectPath, system, cacheFlag } = config
 
-  const workflowConfig = config[ 'workflow.build' ]
+  const workflowConfig = config['workflow.build']
 
   const { publicPath } = workflowConfig
 
@@ -44,7 +44,7 @@ module.exports = function (config) {
   }
 
   if (config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true) {
-    webpackOptions[ 'devtool' ] = 'source-map'
+    webpackOptions['devtool'] = 'source-map'
   }
 
   if (config.mode === 'webpack' && config.webpack && config.webpack.happypack == true) {
@@ -67,19 +67,19 @@ module.exports = function (config) {
             verbose: true
           }
 
-          const use = [ {
+          const use = [{
             loader: require.resolve('happypack/loader'),
             options: { id: _ir.id }
-          } ]
+          }]
 
           if (item.oneOf) {
-            const loaders = item.oneOf[ _ir.oneOf ].use
+            const loaders = item.oneOf[_ir.oneOf].use
 
-            item.oneOf[ _ir.oneOf ].use = use
+            item.oneOf[_ir.oneOf].use = use
 
             pluginOptions.loaders = loaders
           } else {
-            webpackOptions.module.rules[ index ].use = use
+            webpackOptions.module.rules[index].use = use
           }
 
           webpackOptions.plugins.unshift(new HappyPack(pluginOptions))

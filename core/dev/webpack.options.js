@@ -7,9 +7,9 @@ const webpackPlugins = require('../common/2_webpack_plugins')
 module.exports = (config) => {
   let { entry, projectPath, system } = config
 
-  const workflowConfig = config[ 'workflow.dev' ] || { }
+  const workflowConfig = config['workflow.dev'] || { }
 
-  const isHotReload = workflowConfig[ 'hot.reload' ] || false
+  const isHotReload = workflowConfig['hot.reload'] || false
 
   const srcFolderPath = path.resolve(projectPath, './src')
 

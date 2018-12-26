@@ -5,10 +5,10 @@ module.exports = {
   'extends': [
     'standard',
     'plugin:vue/essential'
-  ],
+ ],
   'plugins': [
     'vue', 'typescript'
-  ],
+ ],
   rules: {
     // https://github.com/eslint/typescript-eslint-parser#known-issues
     'no-undef': 'off',

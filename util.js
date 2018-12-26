@@ -32,7 +32,7 @@ String.prototype.toConfig = function () {
     if (extname == '.yml') {
       config = YAML.load(p)
     } else {
-      delete require.cache[ p ]
+      delete require.cache[p]
 
       config = require(p)
 
@@ -88,12 +88,12 @@ String.prototype.getConfig = function (_config_ = { }) {
         user: author || global.__config.user
       })
 
-      if (!config[ 'workflow.dev' ]) {
-        config[ 'workflow.dev' ] = { }
+      if (!config['workflow.dev']) {
+        config['workflow.dev'] = { }
       }
 
-      if (!config[ 'workflow.build' ]) {
-        config[ 'workflow.build' ] = { }
+      if (!config['workflow.build']) {
+        config['workflow.build'] = { }
       }
     }
 

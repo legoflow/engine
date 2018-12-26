@@ -4,7 +4,7 @@ module.exports = (config) => {
   let { alias, root, includeModules, projectPath } = config
 
   if (!includeModules) {
-    includeModules = [ ]
+    includeModules = []
   }
 
   if (root.toLocaleLowerCase().indexOf('yarn') > 0) {

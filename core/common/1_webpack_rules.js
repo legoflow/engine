@@ -6,11 +6,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 let babelOptions = require('../common/babel_options')
 
 module.exports = (config) => {
-  const isESNext = config[ 'ES.Next' ]
+  const isESNext = config['ES.Next']
 
   const { workflow, root, projectPath, ESLint, isTS, cacheFlag } = config
 
-  const workflowConfig = config[ `workflow.${workflow}` ] || { }
+  const workflowConfig = config[`workflow.${workflow}`] || { }
 
   const webpackImageQuality = config.webpack ? (config.webpack.imageQuality || 90) : 90
 
@@ -23,7 +23,7 @@ module.exports = (config) => {
   const inlineNodeModules = path.resolve(root, './node_modules')
   const localNodeModules = path.resolve(projectPath, './node_modules')
 
-  const exclude = [ inlineNodeModules, localNodeModules ]
+  const exclude = [inlineNodeModules, localNodeModules]
 
   babelOptions = babelOptions({ babelModules: config.webpack && config.webpack['babelModules'] })
 
@@ -33,7 +33,7 @@ module.exports = (config) => {
     )
   }
 
-  const [ postcssConfig ] = glob.sync(path.resolve(projectPath, '.postcssrc.*'))
+  const [postcssConfig] = glob.sync(path.resolve(projectPath, '.postcssrc.*'))
 
   let isBuildStyleSourceMap = !isBuildWorkflow
 
@@ -42,7 +42,7 @@ module.exports = (config) => {
     plugins: () => [
       require('postcss-preset-env')({
         stage: 0,
-        browsers: [ '> 0.01%' ]
+        browsers: ['> 0.01%']
       }),
       require('postcss-sprites')({
         alias: config.alias,
@@ -182,17 +182,17 @@ module.exports = (config) => {
   ]
 
   // sass global resources
-  let sassGlobalResources = [ ]
+  let sassGlobalResources = []
 
-  if (config.mode === 'webpack' && config.webpack && Array.isArray(config.webpack[ 'sass.globalResources' ])) {
-    config.webpack[ 'sass.globalResources' ].forEach(item => {
+  if (config.mode === 'webpack' && config.webpack && Array.isArray(config.webpack['sass.globalResources'])) {
+    config.webpack['sass.globalResources'].forEach(item => {
       item.indexOf('./') === 0 && (item = path.resolve(projectPath, item))
 
       sassGlobalResources.push(item)
     })
   }
 
-  const sassLoaders = [ {
+  const sassLoaders = [{
     loader: require.resolve('sass-loader'),
     options: {
       sourceMap: isBuildStyleSourceMap
@@ -320,14 +320,14 @@ module.exports = (config) => {
     cssRule,
     {
       test: /\.(tpl|art)$/,
-      use: [ require.resolve('art-template-loader') ]
+      use: [require.resolve('art-template-loader')]
     },
     {
       test: /\.html$/,
       oneOf: [
         {
           resourceQuery: /^\?vue/,
-          use: [ ]
+          use: []
         },
         {
           use: [
@@ -371,7 +371,7 @@ module.exports = (config) => {
             context: projectPath,
             allowTsInNodeModules: true,
             transpileOnly: true,
-            appendTsSuffixTo: [ /\.vue$/ ]
+            appendTsSuffixTo: [/\.vue$/]
           }
         }
       ]
@@ -379,7 +379,7 @@ module.exports = (config) => {
   }
 
   if (ESLint) {
-    const [ eslintConfig ] = glob.sync(path.resolve(projectPath, '.eslintrc.*'))
+    const [eslintConfig] = glob.sync(path.resolve(projectPath, '.eslintrc.*'))
 
     const eslintRule = {
       loader: require.resolve('eslint-loader'),
@@ -393,7 +393,7 @@ module.exports = (config) => {
       enforce: 'pre',
       test: /\.(js|vue|ts)$/,
       exclude,
-      use: [ eslintRule ]
+      use: [eslintRule]
     })
   }
 
@@ -404,7 +404,7 @@ module.exports = (config) => {
 
   const arrayPathToAbsolute = (array) => {
     array.forEach((item, index) => {
-      item.indexOf('./') === 0 && (array[ index ] = path.resolve(projectPath, item))
+      item.indexOf('./') === 0 && (array[index] = path.resolve(projectPath, item))
     })
   }
 

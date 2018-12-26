@@ -49,7 +49,7 @@ const start = async (_config_) => {
 
   _config_.ip = localIP
 
-  let { shell, onlyRunShell } = _config_[ 'workflow.dev' ]
+  let { shell, onlyRunShell } = _config_['workflow.dev']
 
   if (shell && shell.indexOf('./') === 0) {
     shell = path.resolve(_config_.projectPath, shell)

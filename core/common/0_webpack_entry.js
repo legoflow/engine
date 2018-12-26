@@ -4,22 +4,22 @@ const glob = require('glob')
 module.exports = (config) => {
   let { entry, projectPath, ip, webpackPort, workflow } = config
 
-  let files = [ ]
+  let files = []
   let entrys = { }
 
-  const workflowConfig = config[ 'workflow.dev' ] || { }
+  const workflowConfig = config['workflow.dev'] || { }
 
-  const hot = workflowConfig[ 'hot.reload' ]
+  const hot = workflowConfig['hot.reload']
 
   if (!entry) {
     const jsFolderPath = path.resolve(projectPath, './src/js')
 
-    files = glob.sync(`${jsFolderPath}/*.*(js|ts)`) || [ ]
+    files = glob.sync(`${jsFolderPath}/*.*(js|ts)`) || []
 
-    files = files.filter(v => path.basename(v)[ 0 ] !== '_' && v.indexOf('.d.ts') < 0)
+    files = files.filter(v => path.basename(v)[0] !== '_' && v.indexOf('.d.ts') < 0)
   } else {
     if (typeof entry === 'string') {
-      entry = [ entry ]
+      entry = [entry]
     }
 
     if (Array.isArray(entry)) {
@@ -30,11 +30,11 @@ module.exports = (config) => {
       files = { }
 
       for (let name in entry) {
-        let entryPath = entry[ name ]
+        let entryPath = entry[name]
 
         entryPath.indexOf('./src/') === 0 && (entryPath = path.resolve(projectPath, entryPath))
 
-        files[ name ] = entryPath
+        files[name] = entryPath
       }
     }
   }
@@ -49,7 +49,7 @@ module.exports = (config) => {
         basename = path.basename(item, '.ts')
       }
 
-      entrys[ basename ] = item
+      entrys[basename] = item
     })
   } else {
     entrys = files
@@ -57,8 +57,8 @@ module.exports = (config) => {
 
   if (workflow === 'dev') {
     for (let name in entrys) {
-      const entryPath = entrys[ name ]
-      entrys[ name ] = hot == true ? [ `webpack-dev-server/client?http://${ip}:${webpackPort}`, 'webpack/hot/dev-server', entryPath ] : [ `webpack-dev-server/client?http://${ip}:${webpackPort}`, entryPath ]
+      const entryPath = entrys[name]
+      entrys[name] = hot == true ? [`webpack-dev-server/client?http://${ip}:${webpackPort}`, 'webpack/hot/dev-server', entryPath] : [`webpack-dev-server/client?http://${ip}:${webpackPort}`, entryPath]
     }
   }
 

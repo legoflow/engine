@@ -116,7 +116,7 @@ const sassErrorNotifier = function (msg) {
 const SASS_TASK = (files) => {
   const { projectPath } = config
 
-  const workflowConfig = config[ 'workflow.dev' ] || { }
+  const workflowConfig = config['workflow.dev'] || { }
 
   const sassPath = `${projectPath}/src/sass/**/*.scss`
   const distPath = `${projectPath}/src/css/`
@@ -136,7 +136,7 @@ const SASS_TASK = (files) => {
       cb(null, file)
     }))
     .pipe(autoprefixer({
-      browsers: [ 'last 2 versions', 'Android >= 4.0' ],
+      browsers: ['last 2 versions', 'Android >= 4.0'],
       cascade: true,
       remove: false
     })
@@ -237,7 +237,7 @@ module.exports = async (_config_, _messager_) => {
     }
   })
 
-  const workflowConfig = config[ 'workflow.dev' ]
+  const workflowConfig = config['workflow.dev']
 
   if (workflowConfig.watch && workflowConfig.watch.length > 0) {
     workflowConfig.watch.forEach((item, index) => {
@@ -257,7 +257,7 @@ module.exports = async (_config_, _messager_) => {
 
   // 入口文件增加或删除提示重启加入webpack构建中
   watch(`${projectPath}/src/js/*.js`, {
-    events: [ 'add', 'unlink' ]
+    events: ['add', 'unlink']
   }, (result) => {
     const name = result.basename
 

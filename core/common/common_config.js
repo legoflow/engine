@@ -26,7 +26,7 @@ const resolve = (_config_) => {
     typeof config['workflow.build']['cache'] === 'undefined' && (config['workflow.build']['cache'] = 'hash')
   }
 
-  const { cache } = config[ 'workflow.build' ]
+  const { cache } = config['workflow.build']
 
   config.cacheFlag = void 0
   config.buildTime = ''
@@ -54,7 +54,7 @@ const resolve = (_config_) => {
     config.system = process.platform === 'win32' ? 'win' : 'mac'
   }
 
-  const workflowConfig = config[ `workflow.${workflow}` ] || { }
+  const workflowConfig = config[`workflow.${workflow}`] || { }
 
   const defaultAlias = {
     'axios': `${projectPath}/node_modules/axios`,
@@ -65,35 +65,35 @@ const resolve = (_config_) => {
     '@tpl/helper': `${root}/node_modules/art-template/lib/runtime`
   }
 
-  const nowENV = workflowConfig[ 'env' ] || workflow
+  const nowENV = workflowConfig['env'] || workflow
 
   config.alias = Object.assign(defaultAlias, config.alias)
 
-  if (typeof env !== 'undefined' && typeof env[ nowENV ] !== 'undefined') {
-    const __config__ = env[ nowENV ]
+  if (typeof env !== 'undefined' && typeof env[nowENV] !== 'undefined') {
+    const __config__ = env[nowENV]
 
     for (let key in __config__) {
-      const value = __config__[ key ]
+      const value = __config__[key]
 
-      if (!config[ key ] || typeof config[ key ] !== 'object') {
-        config[ key ] = value
+      if (!config[key] || typeof config[key] !== 'object') {
+        config[key] = value
       } else {
-        config[ key ] = _.merge(config[ key ], value)
+        config[key] = _.merge(config[key], value)
       }
     }
   }
 
   // to absolute path
   for (let item in config.alias) {
-    if (typeof config.alias[ item ] === 'string' && config.alias[ item ].indexOf('./') === 0) {
-      config.alias[ item ] = path.resolve(projectPath, config.alias[ item ])
+    if (typeof config.alias[item] === 'string' && config.alias[item].indexOf('./') === 0) {
+      config.alias[item] = path.resolve(projectPath, config.alias[item])
     }
   }
 
   if (includeModules && includeModules.length > 0) {
     includeModules.forEach((item, index) => {
       if (typeof item === 'string' && item.indexOf('./') === 0) {
-        config.includeModules[ index ] = path.resolve(projectPath, item)
+        config.includeModules[index] = path.resolve(projectPath, item)
       }
     })
   }
@@ -106,12 +106,12 @@ const resolve = (_config_) => {
     'process.build_time': `"${config.buildTime}"`
   }
 
-  const envUserArgs = workflowConfig[ 'user.args' ]
+  const envUserArgs = workflowConfig['user.args']
 
   if (typeof envUserArgs != 'undefined') {
     for (let key in envUserArgs) {
       if (key === user || key === '*') {
-        args[ 'process.args' ] = _.assign(args[ 'process.args' ], envUserArgs[ key ])
+        args['process.args'] = _.assign(args['process.args'], envUserArgs[key])
       }
     }
   }

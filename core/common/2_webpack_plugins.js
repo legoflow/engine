@@ -27,7 +27,7 @@ module.exports = (config) => {
   ]
 
   // friendlyErrors
-  const successMessage = [ ]
+  const successMessage = []
 
   if (config.friendlyErrors && config.workflow === 'dev') {
     if (config.mode === 'webpack') {
@@ -58,7 +58,7 @@ module.exports = (config) => {
           if (errors instanceof Array) {
             errors.forEach((item, index) => {
               if (item.file.indexOf('./src/') >= 0) {
-                errors[ index ].file = `./src/${item.file.split('./src/')[ 1 ]}`
+                errors[index].file = `./src/${item.file.split('./src/')[1]}`
               }
             })
           }
@@ -68,10 +68,10 @@ module.exports = (config) => {
     )
   }
 
-  const workflowConfig = config[ `workflow.${config.workflow}` ]
+  const workflowConfig = config[`workflow.${config.workflow}`]
 
   // hot reload
-  const isHotReload = workflowConfig[ 'hot.reload' ] || false
+  const isHotReload = workflowConfig['hot.reload'] || false
 
   if (isHotReload && config.workflow == 'dev') {
     plugins.push(new webpack.HotModuleReplacementPlugin())
@@ -88,7 +88,7 @@ module.exports = (config) => {
   }
 
   // output stats
-  if (config.workflow === 'build' && workflowConfig[ 'output.webpackStats' ] == true) {
+  if (config.workflow === 'build' && workflowConfig['output.webpackStats'] == true) {
     plugins.push(
       new StatsPlugin('../../stats.json', {
         chunkModules: true
@@ -100,9 +100,9 @@ module.exports = (config) => {
     let { html, dll } = config.webpack || { }
     const isBuildWorkflow = config.workflow === 'build'
 
-    let manifestFiles = [ ]
-    let dllOptions = [ ]
-    let dllFiles = [ ]
+    let manifestFiles = []
+    let dllOptions = []
+    let dllFiles = []
 
     if (config.workflow === 'build') {
       manifestFiles = glob.sync(path.resolve(projectPath, './dll/*.manifest.json'))
@@ -113,9 +113,9 @@ module.exports = (config) => {
       filename: 'index.html'
     }
 
-    !html && (html = [ defaultHtml ])
+    !html && (html = [defaultHtml])
 
-    !Array.isArray(html) && (html = [ html ])
+    !Array.isArray(html) && (html = [html])
 
     html.forEach((item) => {
       item.template && item.template.indexOf('./src') === 0 && (item.template = path.resolve(projectPath, item.template))
@@ -130,7 +130,7 @@ module.exports = (config) => {
         const { dll: itemDll } = item
 
         if (itemDll) {
-          const dllAssets = [ ]
+          const dllAssets = []
 
           itemDll.forEach((itemDllItem) => {
             dllAssets.push(`${itemDllItem}.dll.js`)
@@ -138,7 +138,7 @@ module.exports = (config) => {
           })
 
           dllOptions.push({
-            files: [ item.filename ],
+            files: [item.filename],
             append: false,
             assets: dllAssets
           })
@@ -148,7 +148,7 @@ module.exports = (config) => {
           dllFiles = _.concat(dllFiles, dllAssets)
 
           dllOptions.push({
-            files: [ item.filename ],
+            files: [item.filename],
             append: false,
             assets: dllAssets
           })
@@ -187,7 +187,7 @@ module.exports = (config) => {
         dllFiles = _.uniq(dllFiles)
 
         dllFiles.forEach((item, index) => {
-          dllFiles[ index ] = {
+          dllFiles[index] = {
             from: path.resolve(projectPath, `./dll/${item}`),
             to: path.resolve(projectPath, `./dist/js/${item}`)
           }
@@ -212,7 +212,7 @@ module.exports = (config) => {
   if (config.workflow === 'dev' && config.mode === 'webpack') {
     plugins.push(
       new HtmlWebpackIncludeAssetsPlugin({
-        assets: [ '//s1.yy.com/ued_web_static/lib/lego/log/dev.js' ],
+        assets: ['//s1.yy.com/ued_web_static/lib/lego/log/dev.js'],
         append: false
       })
     )
@@ -254,7 +254,7 @@ module.exports = (config) => {
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: /\.css$/g,
         cssProcessor: require('cssnano'),
-        cssProcessorOptions: { autoprefixer: { browsers: [ '> 0.01%' ] } },
+        cssProcessorOptions: { autoprefixer: { browsers: ['> 0.01%'] } },
         canPrint: true
       })
     )

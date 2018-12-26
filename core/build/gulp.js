@@ -59,7 +59,7 @@ const EJS_TASK = (resolve, reject) => {
     .pipe(preprocess({
       context: {
         env: 'build',
-        args: args[ 'process.args' ]
+        args: args['process.args']
       }
     })
       .on('error', (error) => {
@@ -78,7 +78,7 @@ const EJS_TASK = (resolve, reject) => {
 const SASS_TASK = (resolve, reject) => {
   const { banner } = config
 
-  const workflowConfig = config[ 'workflow.build' ] || { }
+  const workflowConfig = config['workflow.build'] || { }
 
   const dest = `${projectPath}/dist/css`
 
@@ -98,11 +98,11 @@ const SASS_TASK = (resolve, reject) => {
     .pipe(cssBase64({
       baseDir: '../img/base64',
       maxWeightResource: 1024 * 1000,
-      extensionsAllowed: [ '.png', '.jpg', 'gif', 'jpeg', 'svg' ]
+      extensionsAllowed: ['.png', '.jpg', 'gif', 'jpeg', 'svg']
     })
     )
     .pipe(autoprefixer({
-      browsers: [ 'last 2 versions', 'Android >= 4.0' ],
+      browsers: ['last 2 versions', 'Android >= 4.0'],
       cascade: true,
       remove: false
     })
@@ -125,14 +125,14 @@ const SASS_TASK = (resolve, reject) => {
 // ---------------------------------- sprite ----------------------------------
 const SPRITE_TASK = (resolve, reject) => {
   let slicePath = `${projectPath}/src/img/slice`
-  let spliteFolder = [ ]
+  let spliteFolder = []
   let spliteBase = false
 
   const buildSprite = (splites, index) => {
     if (index + 1 <= splites.length) {
-      let spliteName = splites[ index ].name + '.png'
-      let splitePath = splites[ index ].path
-      let inputPath = splites[ index ].type === 'folder' ? `${splites[ index ].name}/` : ''
+      let spliteName = splites[index].name + '.png'
+      let splitePath = splites[index].path
+      let inputPath = splites[index].type === 'folder' ? `${splites[index].name}/` : ''
 
       gulp.src(`${projectPath}/dist/css/**/*.css`)
         .pipe(spriter({
@@ -204,21 +204,21 @@ const SPRITE_TASK = (resolve, reject) => {
 // ---------------------------------- img ----------------------------------
 const IMG_TASK = (resolve, reject) => {
   const copyOtherTypeImg = (resolve, reject) => {
-    gulp.src([ `${projectPath}/dist/.img/**/*.gif`, `${projectPath}/dist/.img/**/*.svg` ])
+    gulp.src([`${projectPath}/dist/.img/**/*.gif`, `${projectPath}/dist/.img/**/*.svg`])
       .pipe(gulp.dest(`${projectPath}/dist/img/`))
       .on('end', resolve)
   }
 
   const minImg = () => {
-    gulp.src([ `${projectPath}/dist/.img/**/*.png`, `${projectPath}/dist/.img/**/*.jpg`, `${projectPath}/dist/.img/**/*.JPG` ])
+    gulp.src([`${projectPath}/dist/.img/**/*.png`, `${projectPath}/dist/.img/**/*.jpg`, `${projectPath}/dist/.img/**/*.JPG`])
       .pipe(imagemin({
         progressive: true
       })
       )
       .pipe(gulp.dest(`${projectPath}/dist/img/`))
       .on('end', () => {
-        del.sync([ `${projectPath}/dist/.img` ], { force: true })
-        del.sync([ `${projectPath}/dist/css/_AllInOne_.css` ], { force: true })
+        del.sync([`${projectPath}/dist/.img`], { force: true })
+        del.sync([`${projectPath}/dist/css/_AllInOne_.css`], { force: true })
 
         messager.log('图片压缩完成')
 
@@ -261,13 +261,13 @@ const INLINE_TASK = (resolve, reject) => {
 
 // ---------------------------------- css version and replace demain ----------------------------------
 const CSS_VERSION_AND_REPLACE_DOMAIN = (resolve, reject) => {
-  const workflowConfig = config[ 'workflow.build' ] || { }
+  const workflowConfig = config['workflow.build'] || { }
 
   const { cache } = workflowConfig
 
-  let resourcesDomain = workflowConfig[ 'css.resourcesDomain' ]
+  let resourcesDomain = workflowConfig['css.resourcesDomain']
 
-  if (resourcesDomain && resourcesDomain[ resourcesDomain.length - 1 ] !== '/') {
+  if (resourcesDomain && resourcesDomain[resourcesDomain.length - 1] !== '/') {
     resourcesDomain += '/'
   }
 
@@ -321,9 +321,9 @@ const MOVE_ASSETS = (resolve, reject) => {
 const HTML_TASK = (resolve, reject) => {
   const { banner } = config
 
-  const resourcesDomain = config[ 'workflow.build' ][ 'html.resourcesDomain' ]
+  const resourcesDomain = config['workflow.build']['html.resourcesDomain']
 
-  const { cache } = config[ 'workflow.build' ]
+  const { cache } = config['workflow.build']
 
   gulp.src(`${projectPath}/dist/*.html`)
     .pipe(useref())
@@ -333,7 +333,7 @@ const HTML_TASK = (resolve, reject) => {
       flag: config.cacheFlag,
       paramType: cache,
       version: config.version,
-      suffix: [ 'css', 'js', 'jpg', 'png', 'gif' ]
+      suffix: ['css', 'js', 'jpg', 'png', 'gif']
     })
     )
     .pipe(assets(resourcesDomain || ''))
@@ -347,7 +347,7 @@ const TOUSLE_TASK = (resolve, reject) => {
     gulp.src(`${projectPath}/dist/js/**/*.css`)
       .pipe(gulp.dest(`${projectPath}/dist/css/`))
       .on('end', () => {
-        del.sync([ `${projectPath}/dist/js/**/*.css` ], { force: true })
+        del.sync([`${projectPath}/dist/js/**/*.css`], { force: true })
 
         resolve()
       })
