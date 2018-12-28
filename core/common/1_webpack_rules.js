@@ -197,8 +197,7 @@ module.exports = (config) => {
     options: {
       sourceMap: isBuildStyleSourceMap
     }
-  }
-  ]
+  }]
 
   sassGlobalResources.length > 0 && sassLoaders.push({
     loader: require.resolve('sass-resources-loader'),

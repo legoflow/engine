@@ -12,6 +12,7 @@ export default {
   includeModules: Array,
   mode: String,
   friendlyErrors: Boolean,
+  'user.args': Object,
   webpack: {
     imageQuality: Number,
     html: Object,

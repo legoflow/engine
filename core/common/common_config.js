@@ -106,7 +106,8 @@ const resolve = (_config_) => {
     'process.build_time': `"${config.buildTime}"`
   }
 
-  const envUserArgs = workflowConfig['user.args']
+  const allEnvUserArgs = config['user.args'] || {}
+  const envUserArgs = Object.assign(allEnvUserArgs, workflowConfig['user.args'])
 
   if (typeof envUserArgs != 'undefined') {
     for (let key in envUserArgs) {

@@ -35,6 +35,7 @@ module.exports = (config) => {
   }
 
   let webpackDevServerOptions = {
+    host: '0.0.0.0',
     contentBase: srcFolderPath,
     hot: isHotReload,
     historyApiFallback: false,
@@ -54,7 +55,7 @@ module.exports = (config) => {
       aggregateTimeout: 100,
       poll: 1000
     },
-    proxy: workflowConfig.proxy || { },
+    proxy: workflowConfig.proxy || {},
     disableHostCheck: true,
     https: (config.webpack && config.webpack['dev.https']) || false
   }

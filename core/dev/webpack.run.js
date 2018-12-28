@@ -11,7 +11,7 @@ const run = (resolve, reject) => {
 
   const compiler = webpack(webpackOptions)
 
-  new WebpackDevServer(compiler, webpackDevServerOptions).listen(webpackPort, ip, (err) => {
+  new WebpackDevServer(compiler, webpackDevServerOptions).listen(webpackPort, '0.0.0.0', (err) => {
     if (err) throw err
 
     mode !== 'webpack' && console.log('[WEBPACK SERVER]', `http://${ip}:${webpackPort}`)
