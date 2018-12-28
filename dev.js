@@ -1,7 +1,7 @@
 const axios = require('axios')
 const path = require('path')
 const fs = require('fs')
-const network = require('network')
+const ip = require('ip')
 const findFreePort = require('find-free-port')
 const watch = require('gulp-watch')
 
@@ -19,12 +19,6 @@ const util = require('./util')
 const getShell = require('./core/common/get_shell')
 
 let config = void 0
-let localIP = void 0
-let getLocalIPCounter = 0
-
-network.get_private_ip((err, ip) => {
-  if (err) throw err; localIP = ip
-})
 
 const webpackDevServerLaunchTimer = (ip, port, resolve) => {
   axios(`http://${ip}:${port}`).then((response) => {
@@ -39,15 +33,7 @@ const webpackDevServerLaunchTimer = (ip, port, resolve) => {
 }
 
 const start = async (_config_) => {
-  if (!localIP && getLocalIPCounter < 10) {
-    ++getLocalIPCounter
-    setTimeout(() => start(_config_), 300)
-    return void 0
-  } else if (getLocalIPCounter >= 10) {
-    localIP = '127.0.0.1'
-  }
-
-  _config_.ip = localIP
+  _config_.ip = ip.address() || '127.0.0.1'
 
   let { shell, onlyRunShell } = _config_['workflow.dev']
 

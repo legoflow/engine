@@ -11,7 +11,7 @@
   "keywords": [
     "legoflow",
     "workflow"
- ],
+  ],
   "author": "lijialiang@yy.com",
   "license": "MIT",
   "bugs": {
@@ -92,12 +92,12 @@
     "html-webpack-plugin": "3.2.0",
     "image-size": "0.6.2",
     "image-webpack-loader": "4.3.1",
+    "ip": "^1.1.5",
     "loader-utils": "1.1.0",
     "lodash": "^4.17.5",
     "markup-inline-loader": "git+https://github.com/legoflow-override/markup-inline-loader.git",
     "mini-css-extract-plugin": "0.4.5",
     "moment": "^2.22.0",
-    "network": "0.4.1",
     "node-sass": "4.7.2",
     "optimize-css-assets-webpack-plugin": "5.0.0",
     "postcss-loader": "3.0.0",
