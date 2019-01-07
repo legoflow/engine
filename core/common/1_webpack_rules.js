@@ -407,10 +407,22 @@ module.exports = (config) => {
     })
   }
 
-  // YY.PKG
+  let includeESNextModules = ['./node_modules/yypkg', './node_modules/@yy/']
+  let includeVueModules = ['./node_modules/@yy/']
+
+  if (config.mode === 'webpack' && config.webpack && config.webpack.include) {
+    const { esnext, vue } = config.webpack.include
+
+    esnext && (includeESNextModules = Object.assign(includeESNextModules, esnext))
+    vue && (includeVueModules = Object.assign(includeVueModules, vue))
+  }
+
+  arrayPathToAbsolute(includeESNextModules)
+  arrayPathToAbsolute(includeVueModules)
+
   rules.push({
     test: /\.*(js|jsx)$/,
-    include: path.resolve(projectPath, './node_modules/yypkg'),
+    include: includeESNextModules,
     use: [
       {
         loader: require.resolve('babel-loader'),
@@ -419,32 +431,7 @@ module.exports = (config) => {
     ]
   })
 
-  // 特别指定 include 的模块
-  if (config.mode === 'webpack' && config.webpack && config.webpack.include) {
-    let { esnext, vue } = config.webpack.include
-
-    // 指定增加 include js || jsx 编译 esnext 模块
-    if (esnext) {
-      arrayPathToAbsolute(esnext)
-
-      rules.push({
-        test: /\.*(js|jsx)$/,
-        include: esnext,
-        use: [
-          {
-            loader: require.resolve('babel-loader'),
-            options: babelOptions
-          }
-        ]
-      })
-    }
-
-    if (vue) {
-      arrayPathToAbsolute(vue)
-
-      rules.push(Object.assign(_.cloneDeep(vueRule), { include: vue }))
-    }
-  }
+  rules.push(Object.assign(_.cloneDeep(vueRule), { include: includeVueModules }))
 
   rules.push({
     test: /\.*(js|jsx)$/,
