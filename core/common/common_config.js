@@ -8,6 +8,24 @@ const resolve = (_config_) => {
 
   const { projectPath, root, env, user, workflow, includeModules } = config
 
+  const workflowConfig = config[`workflow.${workflow}`] || {}
+
+  const nowENV = workflowConfig['env'] || workflow
+
+  if (typeof env !== 'undefined' && typeof env[nowENV] !== 'undefined') {
+    const __config__ = env[nowENV]
+
+    for (let key in __config__) {
+      const value = __config__[key]
+
+      if (!config[key] || typeof config[key] !== 'object') {
+        config[key] = value
+      } else {
+        config[key] = _.merge(config[key], value)
+      }
+    }
+  }
+
   if (typeof config.isTS === 'undefined') {
     config.isTS = fs.existsSync(path.resolve(projectPath, 'tsconfig.json'))
   }
@@ -54,8 +72,6 @@ const resolve = (_config_) => {
     config.system = process.platform === 'win32' ? 'win' : 'mac'
   }
 
-  const workflowConfig = config[`workflow.${workflow}`] || { }
-
   const defaultAlias = {
     'axios': `${projectPath}/node_modules/axios`,
     'moment': `${projectPath}/node_modules/moment`,
@@ -65,23 +81,7 @@ const resolve = (_config_) => {
     '@tpl/helper': `${root}/node_modules/art-template/lib/runtime`
   }
 
-  const nowENV = workflowConfig['env'] || workflow
-
   config.alias = Object.assign(defaultAlias, config.alias)
-
-  if (typeof env !== 'undefined' && typeof env[nowENV] !== 'undefined') {
-    const __config__ = env[nowENV]
-
-    for (let key in __config__) {
-      const value = __config__[key]
-
-      if (!config[key] || typeof config[key] !== 'object') {
-        config[key] = value
-      } else {
-        config[key] = _.merge(config[key], value)
-      }
-    }
-  }
 
   // to absolute path
   for (let item in config.alias) {
