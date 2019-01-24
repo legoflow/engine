@@ -275,6 +275,12 @@ module.exports = (config) => {
     )
   }
 
+  if (config.mode === 'webpack' && config.workflow === 'dev' && config.webpack['dev.htmlInject']) {
+    plugins.push(
+      new HtmlInjectAssetsWebpackPlugin(config.webpack['dev.htmlInject'], { projectPath })
+    )
+  }
+
   if (config.mode === 'webpack' && config.workflow === 'build' && config.webpack['build.copy']) {
     plugins.push(
       new FsCopyWebpackPlugin({
