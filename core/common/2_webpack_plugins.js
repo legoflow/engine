@@ -271,7 +271,7 @@ module.exports = (config) => {
 
   if (config.mode === 'webpack' && config.workflow === 'build' && config.webpack['build.htmlInject']) {
     plugins.push(
-      new HtmlInjectAssetsWebpackPlugin(config.webpack['build.htmlInject'])
+      new HtmlInjectAssetsWebpackPlugin(config.webpack['build.htmlInject'], { projectPath })
     )
   }
 
