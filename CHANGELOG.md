@@ -1,6 +1,6 @@
 ## Unreleased
 
-* [null]
+* 升级 [html-inject-assets-webpack-plugin](https://github.com/lijialiang/html-inject-assets-webpack-plugin) 可 inline 本地项目 src 文件夹下 CSS 或者 JS 文件
 
 ## 1.10.0 (01-09, 2019)
 

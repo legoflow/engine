@@ -27,7 +27,7 @@ module.exports = (config) => {
 
       files = files.map(v => v.indexOf('./src/') === 0 ? path.resolve(projectPath, v) : v)
     } else if (typeof entry === 'object') {
-      files = { }
+      files = {}
 
       for (let name in entry) {
         let entryPath = entry[name]
