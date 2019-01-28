@@ -157,12 +157,14 @@ module.exports = (config) => {
     })
 
     if (config.workflow === 'build') {
-      const name = config.cacheFlag ? `../css/[name].${config.cacheFlag}.css` : '../css/[name].css'
+      if (!config.webpack['bundle.css.useStyleLoader']) {
+        const name = config.cacheFlag ? `../css/[name].${config.cacheFlag}.css` : '../css/[name].css'
 
-      plugins.push(new MiniCssExtractPlugin({
-        filename: name,
-        chunkFilename: name
-      }))
+        plugins.push(new MiniCssExtractPlugin({
+          filename: name,
+          chunkFilename: name
+        }))
+      }
 
       // dll
       if (dll && manifestFiles.length > 0) {
@@ -229,11 +231,11 @@ module.exports = (config) => {
       // },
     }
 
-    if (config.mode === 'webpack' && config.webpack && config.webpack['uglifyOptions']) {
+    if (config.mode === 'webpack' && config.webpack['uglifyOptions']) {
       UglifyJsPluginOptions.uglifyOptions = config.webpack['uglifyOptions']
     }
 
-    if (config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true) {
+    if (config.mode === 'webpack' && config.webpack['build.sourceMap'] == true) {
       UglifyJsPluginOptions.sourceMap = true
     }
 

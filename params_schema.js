@@ -27,9 +27,11 @@ export default {
     'sass.globalResources': Array,
     'dev.https': Boolean,
     'build.sourceMap': Boolean,
-    'build.html.inject': Object,
+    'dev.htmlInject': Object,
+    'build.htmlInject': Object,
     'build.copy': Object,
-    'bundle.worker': Boolean
+    'bundle.worker': Boolean,
+    'bundle.css.useStyleLoader': Boolean
   },
   'workflow.dev': {
     env: String,

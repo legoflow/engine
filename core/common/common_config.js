@@ -129,6 +129,8 @@ const resolve = (_config_) => {
  */
 `
 
+  !config.webpack && (config.webpack = {})
+
   return config
 }
 

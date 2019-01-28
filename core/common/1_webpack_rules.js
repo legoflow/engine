@@ -126,19 +126,6 @@ module.exports = (config) => {
   }
 
   const cssModulesRuleUse = [
-    config.workflow === 'build' && config.mode === 'webpack'
-      ? {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          publicPath: publicPath || './'
-        }
-      }
-      : {
-        loader: require.resolve('vue-style-loader'),
-        options: {
-          sourceMap: isBuildStyleSourceMap
-        }
-      },
     {
       loader: require.resolve('css-loader'),
       options: {
@@ -155,19 +142,6 @@ module.exports = (config) => {
   ]
 
   const cssRuleUse = [
-    config.workflow === 'build' && config.mode === 'webpack'
-      ? {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          publicPath: publicPath || './'
-        }
-      }
-      : {
-        loader: require.resolve('vue-style-loader'),
-        options: {
-          sourceMap: isBuildStyleSourceMap
-        }
-      },
     {
       loader: require.resolve('css-loader'),
       options: {
@@ -181,10 +155,44 @@ module.exports = (config) => {
     }
   ]
 
+  if (config.workflow === 'build' && config.mode === 'webpack') {
+    if (config.webpack['bundle.css.useStyleLoader']) {
+      const styleLoader = {
+        loader: require.resolve('style-loader'),
+        options: {
+          sourceMap: isBuildStyleSourceMap
+        }
+      }
+
+      cssRuleUse.unshift(styleLoader)
+      cssModulesRuleUse.unshift(styleLoader)
+    } else {
+      const MiniCssExtractPluginLoader = {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          publicPath: publicPath || './'
+        }
+      }
+
+      cssRuleUse.unshift(MiniCssExtractPluginLoader)
+      cssModulesRuleUse.unshift(MiniCssExtractPluginLoader)
+    }
+  } else {
+    const vueStyleLoader = {
+      loader: require.resolve('vue-style-loader'),
+      options: {
+        sourceMap: isBuildStyleSourceMap
+      }
+    }
+
+    cssRuleUse.unshift(vueStyleLoader)
+    cssModulesRuleUse.unshift(vueStyleLoader)
+  }
+
   // sass global resources
   let sassGlobalResources = []
 
-  if (config.mode === 'webpack' && config.webpack && Array.isArray(config.webpack['sass.globalResources'])) {
+  if (config.mode === 'webpack' && Array.isArray(config.webpack['sass.globalResources'])) {
     config.webpack['sass.globalResources'].forEach(item => {
       item.indexOf('./') === 0 && (item = path.resolve(projectPath, item))
 
@@ -273,7 +281,7 @@ module.exports = (config) => {
     ]
   }
 
-  if (config.workflow === 'build' && config.mode === 'webpack' && config.webpack && config.webpack.VueChunkStyle == false) {
+  if (config.workflow === 'build' && config.mode === 'webpack' && config.webpack.VueChunkStyle == false) {
     const VueStyleLoader = {
       loader: require.resolve('vue-style-loader'),
       options: {

@@ -5306,9 +5306,9 @@ html-entities@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
 
-html-inject-assets-webpack-plugin@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/html-inject-assets-webpack-plugin/-/html-inject-assets-webpack-plugin-0.0.1.tgz#147df0a9eade647f86551718e600a91ec5dbaf43"
+html-inject-assets-webpack-plugin@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/html-inject-assets-webpack-plugin/-/html-inject-assets-webpack-plugin-0.0.2.tgz#2b7ba4fd95b746ed6e3ea65091fd688043ce6c8c"
   dependencies:
     axios "^0.18.0"
 
@@ -10202,7 +10202,7 @@ strip-outer@^1.0.0:
   dependencies:
     escape-string-regexp "^1.0.2"
 
-style-loader@0.23.1:
+style-loader@^0.23.1:
   version "0.23.1"
   resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.23.1.tgz#cb9154606f3e771ab6c4ab637026a1049174d925"
   dependencies:
