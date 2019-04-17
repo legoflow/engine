@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "1.11.0-4",
+  "version": "1.11.0-6",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {},
@@ -98,7 +98,7 @@
     "markup-inline-loader": "git+https://github.com/legoflow-override/markup-inline-loader.git",
     "mini-css-extract-plugin": "0.4.5",
     "moment": "^2.22.0",
-    "node-sass": "4.7.2",
+    "node-sass": "4.11.0",
     "optimize-css-assets-webpack-plugin": "5.0.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.4.0",

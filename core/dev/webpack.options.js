@@ -23,7 +23,7 @@ module.exports = (config) => {
     output: {
       filename: './js/[name].js',
       path: system === 'mac' ? outputPath : outputPath.pathWinNorm(),
-      publicPath: ''
+      publicPath: workflowConfig.publicPath || ''
     },
     module: {
       rules: webpackRules(config)
@@ -38,7 +38,7 @@ module.exports = (config) => {
     host: '0.0.0.0',
     contentBase: srcFolderPath,
     hot: isHotReload,
-    historyApiFallback: false,
+    historyApiFallback: workflowConfig.historyApiFallback || false,
     compress: false,
     noInfo: false,
     lazy: false,

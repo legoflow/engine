@@ -224,11 +224,6 @@ module.exports = (config) => {
     const UglifyJsPluginOptions = {
       cache: `${projectPath}/.cache/uglifyjs-webpack-plugin`,
       parallel: true
-      // uglifyOptions: {
-      //     compress: {},
-      //     ecma: 6,
-      //     mangle: {},
-      // },
     }
 
     if (config.mode === 'webpack' && config.webpack['uglifyOptions']) {
