@@ -16,6 +16,12 @@ module.exports = (config) => {
 
   const { publicPath } = workflowConfig
 
+  let chunkFilename = '[name].js'
+
+  if (cacheFlag) {
+    chunkFilename = `[name].${cacheFlag}.js`
+  }
+
   const isBuildWorkflow = config.workflow === 'build'
 
   const limitSize = workflow == 'build' ? (typeof workflowConfig['bundle.limitResourcesSize'] !== 'undefined' ? workflowConfig['bundle.limitResourcesSize'] : 5) : 1024 * 100
@@ -348,12 +354,32 @@ module.exports = (config) => {
 
   let jsRule = void 0
   let tsRule = void 0
+  let jsWorkerRule = void 0
 
   if (isESNext) {
     jsRule = {
       test: /\.*(js|jsx)$/,
       exclude,
       use: [
+        {
+          loader: require.resolve('babel-loader'),
+          options: babelOptions
+        }
+      ]
+    }
+
+    jsWorkerRule = {
+      test: /\.worker\.js$/,
+      exclude,
+      use: [
+        {
+          loader: require.resolve('worker-loader'),
+          options: {
+            fallback: false,
+            name: config.mode !== 'webpack' ? '[name].js' : chunkFilename,
+            publicPath
+          }
+        },
         {
           loader: require.resolve('babel-loader'),
           options: babelOptions
@@ -406,6 +432,7 @@ module.exports = (config) => {
 
   jsRule && rules.push(jsRule)
   tsRule && rules.push(tsRule)
+  jsWorkerRule && rules.push(jsWorkerRule)
 
   rules.push(Object.assign(_.cloneDeep(vueRule), { exclude }))
 
