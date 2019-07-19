@@ -143,7 +143,6 @@ const SASS_TASK = (files) => {
     )
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(distPath))
-    .pipe(reload({ stream: true }))
     .pipe(through.obj((file, enc, cb) => {
       if (typeof files !== 'undefined' && sassCompileSuccess && sassCompileError) {
         let extname = ''
@@ -163,6 +162,8 @@ const SASS_TASK = (files) => {
 
           messager.notice('Sass 编译成功')
         }
+
+        reload(projectPath + '/src/css/*.css')
       }
     }))
 }

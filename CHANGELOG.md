@@ -2,6 +2,8 @@
 
 * 升级 [html-inject-assets-webpack-plugin](https://github.com/lijialiang/html-inject-assets-webpack-plugin) 可 inline 本地项目 src 文件夹下 CSS 或者 JS 文件
 * 增加 `webpack { dev.htmlInject }` 字段可在开发工作流上对 html 进入资源注入
+* 增加 支持 `.worker.js` 脚本文件（[详细](https://legoflow.com/wiki/#worker-%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6-%EF%BC%88v2-7-0-%EF%BC%89)）
+* 修复 Win10 个别机器编译 `ansi-regex`、`strip-ansi` 问题
 
 ## 1.10.0 (01-09, 2019)
 

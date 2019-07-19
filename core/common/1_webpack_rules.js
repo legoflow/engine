@@ -471,8 +471,8 @@ module.exports = (config) => {
   rules.push({
     test: /\.*(js|jsx)$/,
     include: [
-      /.*\/ansi-regex\//,
-      /.*\/strip-ansi\//
+      /ansi-regex/,
+      /strip-ansi/
     ],
     use: [
       {
