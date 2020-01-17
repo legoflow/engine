@@ -12,7 +12,7 @@ module.exports = (config) => {
 
   const workflowConfig = config[`workflow.${workflow}`] || { }
 
-  const webpackImageQuality = config.webpack ? (config.webpack.imageQuality || 90) : 90
+  const webpackImageQuality = (config.webpack ? (config.webpack.imageQuality || 90) : 90) / 100
 
   const { publicPath } = workflowConfig
 
@@ -41,7 +41,7 @@ module.exports = (config) => {
 
   const [postcssConfig] = glob.sync(path.resolve(projectPath, '.postcssrc.*'))
 
-  let isBuildStyleSourceMap = !isBuildWorkflow
+  const isBuildStyleSourceMap = !isBuildWorkflow
 
   const postcssOptions = !postcssConfig ? {
     sourceMap: isBuildStyleSourceMap,
@@ -62,8 +62,8 @@ module.exports = (config) => {
           return Promise.resolve()
         },
         groupBy (image) {
-          let groups = /\/slice\/(.*?)\/.*/gi.exec(image.url)
-          let groupName = groups ? groups[1] : ''
+          const groups = /\/slice\/(.*?)\/.*/gi.exec(image.url)
+          const groupName = groups ? groups[1] : ''
 
           image.retina = true
           image.ratio = 1
@@ -196,7 +196,7 @@ module.exports = (config) => {
   }
 
   // sass global resources
-  let sassGlobalResources = []
+  const sassGlobalResources = []
 
   if (config.mode === 'webpack' && Array.isArray(config.webpack['sass.globalResources'])) {
     config.webpack['sass.globalResources'].forEach(item => {
@@ -252,7 +252,7 @@ module.exports = (config) => {
           enabled: false
         },
         pngquant: {
-          quality: webpackImageQuality
+          quality: [webpackImageQuality - 0.1, webpackImageQuality]
         },
         gifsicle: {
           interlaced: false

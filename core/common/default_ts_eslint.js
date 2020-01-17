@@ -1,12 +1,12 @@
 module.exports = {
-  'parserOptions': {
-    'parser': 'typescript-eslint-parser'
+  parserOptions: {
+    parser: 'typescript-eslint-parser'
   },
-  'extends': [
+  extends: [
     'standard',
     'plugin:vue/essential'
   ],
-  'plugins': [
+  plugins: [
     'vue', 'typescript'
   ],
   rules: {
@@ -20,6 +20,6 @@ module.exports = {
     // temporary fix for https://github.com/vuejs/vue-cli/issues/1922
     // very strange as somehow this rule gets different behaviors depending
     // on the presence of typescript-eslint-parser...
-    'strict': 'off'
+    strict: 'off'
   }
 }
