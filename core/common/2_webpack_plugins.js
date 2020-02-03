@@ -5,7 +5,6 @@ const path = require('path')
 const StatsPlugin = require('stats-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -221,23 +220,6 @@ module.exports = (config) => {
   }
 
   if (config.workflow === 'build') {
-    const UglifyJsPluginOptions = {
-      cache: `${projectPath}/.cache/uglifyjs-webpack-plugin`,
-      parallel: true
-    }
-
-    if (config.mode === 'webpack' && config.webpack['uglifyOptions']) {
-      UglifyJsPluginOptions.uglifyOptions = config.webpack['uglifyOptions']
-    }
-
-    if (config.mode === 'webpack' && config.webpack['build.sourceMap'] == true) {
-      UglifyJsPluginOptions.sourceMap = true
-    }
-
-    if (workflowConfig['noUglifyJs'] != true) {
-      plugins.push(new UglifyJsPlugin(UglifyJsPluginOptions))
-    }
-
     // build other plugins
     plugins.push(
       new webpack.NoEmitOnErrorsPlugin()
