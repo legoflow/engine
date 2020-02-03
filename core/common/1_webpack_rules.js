@@ -31,7 +31,7 @@ module.exports = (config) => {
 
   const exclude = [inlineNodeModules, localNodeModules]
 
-  babelOptions = babelOptions({ babelModules: config.webpack && config.webpack['babelModules'] })
+  babelOptions = babelOptions({ babelModules: config.webpack && config.webpack.babelModules })
 
   if (root.toLocaleLowerCase().indexOf('yarn') > 0) {
     exclude.push(
@@ -448,8 +448,8 @@ module.exports = (config) => {
   if (config.mode === 'webpack' && config.webpack && config.webpack.include) {
     const { esnext, vue } = config.webpack.include
 
-    esnext && (includeESNextModules = Object.assign(includeESNextModules, esnext))
-    vue && (includeVueModules = Object.assign(includeVueModules, vue))
+    esnext && (includeESNextModules = includeESNextModules.concat(esnext))
+    vue && (includeVueModules = includeVueModules.concat(vue))
   }
 
   arrayPathToAbsolute(includeESNextModules)

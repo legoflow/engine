@@ -1,9 +1,10 @@
 const webpackRules = require('../common/1_webpack_rules')
 const webpackResolve = require('../common/3_webpack_resolve')
 const webpackPlugins = require('../common/2_webpack_plugins')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = function (config) {
-  let { entry, projectPath, system, cacheFlag } = config
+  const { entry, projectPath, system, cacheFlag } = config
 
   const workflowConfig = config['workflow.build']
 
@@ -43,8 +44,26 @@ module.exports = function (config) {
     }
   }
 
+  const UglifyJsPluginOptions = {
+    cache: `${projectPath}/.cache/uglifyjs-webpack-plugin`,
+    parallel: true
+  }
+
+  if (config.mode === 'webpack' && config.webpack.uglifyOptions) {
+    UglifyJsPluginOptions.uglifyOptions = config.webpack.uglifyOptions
+  }
+
+  if (config.mode === 'webpack' && config.webpack['build.sourceMap'] == true) {
+    UglifyJsPluginOptions.sourceMap = true
+  }
+
+  if (workflowConfig.noUglifyJs != true) {
+    webpackOptions.optimization.minimize = undefined
+    webpackOptions.optimization.minimizer = [new UglifyJsPlugin(UglifyJsPluginOptions)]
+  }
+
   if (config.mode === 'webpack' && config.webpack && config.webpack['build.sourceMap'] == true) {
-    webpackOptions['devtool'] = 'source-map'
+    webpackOptions.devtool = 'source-map'
   }
 
   if (config.mode === 'webpack' && config.webpack && config.webpack.happypack == true) {
