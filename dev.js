@@ -33,7 +33,7 @@ const webpackDevServerLaunchTimer = (ip, port, resolve) => {
 }
 
 const start = async (_config_) => {
-  _config_.ip = ip.address() || '127.0.0.1'
+  _config_.ip = process.env.DOCKER_HOST_IP || ip.address() || '127.0.0.1'
 
   let { shell, onlyRunShell } = _config_['workflow.dev']
 
