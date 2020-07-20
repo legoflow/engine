@@ -213,7 +213,7 @@ module.exports = (config) => {
   if (config.workflow === 'dev' && config.mode === 'webpack') {
     plugins.push(
       new HtmlWebpackIncludeAssetsPlugin({
-        assets: ['//s1.yy.com/ued_web_static/lib/lego/log/dev.js'],
+        assets: ['https://s1.yy.com/ued_web_static/lib/lego/log/dev.js'],
         append: false
       })
     )

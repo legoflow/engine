@@ -1,6 +1,6 @@
 {
   "name": "legoflow-engine",
-  "version": "1.11.6",
+  "version": "1.11.7",
   "description": "the engine of legoflow-workflow",
   "main": "index.js",
   "scripts": {},
@@ -93,6 +93,7 @@
     "image-size": "0.8.3",
     "image-webpack-loader": "6.0.0",
     "ip": "^1.1.5",
+    "jpegtran-bin": "3.0.0",
     "loader-utils": "1.2.3",
     "lodash": "^4.17.15",
     "markup-inline-loader": "git+https://github.com/legoflow-override/markup-inline-loader.git",
