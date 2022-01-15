@@ -107,7 +107,7 @@
     "raw-loader": "4.0.0",
     "sass-loader": "8.0.2",
     "sass-resources-loader": "2.0.1",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.5",
     "stats-webpack-plugin": "0.7.0",
     "style-loader": "1.1.2",
     "to-string-loader": "1.1.5",
